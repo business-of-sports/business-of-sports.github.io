@@ -1,0 +1,3 @@
+# Decks here are shared by direct link and are not meant to be indexed.
+User-agent: *
+Disallow: /
