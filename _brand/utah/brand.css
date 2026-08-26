@@ -1,0 +1,76 @@
+/* ============================================================
+   BRAND — University of Utah / David Eccles School of Business
+   brandId: university-of-utah
+
+   Supplies brand values to the engine. Contains NO layout.
+   Swap this one file and the same engine renders a Centium deck,
+   a client deck, or anything else.
+
+   Assets in this folder are self-contained and self-hosted:
+   nothing here requires a network at present time.
+   ============================================================ */
+
+@import url("fonts/fonts.css");
+
+:root {
+  /* ---- engine tokens ---- */
+  --brand-primary:        #BE0000;   /* Utah Red */
+  --brand-primary-bright: #E60012;
+  --brand-primary-deep:   #7A0000;
+  --brand-ink:            #0A0A0A;
+  --brand-ink-soft:       #1A1A1A;
+  --brand-paper:          #FFFFFF;
+  --brand-bone:           #F4F1EC;
+
+  --brand-f-display:   'Anton', 'Oswald', Impact, sans-serif;
+  --brand-f-condensed: 'Oswald', 'Archivo Narrow', sans-serif;
+  --brand-f-body:      'Inter', system-ui, -apple-system, sans-serif;
+  --brand-f-mono:      'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---- legacy aliases ----
+     Deck 1 (PLAYERS Academy) slide CSS was written against these
+     names. Keeping them means a slide can be lifted from that deck
+     into this structure with zero find-and-replace. */
+  --utah-red:        var(--brand-primary);
+  --utah-red-bright: var(--brand-primary-bright);
+  --utah-red-deep:   var(--brand-primary-deep);
+  --ink:             var(--brand-ink);
+  --ink-soft:        var(--brand-ink-soft);
+  --paper:           var(--brand-paper);
+  --bone:            var(--brand-bone);
+  --steel:           #4A4A4A;
+  --steel-light:     #6B6B6B;
+  --f-display:       var(--brand-f-display);
+  --f-condensed:     var(--brand-f-condensed);
+  --f-body:          var(--brand-f-body);
+  --f-mono:          var(--brand-f-mono);
+}
+
+/* ---------- Utah Stripe ----------
+   Four horizontal bars, decoded from the official EPS. Uses
+   currentColor so it inverts on dark panes via .white. */
+.utah-stripe {
+  display: block;
+  width: 100%;
+  height: 3.2cqh;
+  color: var(--brand-primary);
+  background: linear-gradient(
+    to bottom,
+    currentColor 0% 14.28%,
+    transparent  14.28% 28.57%,
+    currentColor 28.57% 42.85%,
+    transparent  42.85% 57.14%,
+    currentColor 57.14% 71.42%,
+    transparent  71.42% 85.71%,
+    currentColor 85.71% 100%
+  );
+}
+.utah-stripe.thin  { height: 2.4cqh; }
+.utah-stripe.thick { height: 4.4cqh; }
+.utah-stripe.white { color: var(--brand-paper); }
+
+/* Deck 1 used .eccles-mark; engine v1 standardises on .brand-mark. */
+.eccles-mark img { display: block; width: auto; }
+.eccles-mark.lg img { height: 4.6cqh; }
+.eccles-mark.md img { height: 3.6cqh; }
+.eccles-mark.sm img { height: 3.0cqh; }

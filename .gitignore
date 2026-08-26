@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Local Claude Code preview config (per-machine)
+.claude/
+
+# Editor scratch
+*.swp
+*~

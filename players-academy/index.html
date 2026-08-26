@@ -1,0 +1,3364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PLAYERS Academy — Business of Sports — David Eccles School of Business</title>
+<link rel="icon" type="image/svg+xml" href="../_legacy/logos/desb_logo_2024_digital_verticalblack.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     PLAYERS ACADEMY — BUSINESS OF SPORTS DECK
+     Blended Concept 01 (Stadium Editorial) + Concept 05 (Crimson)
+     Cinematic dark covers + Red/White split content slides.
+     Typography tuned for legibility:
+       - Display: letter-spacing 0.01–0.02em (NEVER negative — fixes bleed)
+       - Body:    2.0+ cqh, weight 400+, full ink contrast (#0A0A0A)
+       - Labels:  Mono SemiBold tracked 0.32em, full white or full red
+     Brand: Utah Red #BE0000 | Ink #0A0A0A | Paper #FFFFFF | Bone #F4F1EC
+     Press F for fullscreen. Arrow keys / clicker advance.
+     ============================================================ */
+
+  :root {
+    --utah-red: #BE0000;
+    --utah-red-bright: #E60012;
+    --utah-red-deep: #7A0000;
+    --ink: #0A0A0A;
+    --ink-soft: #1A1A1A;
+    --paper: #FFFFFF;
+    --bone: #F4F1EC;
+    --steel: #4A4A4A;
+    --steel-light: #6B6B6B;
+
+    --f-display: 'Anton', 'Oswald', Impact, sans-serif;
+    --f-condensed: 'Oswald', 'Archivo Narrow', sans-serif;
+    --f-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; color: var(--paper); font-family: var(--f-body); -webkit-font-smoothing: antialiased; }
+
+  /* ---------- DECK STAGE ---------- */
+  .deck-shell { position: fixed; inset: 0; display: grid; place-items: center; background: #000; }
+  .stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100vw;
+    max-width: calc(100vh * 16 / 9);
+    height: 100vh;
+    max-height: calc(100vw * 9 / 16);
+    overflow: hidden;
+    background: #000;
+    container-type: size;
+    container-name: slide;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 600ms cubic-bezier(.22,1,.36,1);
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; z-index: 2; }
+
+  /* ---------- HUD ---------- */
+  .hud {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 22px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.6);
+    pointer-events: none;
+    z-index: 50;
+    mix-blend-mode: difference;
+  }
+  .hud .pip { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--utah-red); box-shadow: 0 0 14px var(--utah-red); }
+  .hud .hud-left, .hud .hud-right { display: flex; gap: 18px; align-items: center; }
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--utah-red), var(--utah-red-bright));
+    transition: width 600ms cubic-bezier(.22,1,.36,1);
+    z-index: 60;
+  }
+  .help {
+    position: fixed; right: 22px; top: 22px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    background: rgba(0,0,0,0.45);
+    padding: 8px 14px;
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    z-index: 60;
+    transition: opacity .6s;
+  }
+  .help.fade { opacity: 0; }
+  .help kbd { font-family: var(--f-mono); background: rgba(255,255,255,0.18); padding: 2px 6px; border-radius: 3px; color: var(--paper); margin: 0 3px; }
+
+  /* ---------- ARRIVE ANIMATIONS ---------- */
+  [data-anim] { opacity: 0; will-change: transform, opacity; }
+  .active [data-anim="rise"]    { animation: rise .9s .15s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-2"]  { animation: rise .9s .35s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-3"]  { animation: rise .9s .55s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-4"]  { animation: rise .9s .75s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-5"]  { animation: rise .9s .95s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="fade"]    { animation: fade 1.2s .2s ease forwards; }
+  .active [data-anim="fade-2"]  { animation: fade 1.2s .5s ease forwards; }
+  .active [data-anim="fade-3"]  { animation: fade 1.2s .8s ease forwards; }
+  .active [data-anim="zoom"]    { animation: zoomBleed 6s .1s ease-out forwards; }
+  .active [data-anim="count"]   { animation: count 1.5s .3s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="count-2"] { animation: count 1.5s .5s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="count-3"] { animation: count 1.5s .7s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="count-4"] { animation: count 1.5s .9s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="reveal"]  { animation: rise 1.0s .2s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="reveal-2"]{ animation: rise 1.0s .4s cubic-bezier(.22,1,.36,1) forwards; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes zoomBleed { from { transform: scale(1.1); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @keyframes count {
+    from { opacity: 0; transform: translateY(20px) scale(.94); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes pulseRed {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(190,0,0,0.7); }
+    50%      { box-shadow: 0 0 0 14px rgba(190,0,0,0); }
+  }
+
+  /* ====================== SHARED TYPE SYSTEM ====================== */
+
+  /* HERO display — letter-spacing 0.01–0.02em (positive!) so Anton breathes */
+  .display-mega {
+    font-family: var(--f-display);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+  }
+  .display-big {
+    font-family: var(--f-display);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+  }
+  .display-med {
+    font-family: var(--f-display);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .stat-mega {
+    font-family: var(--f-display);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+  }
+
+  .label-mono {
+    font-family: var(--f-mono);
+    font-weight: 600;
+    font-size: 1.2cqh;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+  .label-mono-sm {
+    font-family: var(--f-mono);
+    font-weight: 600;
+    font-size: 1.15cqh;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .body-lead {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 2.2cqh;
+    line-height: 1.5;
+  }
+  .body-med {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.95cqh;
+    line-height: 1.5;
+  }
+  .body-sm {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.7cqh;
+    line-height: 1.5;
+  }
+
+  /* Utah Stripe — 4 horizontal red bars (decoded from EPS). Uses currentColor. */
+  .utah-stripe {
+    display: block;
+    width: 100%;
+    height: 3.2cqh;
+    color: var(--utah-red);
+    background:
+      linear-gradient(
+        to bottom,
+        currentColor 0% 14.28%,
+        transparent  14.28% 28.57%,
+        currentColor 28.57% 42.85%,
+        transparent  42.85% 57.14%,
+        currentColor 57.14% 71.42%,
+        transparent  71.42% 85.71%,
+        currentColor 85.71% 100%
+      );
+  }
+  .utah-stripe.thin { height: 2.4cqh; }
+  .utah-stripe.thick { height: 4.4cqh; }
+  .utah-stripe.white { color: var(--paper); }
+
+  .eccles-mark img { display: block; width: auto; }
+  .eccles-mark.lg img { height: 4.6cqh; }
+  .eccles-mark.md img { height: 3.6cqh; }
+  .eccles-mark.sm img { height: 3.0cqh; }
+
+  /* ====================== SLIDE 01 — COVER ====================== */
+  .s-cover {
+    background: #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .s-cover .photo {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.35) 35%, rgba(0,0,0,0.85) 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%),
+      url('../_legacy/img/10152022_uu_fb_utah-utes-vs.-usc-hd-edits-58-1.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: contrast(1.05) saturate(0.95);
+    z-index: 0;
+  }
+  .s-cover .photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 65%, rgba(190,0,0,0.22), transparent 55%);
+    mix-blend-mode: screen;
+  }
+  .s-cover .topbar, .s-cover .midbar, .s-cover .bottombar { position: relative; z-index: 2; }
+  .s-cover .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4cqh 5cqw 0;
+  }
+  .s-cover .topbar .meta {
+    color: var(--paper);
+    display: flex; gap: 1cqw; align-items: center;
+  }
+  .s-cover .topbar .meta .pip {
+    display: inline-block; width: 0.9cqh; height: 0.9cqh;
+    background: var(--utah-red); border-radius: 50%;
+    box-shadow: 0 0 14px var(--utah-red);
+    animation: pulseRed 2.4s infinite;
+  }
+
+  .s-cover .midbar {
+    display: grid; align-content: end;
+    padding: 0 5cqw;
+    gap: 2.4cqh;
+  }
+  .s-cover .midbar .eyebrow {
+    color: var(--utah-red-bright);
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.3cqh;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    text-shadow: 0 0 24px rgba(230,0,18,0.55);
+  }
+  .s-cover .midbar h1 {
+    color: var(--paper);
+    font-size: 13.5cqw;
+    line-height: 1.02;
+    letter-spacing: 0.012em;
+    font-family: var(--f-display);
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  .s-cover .midbar h1 .red { color: var(--utah-red-bright); }
+  .s-cover .midbar .expand {
+    color: var(--paper);
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 2.0cqh;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    max-width: 70cqw;
+  }
+  .s-cover .midbar .expand .red { color: var(--utah-red-bright); font-weight: 700; }
+
+  .s-cover .bottombar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    gap: 3cqw;
+    padding: 5cqh 5cqw 4cqh;
+  }
+  .s-cover .bottombar .tagline {
+    color: rgba(255,255,255,0.82);
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.7cqh;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    line-height: 1.4;
+    max-width: 38cqw;
+  }
+  .s-cover .bottombar .tagline .accent { color: var(--paper); font-weight: 600; }
+  .s-cover .bottombar .tagline .accent { color: var(--utah-red-bright); }
+  .s-cover .bottombar .rule { width: 8cqw; height: 2px; background: var(--paper); opacity: 0.5; }
+  .s-cover .bottombar .lockup {
+    text-align: right;
+    color: var(--paper);
+    line-height: 1.7;
+  }
+  .s-cover .bottombar .lockup .strong { color: var(--paper); font-weight: 700; }
+
+  /* ====================== SLIDE 02 — OVERVIEW DIVIDER (split) ====================== */
+  .s-overview-div {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    overflow: hidden;
+  }
+  .s-overview-div .red-pane {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 4cqh 4.5cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+  }
+  .s-overview-div .red-pane::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(255,255,255,0.1), transparent 55%),
+      radial-gradient(ellipse at 20% 100%, rgba(0,0,0,0.2), transparent 55%);
+    pointer-events: none;
+  }
+  .s-overview-div .red-pane > * { position: relative; z-index: 1; }
+  .s-overview-div .red-pane .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .s-overview-div .red-pane .topbar .meta {
+    color: var(--paper);
+  }
+  .s-overview-div .red-pane .hero {
+    display: grid; align-content: center; gap: 2.2cqh;
+  }
+  .s-overview-div .red-pane .hero .num {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.2cqh;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.85);
+    text-transform: uppercase;
+  }
+  .s-overview-div .red-pane .hero h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 9cqw;
+    line-height: 1.02;
+    letter-spacing: 0.015em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-overview-div .red-pane .hero .sub {
+    color: var(--paper);
+    max-width: 38cqw;
+  }
+  .s-overview-div .red-pane .footer {
+    display: grid; gap: 1.2cqh;
+    padding-top: 1.6cqh;
+    border-top: 1px solid rgba(255,255,255,0.28);
+  }
+  .s-overview-div .red-pane .footer .lockup { color: var(--paper); }
+  .s-overview-div .red-pane .footer .lockup .strong { font-weight: 700; }
+
+  .s-overview-div .white-pane {
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.4) 100%),
+      url('../_legacy/img/garff-business-bulding.jpg');
+    background-size: cover;
+    background-position: center 55%;
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 4cqh 4cqw;
+  }
+  .s-overview-div .white-pane .logo-band {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .s-overview-div .white-pane .photo-meta {
+    align-self: end;
+    color: var(--paper);
+    font-family: var(--f-mono);
+    font-weight: 600;
+    font-size: 1.1cqh;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .s-overview-div .white-pane .frame-num {
+    color: var(--paper);
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 3.2cqh;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-align: right;
+    margin-bottom: 0.6cqh;
+  }
+  .s-overview-div .white-pane .frame-num .red { color: var(--utah-red-bright); }
+
+  /* ====================== SLIDE 03 — OVERVIEW DETAILS ====================== */
+  .s-overview {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    padding: 4cqh 4.5cqw;
+  }
+  .s-overview .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-overview .topbar .crumb {
+    color: var(--utah-red);
+  }
+  .s-overview h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 5.6cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    color: var(--ink);
+    text-transform: uppercase;
+    margin: 1.2cqh 0 1.2cqh;
+  }
+  .s-overview h2 .red { color: var(--utah-red); }
+
+  .s-overview .countdown {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2.4cqw;
+    padding: 1.0cqh 2cqw;
+    margin-bottom: 1.6cqh;
+    background: var(--utah-red);
+    color: var(--paper);
+    border-left: 6px solid var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .s-overview .countdown::after {
+    content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 40%;
+    background: radial-gradient(ellipse at 90% 50%, rgba(0,0,0,0.22), transparent 70%);
+    pointer-events: none;
+  }
+  .s-overview .countdown > * { position: relative; z-index: 1; }
+  .s-overview .countdown .timer {
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    align-items: start;
+    gap: 0 0.9cqw;
+  }
+  .s-overview .countdown .timer .unit { display: grid; gap: 0.4cqh; justify-items: center; }
+  .s-overview .countdown .timer .v {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4.6cqh;
+    line-height: 0.9;
+    letter-spacing: 0.015em;
+    color: var(--paper);
+    text-shadow: 0 0 22px rgba(255,255,255,0.30);
+    font-variant-numeric: tabular-nums;
+    min-width: 2.2ch;
+    text-align: center;
+    transition: text-shadow 0.18s ease-out;
+  }
+  .s-overview .countdown .timer .l {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.0cqh;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.82);
+    text-transform: uppercase;
+  }
+  .s-overview .countdown .timer .sep {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4.0cqh;
+    line-height: 0.95;
+    color: rgba(255,255,255,0.42);
+    align-self: start;
+    padding-top: 0.2cqh;
+  }
+  .s-overview .countdown .timer #bos-secs {
+    animation: bosTick 1s steps(2, jump-none) infinite;
+  }
+  @keyframes bosTick {
+    0%, 50% { text-shadow: 0 0 24px rgba(255,255,255,0.65); }
+    100%    { text-shadow: 0 0 22px rgba(255,255,255,0.18); }
+  }
+  .s-overview .countdown .meta {
+    text-align: right;
+    color: var(--paper);
+    font-family: var(--f-mono);
+    font-weight: 600;
+    font-size: 1.3cqh;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .s-overview .countdown .meta .label {
+    display: block;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 0.4cqh;
+  }
+  .s-overview .countdown .meta .date {
+    color: var(--paper);
+    font-weight: 700;
+    letter-spacing: 0.28em;
+  }
+  .s-overview .countdown .meta .date .red { color: rgba(255,255,255,0.55); }
+
+  /* Infographic snapshot body */
+  .s-overview .snap-body {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 1.8cqh;
+    align-content: start;
+  }
+  .s-overview .snap-tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4cqw;
+  }
+  .s-overview .snap-tile {
+    background: var(--paper);
+    border-top: 4px solid var(--utah-red);
+    padding: 1.3cqh 1.2cqw 1.2cqh;
+    display: grid;
+    gap: 0.4cqh;
+    align-content: start;
+  }
+  .s-overview .snap-tile .big {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 7cqh;
+    line-height: 0.82;
+    letter-spacing: 0.01em;
+    color: var(--utah-red);
+  }
+  .s-overview .snap-tile .cap {
+    font-family: var(--f-condensed);
+    font-weight: 600;
+    font-size: 1.85cqh;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .s-overview .snap-tile .sub {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.35cqh;
+    line-height: 1.3;
+    color: var(--ink);
+    opacity: 0.78;
+  }
+  .s-overview .snap-band {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3cqw;
+    align-content: start;
+  }
+  .s-overview .snap-col h3 {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.3cqh;
+    letter-spacing: 0.32em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    margin-bottom: 1cqh;
+    padding-bottom: 0.7cqh;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+  }
+  .s-overview .snap-col ul { list-style: none; display: grid; gap: 0.7cqh; }
+  .s-overview .snap-col ul li {
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 1.6cqh;
+    line-height: 1.35;
+    color: var(--ink);
+    padding-left: 1.4cqw;
+    position: relative;
+  }
+  .s-overview .snap-col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.6cqh;
+    width: 0.6cqw; height: 2px;
+    background: var(--utah-red);
+  }
+  .s-overview .snap-col ul li strong { font-weight: 700; }
+  .s-overview .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.8cqh;
+    border-top: 1px solid rgba(0,0,0,0.18);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 04 — ACADEMIC FOCUS ====================== */
+  .s-focus {
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3.4cqh 4.5cqw;
+  }
+  .s-focus .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.6cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-focus .topbar .crumb { color: var(--utah-red); }
+  .s-focus .topbar h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4cqh;
+    line-height: 1.0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-focus .topbar h2 .red { color: var(--utah-red); }
+
+  .s-focus .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2cqw;
+    padding: 2cqh 0 0;
+    position: relative;
+  }
+  .s-focus .pillar {
+    background: var(--bone);
+    padding: 0 2cqw 11cqh;
+    display: grid;
+    grid-template-rows: auto auto auto auto 1fr;
+    gap: 1.2cqh;
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid var(--utah-red);
+  }
+  .s-focus .pillar .photo-band {
+    margin: 0 -2cqw 1cqh;
+    height: 18cqh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .s-focus .pillar .photo-band::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 100%);
+  }
+  .s-focus .pillar .photo-band .photo-tag {
+    position: absolute; left: 1.4cqw; bottom: 0.8cqh;
+    z-index: 2;
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.0cqh;
+    letter-spacing: 0.3em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-focus .pillar > .label {
+    padding-top: 1.4cqh;
+  }
+  .s-focus .pillar .label {
+    color: var(--utah-red);
+  }
+  .s-focus .pillar h3 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 5.4cqh;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-focus .pillar .pitch {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 2.0cqh;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .s-focus .pillar .pitch .red { color: var(--utah-red); }
+  .s-focus .pillar ul {
+    list-style: none;
+    display: grid;
+    gap: 0.7cqh;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.18);
+    align-content: start;
+  }
+  .s-focus .pillar ul li {
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 1.7cqh;
+    line-height: 1.4;
+    padding-left: 1.4cqw;
+    position: relative;
+  }
+  .s-focus .pillar ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.6cqh;
+    width: 0.5cqw; height: 2px;
+    background: var(--utah-red);
+  }
+
+  /* Themes band — cuts horizontally across the lower third of all three
+     focus cards, showing the threads run through every focus area. */
+  .s-focus .themes-strip {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: auto repeat(3, 1fr);
+    align-items: center;
+    gap: 2.4cqw;
+    padding: 1.9cqh 2.4cqw;
+    background: #000;
+    border-top: 4px solid var(--utah-red);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.28);
+  }
+  .s-focus .themes-strip .strip-label {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.35cqh;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.4;
+    max-width: 15cqw;
+  }
+  .s-focus .themes-strip .strip-label .red { color: var(--utah-red-bright); display: block; }
+  .s-focus .themes-strip .tm {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.1cqw;
+    align-items: center;
+    border-left: 1px solid rgba(255,255,255,0.2);
+    padding-left: 1.8cqw;
+  }
+  .s-focus .themes-strip .tm .tn {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4.2cqh;
+    line-height: 0.82;
+    letter-spacing: 0.02em;
+    color: var(--utah-red-bright);
+  }
+  .s-focus .themes-strip .tm .tname {
+    font-family: var(--f-condensed);
+    font-weight: 600;
+    font-size: 1.9cqh;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.1;
+  }
+
+  /* ====================== SLIDE 05 — CORE THEMES (split) ====================== */
+  .s-themes {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    overflow: hidden;
+  }
+  .s-themes .red-pane {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 4cqh 3.5cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+  }
+  .s-themes .red-pane::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(255,255,255,0.1), transparent 55%);
+    pointer-events: none;
+  }
+  .s-themes .red-pane > * { position: relative; z-index: 1; }
+  .s-themes .red-pane .topbar { color: var(--paper); }
+  .s-themes .red-pane .hero { display: grid; align-content: center; gap: 1.8cqh; }
+  .s-themes .red-pane .hero .num { color: rgba(255,255,255,0.85); }
+  .s-themes .red-pane .hero h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 10cqw;
+    line-height: 0.98;
+    letter-spacing: 0.015em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-themes .red-pane .hero .desc {
+    color: var(--paper);
+    font-weight: 500;
+    margin-top: 1cqh;
+    max-width: 36cqw;
+  }
+  .s-themes .red-pane .footer { color: var(--paper); }
+  .s-themes .red-pane .footer .lockup .strong { font-weight: 700; }
+
+  .s-themes .white-pane {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 4cqh 4cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .s-themes .white-pane .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--ink);
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-themes .white-pane .topbar .crumb { color: var(--utah-red); }
+  .s-themes .white-pane .themes {
+    display: grid; align-content: center; gap: 2.4cqh;
+    padding: 1cqh 0;
+  }
+  .s-themes .theme {
+    display: grid;
+    grid-template-columns: 9cqw 1fr;
+    gap: 2cqw;
+    align-items: start;
+    padding: 1.6cqh 0;
+    border-top: 2px solid var(--ink);
+    position: relative;
+  }
+  .s-themes .theme::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -2px;
+    width: 7cqw; height: 2px;
+    background: var(--utah-red);
+  }
+  .s-themes .theme .num {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 6cqh;
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--utah-red);
+    padding-top: 0.4cqh;
+  }
+  .s-themes .theme .name {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4.4cqh;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.6cqh;
+  }
+  .s-themes .theme .def {
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 38cqw;
+  }
+  .s-themes .white-pane .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 06 — UTAH ECOSYSTEM ====================== */
+  .s-ecosystem {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 4cqh 4cqw;
+  }
+  .s-ecosystem .topbar {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-bottom: 1.6cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-ecosystem .topbar .left .crumb { color: var(--utah-red); margin-bottom: 0.6cqh; }
+  .s-ecosystem .topbar .left h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 6cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-ecosystem .topbar .left h2 .red { color: var(--utah-red); }
+  .s-ecosystem .topbar .right {
+    text-align: right;
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 32cqw;
+  }
+
+  .s-ecosystem .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 1.4cqw 1.6cqw;
+    padding: 3cqh 0;
+    align-content: start;
+  }
+  /* Hover-flip card system. Default = description (front). Hover = logos (back).
+     On slide arrival: cards start showing LOGOS, then stagger-reveal descriptions
+     one-by-one. After reveal, hover toggles back to logos. */
+  .s-ecosystem .seg {
+    perspective: 1200px;
+    cursor: pointer;
+    min-height: 26cqh;
+  }
+  .s-ecosystem .seg .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(.65, 0, .35, 1);
+  }
+  /* Stagger-reveal on slide arrival: each card starts flipped to logos
+     (back side), then rotates to description (front side) one-by-one.
+     `both` fill mode applies the starting "back" keyframe during the delay,
+     so cards are on the back the instant the slide appears — no
+     front-flash before the flip. */
+  .s-ecosystem.flipping .seg .card-inner {
+    animation: flipReveal 1.2s cubic-bezier(.65, 0, .35, 1) both;
+  }
+  .s-ecosystem.flipping .seg:nth-child(1) .card-inner { animation-delay: 0.5s; }
+  .s-ecosystem.flipping .seg:nth-child(2) .card-inner { animation-delay: 0.7s; }
+  .s-ecosystem.flipping .seg:nth-child(3) .card-inner { animation-delay: 0.9s; }
+  .s-ecosystem.flipping .seg:nth-child(4) .card-inner { animation-delay: 1.1s; }
+  .s-ecosystem.flipping .seg:nth-child(5) .card-inner { animation-delay: 1.3s; }
+  .s-ecosystem.flipping .seg:nth-child(6) .card-inner { animation-delay: 1.5s; }
+  .s-ecosystem.flipping .seg:nth-child(7) .card-inner { animation-delay: 1.7s; }
+  .s-ecosystem.flipping .seg:nth-child(8) .card-inner { animation-delay: 1.9s; }
+
+  @keyframes flipReveal {
+    0%   { transform: rotateY(180deg); }  /* start on back (logos) */
+    100% { transform: rotateY(0deg); }    /* end on front (description) */
+  }
+
+  /* Hover toggles back to logos (after the arrival reveal completes). */
+  .s-ecosystem .seg:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .s-ecosystem .seg .card-front,
+  .s-ecosystem .seg .card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: var(--paper);
+    border-top: 4px solid var(--utah-red);
+    padding: 1.6cqh 1.3cqw;
+    display: grid;
+    gap: 0.9cqh;
+  }
+  .s-ecosystem .seg .card-front { grid-template-rows: auto auto 1fr auto; }
+  .s-ecosystem .seg .card-front .h {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.15cqh;
+    letter-spacing: 0.32em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+  }
+  .s-ecosystem .seg .card-front .n {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4cqh;
+    line-height: 0.95;
+    letter-spacing: 0.018em;
+    color: var(--ink);
+  }
+  .s-ecosystem .seg .card-front .l {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 1.4cqh;
+    line-height: 1.4;
+  }
+  .s-ecosystem .seg .card-front .hint {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.0cqh;
+    letter-spacing: 0.32em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    align-self: end;
+    opacity: 0.55;
+    transition: opacity 0.3s;
+    display: flex; gap: 0.4cqw; align-items: center;
+  }
+  .s-ecosystem .seg:hover .card-front .hint { opacity: 1; }
+
+  .s-ecosystem .seg .card-back {
+    transform: rotateY(180deg);
+    background: var(--ink);
+    border-top: 4px solid var(--paper);
+    grid-template-rows: auto auto 1fr;
+    padding: 1.4cqh 1.1cqw;
+    gap: 0.7cqh;
+  }
+  .s-ecosystem .seg .card-back .h {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.1cqh;
+    letter-spacing: 0.3em;
+    color: var(--utah-red-bright);
+    text-transform: uppercase;
+  }
+  .s-ecosystem .seg .card-back .h-sub {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 2.4cqh;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-ecosystem .seg .card-back .logos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6cqh 0.5cqw;
+    align-content: center;
+    padding: 0.4cqh 0;
+  }
+  .s-ecosystem .seg .card-back .logos .logo {
+    display: grid;
+    grid-template-columns: 3.75cqh 1fr;
+    gap: 0.7cqw;
+    align-items: center;
+  }
+  .s-ecosystem .seg .card-back .logos .logo img {
+    width: 3.75cqh;
+    height: 3.75cqh;
+    object-fit: contain;
+    background: var(--paper);
+    border-radius: 50%;
+    padding: 0.45cqh;
+    display: block;
+  }
+  .s-ecosystem .seg .card-back .logos .logo .name {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 1.2cqh;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+  }
+
+  /* Lead box — College Athletics, first among equals (red-filled front) */
+  .s-ecosystem .seg.lead .card-front {
+    background: var(--utah-red);
+    border-top: 4px solid var(--paper);
+  }
+  .s-ecosystem .seg.lead .card-front .h { color: #fff; opacity: 0.92; }
+  .s-ecosystem .seg.lead .card-front .n { color: #fff; }
+  .s-ecosystem .seg.lead .card-front .l { color: rgba(255,255,255,0.92); }
+  .s-ecosystem .seg.lead .card-front .hint { color: #fff; opacity: 0.85; }
+  .s-ecosystem .seg.lead .card-back { border-top: 4px solid var(--utah-red); }
+  .s-ecosystem .seg.lead .card-back .h { color: var(--utah-red-bright); }
+
+  .s-ecosystem .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE — CONNECTING CAMPUS TO COMMUNITY ====================== */
+  .s-bridge {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto auto 1fr auto auto;
+    padding: 3.2cqh 4.5cqw;
+  }
+  .s-bridge .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.2cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-bridge .topbar .crumb { color: var(--utah-red); }
+  .s-bridge .head {
+    margin: 1.2cqh 0 0.6cqh;
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 3cqw;
+  }
+  .s-bridge .head h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 5cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-bridge .head h2 .red { color: var(--utah-red); }
+  .s-bridge .head .sub {
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 1.65cqh;
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 42cqw;
+    text-align: right;
+  }
+  .s-bridge .head .sub strong { font-weight: 700; }
+
+  /* Horizontal flow — campus ▶ academy ▶ community */
+  .s-bridge .flow {
+    display: grid;
+    grid-template-columns: 1fr 3cqw 1fr 3cqw 1fr;
+    align-items: stretch;
+    gap: 0;
+    padding: 2.2cqh 0;
+  }
+  .s-bridge .flow .node {
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    padding: 2.2cqh 1.6cqw;
+    display: grid; gap: 0.7cqh; align-content: center;
+    position: relative; overflow: hidden;
+  }
+  .s-bridge .flow .node.campus { border: none; }
+  .s-bridge .flow .node.campus .photo {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.82) 100%),
+      url('../_legacy/img/garff-business-bulding.jpg');
+    background-size: cover; background-position: center 52%;
+    z-index: 0;
+  }
+  .s-bridge .flow .node.campus > * { position: relative; z-index: 1; }
+  .s-bridge .flow .node.campus .nlabel,
+  .s-bridge .flow .node.campus .ntitle { color: #fff; }
+  .s-bridge .flow .node.campus .ndesc { color: rgba(255,255,255,0.92); }
+  .s-bridge .flow .node.academy {
+    background: var(--utah-red);
+    border-color: var(--utah-red);
+    box-shadow: 0 12px 40px rgba(190,0,0,0.36);
+  }
+  .s-bridge .flow .node .nlabel {
+    font-family: var(--f-mono); font-weight: 700;
+    font-size: 1.1cqh; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--utah-red);
+  }
+  .s-bridge .flow .node.academy .nlabel { color: rgba(255,255,255,0.88); }
+  .s-bridge .flow .node .ntitle {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: 3.6cqh; line-height: 1.0; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--ink);
+  }
+  .s-bridge .flow .node.academy .ntitle { color: #fff; }
+  .s-bridge .flow .node .ndesc {
+    font-family: var(--f-body); font-weight: 500;
+    font-size: 1.55cqh; line-height: 1.32; color: var(--ink);
+  }
+  .s-bridge .flow .node.academy .ndesc { color: rgba(255,255,255,0.95); }
+  .s-bridge .flow .arrow {
+    align-self: center; justify-self: center;
+    font-family: var(--f-body); font-weight: 700;
+    font-size: 3.4cqh; line-height: 1; color: var(--utah-red);
+    padding: 0 0.7cqw;
+  }
+
+  /* Curriculum ribbon — the 21 credits, experiential highlighted */
+  .s-bridge .ribbon {
+    display: grid;
+    grid-template-columns: 1fr 3cqw 1fr 3cqw 1fr;
+    gap: 0;
+    margin-bottom: 0.4cqh;
+  }
+  .s-bridge .ribbon .seg2:nth-child(1) { grid-column: 1; }
+  .s-bridge .ribbon .seg2:nth-child(2) { grid-column: 3; }
+  .s-bridge .ribbon .seg2:nth-child(3) { grid-column: 5; }
+  .s-bridge .ribbon .seg2 {
+    background: var(--paper);
+    border-top: 4px solid var(--utah-red);
+    padding: 1.1cqh 1.2cqw;
+    display: grid; gap: 0.4cqh; align-content: start;
+  }
+  .s-bridge .ribbon .seg2.exp { background: var(--utah-red); border-top-color: var(--paper); }
+  .s-bridge .ribbon .seg2 .sh {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1cqw;
+  }
+  .s-bridge .ribbon .seg2 .sname {
+    font-family: var(--f-mono); font-weight: 700;
+    font-size: 1.15cqh; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--utah-red);
+  }
+  .s-bridge .ribbon .seg2.exp .sname { color: #fff; }
+  .s-bridge .ribbon .seg2 .scr {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: 2.4cqh; line-height: 1; color: var(--ink); white-space: nowrap;
+  }
+  .s-bridge .ribbon .seg2.exp .scr { color: #fff; }
+  .s-bridge .ribbon .seg2 .courses {
+    font-family: var(--f-body); font-weight: 500;
+    font-size: 1.35cqh; line-height: 1.3; color: var(--ink);
+  }
+  .s-bridge .ribbon .seg2.exp .courses { color: #fff; }
+
+  .s-bridge .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.2cqh;
+    border-top: 1px solid rgba(0,0,0,0.18);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 07 — PLAYERS DIVIDER (cinematic) ====================== */
+  .s-players-div {
+    background: #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .s-players-div .photo {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.20) 35%, rgba(0,0,0,0.88) 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0) 60%),
+      url('../_legacy/img/footballfans-byu-141.jpg');
+    background-size: cover;
+    background-position: center 35%;
+    filter: contrast(1.08) saturate(1.05);
+    z-index: 0;
+  }
+  .s-players-div .photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 60%, rgba(190,0,0,0.12), transparent 55%);
+    mix-blend-mode: screen;
+  }
+  .s-players-div .topbar, .s-players-div .midbar, .s-players-div .bottombar { position: relative; z-index: 2; }
+  .s-players-div .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4cqh 5cqw 0;
+    color: var(--paper);
+  }
+  .s-players-div .topbar .meta { color: var(--paper); }
+  .s-players-div .midbar {
+    display: grid; align-content: center;
+    padding: 0 5cqw;
+    gap: 2.6cqh;
+  }
+  .s-players-div .midbar .num {
+    color: var(--utah-red-bright);
+    text-shadow: 0 0 18px rgba(230,0,18,0.4);
+  }
+  .s-players-div .midbar h2 {
+    color: var(--paper);
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 13.5cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+  }
+  .s-players-div .midbar h2 .red { color: var(--utah-red-bright); }
+  .s-players-div .midbar .expand {
+    color: var(--paper);
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 2.5cqh;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    max-width: 80cqw;
+  }
+  .s-players-div .midbar .expand .red { color: var(--utah-red-bright); font-weight: 700; }
+
+  .s-players-div .bottombar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    gap: 3cqw;
+    padding: 3cqh 5cqw 3cqh;
+  }
+  .s-players-div .bottombar .left, .s-players-div .bottombar .right {
+    color: var(--paper);
+    line-height: 1.7;
+  }
+  .s-players-div .bottombar .right { text-align: right; }
+  .s-players-div .bottombar .strong { font-weight: 700; }
+
+  /* ====================== SLIDE 08 — WHAT IS PLAYERS? (split) ====================== */
+  .s-what {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    overflow: hidden;
+  }
+  .s-what .red-pane {
+    background-color: var(--utah-red);
+    background-image:
+      linear-gradient(135deg, rgba(190,0,0,0.55) 0%, rgba(122,0,0,0.45) 100%),
+      url('../_legacy/img/spring-view-slc-8.jpg');
+    background-size: cover;
+    background-position: center 75%;
+    background-blend-mode: normal, multiply;
+    color: var(--paper);
+    padding: 4cqh 3.5cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+  }
+  .s-what .red-pane::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(255,255,255,0.1), transparent 55%),
+      radial-gradient(ellipse at 20% 100%, rgba(0,0,0,0.2), transparent 50%);
+    pointer-events: none;
+  }
+  .s-what .red-pane > * { position: relative; z-index: 1; }
+  .s-what .red-pane .topbar { color: var(--paper); }
+  .s-what .red-pane .hero { display: grid; align-content: center; gap: 1.8cqh; }
+  .s-what .red-pane .hero .label { color: rgba(255,255,255,0.85); }
+  .s-what .red-pane .hero h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 8cqw;
+    line-height: 1.02;
+    letter-spacing: 0.015em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-what .red-pane .hero .expand {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 1.7cqh;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--paper);
+    line-height: 1.35;
+    max-width: 36cqw;
+  }
+  .s-what .red-pane .hero .expand .accent { color: rgba(255,255,255,0.75); }
+  .s-what .red-pane .hero .body {
+    color: var(--paper);
+    font-weight: 500;
+    margin-top: 1cqh;
+    max-width: 38cqw;
+  }
+  .s-what .red-pane .footer { color: var(--paper); }
+  .s-what .red-pane .footer .strong { font-weight: 700; }
+
+  .s-what .white-pane {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 4cqh 4cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .s-what .white-pane .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--ink);
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-what .white-pane .topbar .crumb { color: var(--utah-red); }
+  .s-what .white-pane .cards {
+    display: grid; align-content: center; gap: 2cqh;
+    padding: 1cqh 0;
+  }
+  .s-what .white-pane .card {
+    padding: 1.6cqh 0;
+    border-top: 2px solid var(--ink);
+    position: relative;
+    display: grid;
+    grid-template-columns: 12cqw 1fr;
+    gap: 1.4cqw;
+  }
+  .s-what .white-pane .card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -2px;
+    width: 9cqw; height: 2px;
+    background: var(--utah-red);
+  }
+  .s-what .white-pane .card .label {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.15cqh;
+    letter-spacing: 0.28em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    padding-top: 0.4cqh;
+  }
+  .s-what .white-pane .card .body {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .s-what .white-pane .card .body strong { color: var(--ink); font-weight: 700; }
+  .s-what .white-pane .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 09 — DAAP MODEL (big stat callouts) ====================== */
+  .s-daap {
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    padding: 3.5cqh 4cqw;
+  }
+  .s-daap .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-daap .topbar .crumb { color: var(--utah-red); }
+  .s-daap .topbar h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4cqh;
+    line-height: 1.0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-daap .topbar h2 .red { color: var(--utah-red); }
+
+  .s-daap .lead {
+    display: grid;
+    grid-template-columns: 18cqw auto 1fr;
+    gap: 2cqw;
+    align-items: start;
+    padding: 2.4cqh 0 2cqh;
+  }
+  .s-daap .lead .portrait {
+    position: relative;
+    height: 22cqh;
+    overflow: hidden;
+    border-top: 4px solid var(--utah-red);
+    background: var(--ink);
+  }
+  .s-daap .lead .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .s-daap .lead .portrait::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+  }
+  .s-daap .lead .portrait .portrait-tag {
+    position: absolute;
+    left: 0.8cqw; right: 0.8cqw; bottom: 0.8cqh;
+    z-index: 2;
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.0cqh;
+    letter-spacing: 0.3em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-daap .lead .source {
+    border-left: 4px solid var(--utah-red);
+    padding-left: 1.4cqw;
+    display: grid; gap: 0.6cqh;
+  }
+  .s-daap .lead .source .label {
+    color: var(--utah-red);
+  }
+  .s-daap .lead .source .name {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 3.6cqh;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-daap .lead .desc {
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 70cqw;
+  }
+  .s-daap .lead .desc strong { color: var(--ink); font-weight: 700; }
+
+  .s-daap .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.6cqw;
+    padding-bottom: 2cqh;
+  }
+  .s-daap .stat {
+    background: var(--bone);
+    padding: 2.2cqh 1.6cqw;
+    border-top: 6px solid var(--utah-red);
+    display: grid;
+    gap: 1.2cqh;
+    align-content: start;
+  }
+  .s-daap .stat .n {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 12cqh;
+    line-height: 0.9;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    transform-origin: left center;
+    will-change: transform, opacity;
+  }
+  .s-daap .stat .n .small { font-size: 0.55em; color: var(--utah-red); vertical-align: top; }
+  .s-daap .stat .n.snap {
+    animation: daapSnap 0.7s ease-out;
+  }
+  @keyframes daapSnap {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .s-daap .stat .label {
+    color: var(--utah-red);
+  }
+  .s-daap .stat .name {
+    font-family: var(--f-condensed);
+    font-weight: 600;
+    font-size: 2.2cqh;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .s-daap .stat .def {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 1.75cqh;
+    line-height: 1.4;
+  }
+
+  .s-daap .borrow {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2cqw;
+    align-items: start;
+    padding-top: 1.8cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+  }
+  .s-daap .borrow .h {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 3cqh;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .s-daap .borrow .h .red { color: var(--utah-red); }
+  .s-daap .borrow ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8cqh 1.2cqw;
+  }
+  .s-daap .borrow ul li {
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 1.6cqh;
+    line-height: 1.3;
+    padding-left: 1cqw;
+    position: relative;
+  }
+  .s-daap .borrow ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.55cqh;
+    width: 0.5cqw; height: 2px;
+    background: var(--utah-red);
+  }
+
+  /* ====================== SLIDE 10 — 8 PILLARS ====================== */
+  .s-pillars {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3.5cqh 3.5cqw;
+  }
+  .s-pillars .topbar {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-pillars .topbar .left .crumb { color: var(--utah-red); margin-bottom: 0.4cqh; }
+  .s-pillars .topbar .left h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 5cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-pillars .topbar .left h2 .red { color: var(--utah-red); }
+  .s-pillars .topbar .right {
+    text-align: right;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 1.7cqh;
+    max-width: 28cqw;
+  }
+
+  .s-pillars .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 1.0cqw 1.0cqw;
+    padding: 1.6cqh 0;
+  }
+  .s-pillars .pillar {
+    background: var(--paper);
+    padding: 1.3cqh 1.2cqw;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 0.5cqh;
+    border-left: 5px solid var(--utah-red);
+  }
+  .s-pillars .pillar .n {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4.6cqh;
+    line-height: 0.9;
+    letter-spacing: 0.015em;
+    color: var(--utah-red);
+  }
+  .s-pillars .pillar h4 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 2.4cqh;
+    line-height: 1.0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-pillars .pillar p {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 1.95cqh;
+    line-height: 1.3;
+  }
+
+  .s-pillars .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.2cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 11 — READINESS COURSE (split) ====================== */
+  .s-readiness {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    overflow: hidden;
+  }
+  .s-readiness .red-pane {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 4cqh 3.5cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+  }
+  .s-readiness .red-pane::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 0%, rgba(255,255,255,0.1), transparent 55%);
+    pointer-events: none;
+  }
+  .s-readiness .red-pane > * { position: relative; z-index: 1; }
+  .s-readiness .red-pane .topbar { color: var(--paper); }
+  .s-readiness .red-pane .hero { display: grid; align-content: center; gap: 1.6cqh; }
+  .s-readiness .red-pane .hero .label { color: rgba(255,255,255,0.85); }
+  .s-readiness .red-pane .hero h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 9cqw;
+    line-height: 0.98;
+    letter-spacing: 0.015em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-readiness .red-pane .hero .body {
+    color: var(--paper);
+    font-weight: 500;
+    margin-top: 1cqh;
+    max-width: 36cqw;
+  }
+  .s-readiness .red-pane .outcome {
+    background: rgba(0,0,0,0.22);
+    border-left: 4px solid var(--paper);
+    padding: 1.6cqh 1.4cqw;
+    color: var(--paper);
+    margin-top: 1.5cqh;
+  }
+  .s-readiness .red-pane .outcome .h {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.15cqh;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--paper);
+    margin-bottom: 0.7cqh;
+  }
+  .s-readiness .red-pane .outcome .body {
+    color: var(--paper);
+    font-weight: 600;
+  }
+  .s-readiness .red-pane .footer { color: var(--paper); }
+  .s-readiness .red-pane .footer .strong { font-weight: 700; }
+
+  .s-readiness .white-pane {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 0;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+  .s-readiness .white-pane .photo-hero {
+    height: 42cqh;
+    background-image: url('../_legacy/img/garff-june4-14.jpg');
+    background-size: cover;
+    background-position: center 100%;
+    position: relative;
+    border-bottom: 4px solid var(--utah-red);
+  }
+  .s-readiness .white-pane .photo-hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+  }
+  .s-readiness .white-pane .photo-hero .photo-meta {
+    position: absolute;
+    left: 1.4cqw; right: 1.4cqw; bottom: 1.0cqh;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.1cqh;
+    letter-spacing: 0.3em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .s-readiness .white-pane .photo-hero .photo-meta .label {
+    color: var(--paper);
+  }
+  .s-readiness .white-pane .photo-hero .photo-meta .frame {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 2.4cqh;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--paper);
+  }
+  .s-readiness .white-pane .content {
+    padding: 3cqh 4cqw 3cqh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1.4cqh;
+  }
+  .s-readiness .white-pane .content .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--ink);
+    padding-bottom: 1.2cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-readiness .white-pane .content .topbar .crumb { color: var(--utah-red); }
+  .s-readiness .white-pane .content h3 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 3.8cqh;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-readiness .white-pane .content h3 .red { color: var(--utah-red); }
+
+  .s-readiness .modules {
+    display: grid;
+    gap: 0.6cqh;
+    align-content: start;
+  }
+  .s-readiness .module {
+    display: grid;
+    grid-template-columns: 4cqw 1fr;
+    gap: 1.2cqw;
+    align-items: center;
+    padding: 0.6cqh 0;
+    border-bottom: 1px solid rgba(0,0,0,0.14);
+  }
+  .s-readiness .module .n {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 2.8cqh;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    color: var(--utah-red);
+  }
+  .s-readiness .module .name {
+    color: var(--ink);
+    font-family: var(--f-condensed);
+    font-weight: 600;
+    font-size: 1.65cqh;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .s-readiness .white-pane .content .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.2cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 12 — MUTUAL ACCOUNTABILITY ====================== */
+  .s-accountability {
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    padding: 3.5cqh 4cqw;
+  }
+  .s-accountability .cols { align-self: center; }
+  .s-accountability .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-accountability .topbar .crumb { color: var(--utah-red); }
+  .s-accountability h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 6.4cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 1.4cqh 0 0.6cqh;
+  }
+  .s-accountability h2 .red { color: var(--utah-red); }
+  .s-accountability .subhead {
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 1.2cqh;
+  }
+
+  .s-accountability .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.4cqw;
+    align-content: start;
+  }
+  .s-accountability .col {
+    background: var(--bone);
+    padding: 1.6cqh 2cqw;
+    display: grid;
+    gap: 1.0cqh;
+    border-top: 6px solid var(--utah-red);
+  }
+  .s-accountability .col .who {
+    color: var(--utah-red);
+  }
+  .s-accountability .col h3 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 3.4cqh;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-accountability .col ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55cqh;
+    padding-top: 0.8cqh;
+    border-top: 1px solid rgba(0,0,0,0.18);
+  }
+  .s-accountability .col ul li {
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 1.95cqh;
+    line-height: 1.3;
+    padding-left: 1.4cqw;
+    position: relative;
+  }
+  .s-accountability .col ul li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.7cqh;
+    width: 0.5cqw; height: 2px;
+    background: var(--utah-red);
+  }
+
+  .s-accountability .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 13 — STUDENT PERSPECTIVES ====================== */
+  .s-perspectives {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 4cqh 4cqw;
+  }
+  .s-perspectives .topbar {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .s-perspectives .topbar .left .crumb { color: var(--utah-red); margin-bottom: 0.4cqh; }
+  .s-perspectives .topbar .left h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 6.5cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-perspectives .topbar .left h2 .red { color: var(--utah-red); }
+  .s-perspectives .topbar .right {
+    color: var(--ink);
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .s-perspectives .quotes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6cqw;
+    padding: 2.4cqh 0;
+    align-content: stretch;
+    align-self: stretch;
+  }
+  .s-perspectives .quote {
+    background: var(--paper);
+    padding: 2.6cqh 1.7cqw;
+    border-left: 6px solid var(--utah-red);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 1.6cqh;
+    position: relative;
+  }
+  .s-perspectives .quote .mark {
+    position: absolute;
+    top: 1.0cqh; right: 1.4cqw;
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 8cqh;
+    line-height: 1;
+    color: rgba(190,0,0,0.13);
+  }
+  .s-perspectives .quote .text {
+    color: var(--ink);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 2.0cqh;
+    line-height: 1.45;
+    position: relative;
+  }
+  .s-perspectives .quote .text.lg {
+    font-size: 1.75cqh;
+    line-height: 1.42;
+  }
+  .s-perspectives .quote .credit {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.0cqw;
+    align-items: center;
+    padding-top: 1.0cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+  }
+  .s-perspectives .quote .credit .portrait {
+    width: 7.2cqh;
+    height: 7.2cqh;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--utah-red);
+    background: var(--bone);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  .s-perspectives .quote .credit .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .s-perspectives .quote .credit .info {
+    display: grid;
+    gap: 0.3cqh;
+  }
+  .s-perspectives .quote .credit .name {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 2.5cqh;
+    line-height: 1.0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .s-perspectives .quote .credit .role {
+    color: var(--ink);
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 1.45cqh;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1.25;
+  }
+  .s-perspectives .quote .credit .role .red { color: var(--utah-red); }
+
+  .s-perspectives .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ====================== SLIDE 14 — DISCUSSION (cinematic) ====================== */
+  .s-discussion {
+    background: #000;
+    color: var(--paper);
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    padding: 2.6cqh 4cqw;
+    overflow: hidden;
+  }
+  .s-discussion::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(190,0,0,0.32), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(190,0,0,0.16), transparent 55%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .s-discussion > * { position: relative; z-index: 1; }
+  .s-discussion .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--paper);
+  }
+  .s-discussion .topbar .crumb {
+    color: var(--paper);
+  }
+  .s-discussion .topbar .crumb .pip {
+    display: inline-block; width: 0.8cqh; height: 0.8cqh;
+    background: var(--utah-red); border-radius: 50%;
+    box-shadow: 0 0 12px var(--utah-red);
+    vertical-align: middle; margin-right: 0.8cqw;
+  }
+  .s-discussion h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 6.5cqw;
+    line-height: 1.0;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+    color: var(--paper);
+    margin: 1.0cqh 0 1.2cqh;
+  }
+  .s-discussion h2 .red { color: var(--utah-red-bright); }
+  .s-discussion .lead {
+    color: var(--paper);
+    font-weight: 500;
+    font-size: 1.55cqh;
+    line-height: 1.4;
+    max-width: 76cqw;
+    margin-bottom: 0.6cqh;
+  }
+
+  .s-discussion .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 0.8cqh 1.0cqw;
+    align-content: stretch;
+  }
+  .s-discussion .q {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-top: 4px solid var(--utah-red);
+    padding: 1.0cqh 1.2cqw;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 1.0cqw;
+    row-gap: 0.5cqh;
+    align-items: start;
+  }
+  .s-discussion .q .n {
+    grid-column: 1; grid-row: 1;
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 3.6cqh;
+    line-height: 0.85;
+    letter-spacing: 0.018em;
+    color: var(--utah-red-bright);
+    align-self: center;
+  }
+  .s-discussion .q .topic {
+    grid-column: 2; grid-row: 1;
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 2.1cqh;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--paper);
+    align-self: center;
+  }
+  .s-discussion .q .body {
+    grid-column: 1 / -1; grid-row: 2;
+    color: var(--paper);
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 2.1cqh;
+    line-height: 1.35;
+  }
+
+  .s-discussion .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.4cqh;
+    color: var(--paper);
+    font-weight: 500;
+  }
+  .s-discussion .footer .strong { font-weight: 700; }
+
+  /* ====================== SLIDE 15 — CLOSE (cinematic bookend) ====================== */
+  .s-close {
+    background: #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .s-close .photo {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.9) 100%),
+      url('../_legacy/img/10152022_uu_fb_utah-utes-vs.-usc-hd-edits-29.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    filter: contrast(1.05) saturate(0.95);
+    z-index: 0;
+  }
+  .s-close .photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(190,0,0,0.22), transparent 60%);
+    mix-blend-mode: screen;
+  }
+  .s-close .topbar, .s-close .midbar, .s-close .bottombar {
+    position: relative; z-index: 2;
+  }
+  .s-close .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4cqh 5cqw 0;
+  }
+  .s-close .topbar .meta {
+    color: var(--paper);
+    display: flex; gap: 0.8cqw; align-items: center;
+  }
+  .s-close .topbar .meta .pip {
+    display: inline-block; width: 0.8cqh; height: 0.8cqh;
+    background: var(--utah-red-bright); border-radius: 50%;
+    box-shadow: 0 0 12px var(--utah-red-bright);
+    animation: pulseRed 2.4s infinite;
+  }
+
+  .s-close .midbar {
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: 2.4cqh;
+    padding: 0 5cqw;
+  }
+  .s-close .midbar .num {
+    color: var(--utah-red-bright);
+    text-shadow: 0 0 24px rgba(230,0,18,0.5);
+  }
+  .s-close .midbar h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 11cqw;
+    line-height: 1.0;
+    letter-spacing: 0.018em;
+    text-transform: uppercase;
+    color: var(--paper);
+  }
+  .s-close .midbar h2 .red {
+    color: var(--utah-red-bright);
+    font-style: italic;
+  }
+  .s-close .midbar .signoff {
+    color: rgba(255,255,255,0.92);
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-size: 1.4cqh;
+    line-height: 1.5;
+  }
+  .s-close .midbar .signoff .accent { color: var(--utah-red-bright); }
+
+  .s-close .bottombar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    gap: 3cqw;
+    padding: 0 5cqw 4cqh;
+  }
+  .s-close .bottombar .lockup {
+    color: var(--paper);
+    line-height: 1.7;
+  }
+  .s-close .bottombar .lockup .strong { font-weight: 700; }
+  .s-close .bottombar .center {
+    display: flex; align-items: center; gap: 1.6cqw;
+  }
+  .s-close .bottombar .center .eccles-mark img { height: 4.2cqh; }
+  .s-close .bottombar .right {
+    color: var(--paper);
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.85cqh;
+    text-align: right;
+    letter-spacing: 0.02em;
+  }
+  .s-close .bottombar .right .accent { color: var(--utah-red-bright); }
+
+  /* ---------- responsive guard ---------- */
+  @media (max-aspect-ratio: 16/9) {
+    .stage { width: 100vw; height: calc(100vw * 9 / 16); }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck-shell">
+  <div class="stage" id="stage">
+
+    <!-- =================================================================
+         SLIDE 01 — COVER
+         ================================================================= -->
+    <section class="slide s-cover" data-section="PLAYERS ACADEMY">
+      <div class="photo" data-anim="zoom"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>BUSINESS OF SPORTS &nbsp;·&nbsp; FALL 2027</span>
+        <div class="eccles-mark lg"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="David Eccles School of Business" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="eyebrow" data-anim="reveal">— A PARTNERSHIP PLATFORM FROM THE DAVID ECCLES SCHOOL OF BUSINESS</div>
+        <h1 data-anim="reveal-2">
+          <span>PLAYERS</span><br/>
+          <span class="red">ACADEMY.</span>
+        </h1>
+        <div class="expand" data-anim="rise-3">
+          <span class="red">P</span>ROFESSIONAL &nbsp;<span class="red">L</span>EARNING &nbsp;<span class="red">A</span>ND<br/>
+          <span class="red">Y</span>EAR-ROUND &nbsp;<span class="red">E</span>XPERIENTIAL &nbsp;<span class="red">R</span>EADINESS
+        </div>
+      </div>
+
+      <div class="bottombar">
+        <div class="tagline body-med" data-anim="rise-3">
+          A structured, experiential program connecting <span class="accent">DESB students with Utah's growing sports industry.</span>
+        </div>
+        <div class="rule" data-anim="fade-3"></div>
+        <div class="lockup label-mono-sm" data-anim="fade-3">
+          DAVID ECCLES SCHOOL OF BUSINESS<br/>
+          <span class="strong">UNIVERSITY OF UTAH</span><br/>
+          BUSINESS OF SPORTS &nbsp;·&nbsp; FALL 2027
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 02 — BUSINESS OF SPORTS SNAPSHOT (infographic)
+         ================================================================= -->
+    <section class="slide s-overview" data-section="BUSINESS OF SPORTS MINOR · AT A GLANCE">
+      <div class="topbar">
+        <span class="crumb label-mono">THE BUSINESS OF SPORTS MINOR &nbsp;·&nbsp; AT A GLANCE</span>
+        <div class="eccles-mark md"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">BUSINESS OF <span class="red">SPORTS.</span></h2>
+
+      <div class="countdown" data-anim="rise-2">
+        <div class="timer">
+          <div class="unit"><div class="v" id="bos-days">—</div><div class="l">DAYS</div></div>
+          <div class="sep">:</div>
+          <div class="unit"><div class="v" id="bos-hrs">—</div><div class="l">HRS</div></div>
+          <div class="sep">:</div>
+          <div class="unit"><div class="v" id="bos-mins">—</div><div class="l">MIN</div></div>
+          <div class="sep">:</div>
+          <div class="unit"><div class="v" id="bos-secs">—</div><div class="l">SEC</div></div>
+        </div>
+        <div class="meta">
+          <span class="label">— UNTIL FIRST CLASS</span>
+          <span class="date">MON <span class="red">·</span> 23 AUG 2027 <span class="red">·</span> 7:30 AM MT</span>
+        </div>
+      </div>
+
+      <div class="snap-body">
+        <div class="snap-tiles">
+          <div class="snap-tile" data-anim="rise-2"><div class="big">21</div><div class="cap">Credit Hours</div><div class="sub">9 core · 3 experiential · 9 elective</div></div>
+          <div class="snap-tile" data-anim="rise-2"><div class="big">31</div><div class="cap">Championship Teams</div><div class="sub">A university of athletic champions</div></div>
+        </div>
+        <div class="snap-band">
+          <div class="snap-col" data-anim="rise-3">
+            <h3>The Program</h3>
+            <ul>
+              <li>University of Utah · David Eccles School of Business</li>
+              <li>Department of Entrepreneurship &amp; Strategy</li>
+              <li>A minor — open to <strong>every U of U undergraduate</strong></li>
+              <li>Vision: <strong>Stadium to Summit</strong> · Mission: Sports Leadership</li>
+            </ul>
+          </div>
+          <div class="snap-col" data-anim="rise-4">
+            <h3>Focus &amp; Edge</h3>
+            <ul>
+              <li><strong>Academic Focus:</strong> Analytics · Brands · Experience</li>
+              <li>AI-fluent — without skipping the business fundamentals</li>
+              <li>Fan engagement, taught as a discipline</li>
+              <li>Sales strategy integrated into every course</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">FALL 2027 LAUNCH &nbsp;·&nbsp; DEPT. OF ENTREPRENEURSHIP &amp; STRATEGY</span>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 04 — FOCUS FRAMEWORK (3 pillars)
+         ================================================================= -->
+    <section class="slide s-focus" data-section="ACADEMIC FOCUS · ANALYTICS · BRANDS · EXPERIENCES">
+      <div class="topbar">
+        <span class="crumb label-mono">ANALYTICS &nbsp;·&nbsp; BRANDS &nbsp;·&nbsp; EXPERIENCES</span>
+        <h2>ACADEMIC <span class="red">FOCUS.</span></h2>
+      </div>
+
+      <div class="pillars">
+        <div class="pillar" data-anim="rise-2">
+          <div class="photo-band" style="background-image: url('../_legacy/img/lassonde-design-22.jpg'); background-position: center 40%;">
+            <div class="photo-tag">LASSONDE ENTREPRENEUR INSTITUTE</div>
+          </div>
+          <div class="label label-mono-sm">FOCUS 01</div>
+          <h3>ANALYTICS</h3>
+          <div class="pitch">Transforming numbers <span class="red">into strategy.</span></div>
+          <ul>
+            <li>Sponsorship ROI</li>
+            <li>Media rights valuation</li>
+            <li>Athlete analytics</li>
+            <li>Data-driven decisions</li>
+          </ul>
+        </div>
+
+        <div class="pillar" data-anim="rise-3">
+          <div class="photo-band" style="background-image: url('../_legacy/img/10152022_uu_fb_utah-utes-vs.-usc-hd-edits-58-1.jpg'); background-position: center 40%;">
+            <div class="photo-tag">UTAH FOOTBALL &nbsp;·&nbsp; RICE-ECCLES STADIUM</div>
+          </div>
+          <div class="label label-mono-sm">FOCUS 02</div>
+          <h3>BRANDS</h3>
+          <div class="pitch">Where sport <span class="red">meets culture.</span></div>
+          <ul>
+            <li>Brand &amp; product development</li>
+            <li>Storytelling &amp; activation</li>
+            <li>Athlete brand management</li>
+            <li>Culture intersection</li>
+          </ul>
+        </div>
+
+        <div class="pillar" data-anim="rise-4">
+          <div class="photo-band" style="background-image: url('../_legacy/img/gymnastics-vs-lsu-120.jpg'); background-position: center 25%;">
+            <div class="photo-tag">UTAH GYMNASTICS &nbsp;·&nbsp; JON M. HUNTSMAN CENTER</div>
+          </div>
+          <div class="label label-mono-sm">FOCUS 03</div>
+          <h3>EXPERIENCES</h3>
+          <div class="pitch">From concept <span class="red">to legacy.</span></div>
+          <ul>
+            <li>Venue design</li>
+            <li>Corporate partner integration</li>
+            <li>Universal access &amp; experience innovation</li>
+            <li>Community impact &amp; legacy</li>
+            <li>Event management &amp; operations</li>
+          </ul>
+        </div>
+
+        <div class="themes-strip" data-anim="rise-4">
+          <div class="strip-label">Woven Through<span class="red">Every Course</span></div>
+          <div class="tm"><span class="tn">01</span><span class="tname">Artificial Intelligence</span></div>
+          <div class="tm"><span class="tn">02</span><span class="tname">Fan Engagement</span></div>
+          <div class="tm"><span class="tn">03</span><span class="tname">Sales Strategy</span></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">DAVID ECCLES SCHOOL OF BUSINESS &nbsp;·&nbsp; BUSINESS OF SPORTS MINOR</span>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 05 — UTAH SPORTS ECOSYSTEM
+         ================================================================= -->
+    <section class="slide s-ecosystem" data-section="OUR UNIQUE ADVANTAGE · UTAH SPORTS INDUSTRY">
+      <div class="topbar">
+        <div class="left">
+          <div class="crumb label-mono">OUR UNIQUE ADVANTAGE</div>
+          <h2><span class="red">UTAH SPORTS</span><br/>INDUSTRY.</h2>
+        </div>
+        <div class="right body-med">Anchored by <strong>Utah Athletics &amp; Crimson Brand Partners</strong>, spanning major &amp; emerging leagues, recreation, brands, wellness, the Olympic movement &amp; NGBs, and events — Utah's full sports stack.</div>
+      </div>
+
+      <div class="grid">
+        <!-- LEAD — COLLEGE ATHLETICS (first among equals) -->
+        <div class="seg lead" data-anim="rise-2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">01</div>
+              <div class="n">COLLEGE<br/>ATHLETICS</div>
+              <div class="l">Utah Athletics &amp; Crimson Brand Partners — the anchor tenant of Utah's sports economy.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">THE ANCHOR</div>
+              <div class="h-sub">College Athletics</div>
+              <div class="logos">
+                <div class="logo"><img src="../_legacy/img/utah-utes-logo.svg" alt="Utah Athletics"/><span class="name">Utah Athletics</span></div>
+                <div class="logo"><img src="../_legacy/img/utah-utes-logo.svg" alt="Crimson Brand Partners"/><span class="name">Crimson Brand Partners</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAJOR LEAGUE -->
+        <div class="seg" data-anim="rise-2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">02</div>
+              <div class="n">MAJOR<br/>LEAGUE</div>
+              <div class="l">The franchises anchoring Salt Lake's professional sports identity.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Major League</div>
+              <div class="logos">
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=utahjazz.com&sz=128" alt="Utah Jazz" referrerpolicy="no-referrer"/><span class="name">Utah Jazz</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=utahmammoth.com&sz=128" alt="Utah Mammoth" referrerpolicy="no-referrer"/><span class="name">Utah Mammoth</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=rsl.com&sz=128" alt="Real Salt Lake" referrerpolicy="no-referrer"/><span class="name">Real Salt Lake</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=utahroyalsfc.com&sz=128" alt="Utah Royals" referrerpolicy="no-referrer"/><span class="name">Utah Royals</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMERGING LEAGUE -->
+        <div class="seg" data-anim="rise-2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">03</div>
+              <div class="n">EMERGING<br/>LEAGUE</div>
+              <div class="l">The new leagues writing the next chapter of Utah sport.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Emerging League</div>
+              <div class="logos">
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=slcstars.com&sz=128" alt="SLC Stars" referrerpolicy="no-referrer"/><span class="name">SLC Stars</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=slbees.com&sz=128" alt="Salt Lake Bees" referrerpolicy="no-referrer"/><span class="name">Salt Lake Bees</span></div>
+                <div class="logo"><img src="../_legacy/img/utah-talons-logo.svg" alt="Utah Talons"/><span class="name">Utah Talons</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=realmonarchs.com&sz=128" alt="Real Monarchs" referrerpolicy="no-referrer"/><span class="name">Real Monarchs</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECREATION & RESORTS -->
+        <div class="seg" data-anim="rise-2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">04</div>
+              <div class="n">RECREATION<br/>&amp; RESORTS</div>
+              <div class="l">The outdoor economy — Utah's $7B+ recreation engine.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Resorts</div>
+              <div class="logos">
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=parkcitymountain.com&sz=128" alt="Park City Mountain" referrerpolicy="no-referrer"/><span class="name">Park City</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=deervalley.com&sz=128" alt="Deer Valley" referrerpolicy="no-referrer"/><span class="name">Deer Valley</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=snowbird.com&sz=128" alt="Snowbird" referrerpolicy="no-referrer"/><span class="name">Snowbird</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=brightonresort.com&sz=128" alt="Brighton" referrerpolicy="no-referrer"/><span class="name">Brighton</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=solitudemountain.com&sz=128" alt="Solitude" referrerpolicy="no-referrer"/><span class="name">Solitude</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=snowbasin.com&sz=128" alt="Snowbasin" referrerpolicy="no-referrer"/><span class="name">Snowbasin</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONSUMER BRANDS -->
+        <div class="seg" data-anim="rise-3">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">05</div>
+              <div class="n">CONSUMER<br/>BRANDS</div>
+              <div class="l">Utah-made gear — the brand bench of the outdoor industry.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Brands</div>
+              <div class="logos">
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=backcountry.com&sz=128" alt="Backcountry" referrerpolicy="no-referrer"/><span class="name">Backcountry</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=blackdiamondequipment.com&sz=128" alt="Black Diamond" referrerpolicy="no-referrer"/><span class="name">Black Diamond</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=cotopaxi.com&sz=128" alt="Cotopaxi" referrerpolicy="no-referrer"/><span class="name">Cotopaxi</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=kuhl.com&sz=128" alt="Kuhl" referrerpolicy="no-referrer"/><span class="name">Kühl</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=pocsports.com&sz=128" alt="POC" referrerpolicy="no-referrer"/><span class="name">POC</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=skullcandy.com&sz=128" alt="Skullcandy" referrerpolicy="no-referrer"/><span class="name">Skullcandy</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=salomon.com&sz=128" alt="Salomon" referrerpolicy="no-referrer"/><span class="name">Salomon</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=armadaskis.com&sz=128" alt="Armada" referrerpolicy="no-referrer"/><span class="name">Armada</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HEALTH & WELLNESS -->
+        <div class="seg" data-anim="rise-3">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">06</div>
+              <div class="n">HEALTH<br/>&amp; WELLNESS</div>
+              <div class="l">The performance &amp; recovery sector — nutrition, equipment, training.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Wellness</div>
+              <div class="logos">
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=gognarly.com&sz=128" alt="Gnarly" referrerpolicy="no-referrer"/><span class="name">Gnarly</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=lifevantage.com&sz=128" alt="LifeVantage" referrerpolicy="no-referrer"/><span class="name">LifeVantage</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=livemomentous.com&sz=128" alt="Momentous" referrerpolicy="no-referrer"/><span class="name">Momentous</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=mtnops.com&sz=128" alt="MTN OPS" referrerpolicy="no-referrer"/><span class="name">MTN OPS</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=nordictrack.com&sz=128" alt="NordicTrack" referrerpolicy="no-referrer"/><span class="name">NordicTrack</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=zyiaactive.com&sz=128" alt="Zyia Active" referrerpolicy="no-referrer"/><span class="name">Zyia Active</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OLYMPIC, PARALYMPIC & NGB (merged) -->
+        <div class="seg" data-anim="rise-3">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">07</div>
+              <div class="n">OLYMPIC<br/>&amp; NGBs</div>
+              <div class="l">The Olympic &amp; Paralympic movement and the national governing bodies headquartered in Utah — host of the 2034 Games.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Olympic, Paralympic &amp; NGB</div>
+              <div class="logos">
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=olympics.com&sz=128" alt="IOC" referrerpolicy="no-referrer"/><span class="name">IOC / Olympics</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=usopc.org&sz=128" alt="USOPC" referrerpolicy="no-referrer"/><span class="name">USOPC</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=paralympic.org&sz=128" alt="Paralympic" referrerpolicy="no-referrer"/><span class="name">Paralympic</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=teamusa.com&sz=128" alt="Team USA" referrerpolicy="no-referrer"/><span class="name">Team USA</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=usskiandsnowboard.org&sz=128" alt="US Ski &amp; Snowboard" referrerpolicy="no-referrer"/><span class="name">US Ski &amp; Snowboard</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=usspeedskating.org&sz=128" alt="US Speedskating" referrerpolicy="no-referrer"/><span class="name">US Speedskating</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=usbiathlon.org&sz=128" alt="US Biathlon" referrerpolicy="no-referrer"/><span class="name">US Biathlon</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=usaclimbing.org&sz=128" alt="USA Climbing" referrerpolicy="no-referrer"/><span class="name">USA Climbing</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EVENTS & ORGS -->
+        <div class="seg" data-anim="rise-4">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">08</div>
+              <div class="n">EVENTS<br/>&amp; ORGS</div>
+              <div class="l">The events &amp; organizations that move the calendar.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Events</div>
+              <div class="logos">
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=runragnar.com&sz=128" alt="Ragnar" referrerpolicy="no-referrer"/><span class="name">Ragnar</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=utaholympiclegacy.org&sz=128" alt="Utah Olympic Legacy" referrerpolicy="no-referrer"/><span class="name">UO Legacy</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=utahsportscommission.com&sz=128" alt="Utah Sports Commission" referrerpolicy="no-referrer"/><span class="name">UT Sports Comm.</span></div>
+                <div class="logo"><img src="https://www.google.com/s2/favicons?domain=visitsaltlake.com&sz=128" alt="Visit Salt Lake" referrerpolicy="no-referrer"/><span class="name">Visit SLC</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">UTAH SPORTS INDUSTRY &nbsp;·&nbsp; THE EMPLOYER MAP THE PLAYERS ACADEMY DRAWS FROM</span>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE — CONNECTING CAMPUS TO COMMUNITY (the bridge)
+         ================================================================= -->
+    <section class="slide s-bridge" data-section="CONNECTING CAMPUS TO COMMUNITY">
+      <div class="topbar">
+        <span class="crumb label-mono">HOW THE PIECES CONNECT</span>
+        <div class="eccles-mark md"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="head">
+        <h2 data-anim="reveal">CONNECTING CAMPUS <span class="red">TO COMMUNITY.</span></h2>
+        <div class="sub">The minor builds the foundation. The PLAYERS Academy turns the required <strong>3-credit experiential class</strong> into real placements with Utah's sports industry.</div>
+      </div>
+
+      <div class="flow">
+        <div class="node campus" data-anim="rise-2">
+          <div class="photo"></div>
+          <div class="nlabel">Campus</div>
+          <div class="ntitle">BOS Students</div>
+          <div class="ndesc">Undergraduates earning the 21-credit Business of Sports minor.</div>
+        </div>
+        <div class="arrow" data-anim="fade-3">▶</div>
+        <div class="node academy" data-anim="rise-3">
+          <div class="nlabel">The Facilitator</div>
+          <div class="ntitle">PLAYERS Academy</div>
+          <div class="ndesc">Delivers the experiential placement — readiness, matchmaking &amp; accountability.</div>
+        </div>
+        <div class="arrow" data-anim="fade-3">▶</div>
+        <div class="node community" data-anim="rise-4">
+          <div class="nlabel">Community</div>
+          <div class="ntitle">Sports Industry</div>
+          <div class="ndesc">Utah's teams, brands, resorts &amp; Olympic organizations.</div>
+        </div>
+      </div>
+
+      <div class="ribbon">
+        <div class="seg2" data-anim="rise-3">
+          <div class="sh"><span class="sname">Core</span><span class="scr">9 CR</span></div>
+          <div class="courses">Intro to Sports Business · Intro to Marketing · Principles of Management</div>
+        </div>
+        <div class="seg2 exp" data-anim="rise-3">
+          <div class="sh"><span class="sname">Experiential</span><span class="scr">3 CR</span></div>
+          <div class="courses">Sports Business Internship / Capstone — delivered by the PLAYERS Academy.</div>
+        </div>
+        <div class="seg2" data-anim="rise-4">
+          <div class="sh"><span class="sname">Electives</span><span class="scr">9 CR</span></div>
+          <div class="courses">Sports Marketing · Analytics · Media · Law &amp; Sports · Event Mgmt · Sports Mgmt · Winter Olympics</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">BUSINESS OF SPORTS &nbsp;·&nbsp; <strong>21 CREDITS · ONE PIPELINE TO INDUSTRY</strong></span>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 07 — PLAYERS DIVIDER (cinematic dark)
+         ================================================================= -->
+    <section class="slide s-players-div" data-section="THE PLAYERS ACADEMY">
+      <div class="photo" data-anim="zoom"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>BUSINESS OF SPORTS &nbsp;·&nbsp; FALL 2027</span>
+        <div class="eccles-mark md"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="num label-mono" data-anim="reveal">— THE EXPERIENTIAL ENGINE</div>
+        <h2 data-anim="reveal-2">THE <span class="red">PLAYERS</span><br/>ACADEMY.</h2>
+        <div class="expand" data-anim="rise-3">
+          <span class="red">P</span>ROFESSIONAL &nbsp;<span class="red">L</span>EARNING &nbsp;<span class="red">A</span>ND<br/>
+          <span class="red">Y</span>EAR-ROUND &nbsp;<span class="red">E</span>XPERIENTIAL &nbsp;<span class="red">R</span>EADINESS
+        </div>
+      </div>
+
+      <div class="bottombar">
+        <div class="left label-mono-sm" data-anim="fade-3"><span class="strong">FROM CLASSROOM TO CAREER</span></div>
+        <div></div>
+        <div class="right label-mono-sm" data-anim="fade-3">DAVID ECCLES SCHOOL OF BUSINESS<br/><span class="strong">BUSINESS OF SPORTS &nbsp;·&nbsp; PARTNERSHIP PLATFORM</span></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 08 — WHAT IS PLAYERS? (split)
+         ================================================================= -->
+    <section class="slide s-what" data-section="WHAT IS THE PLAYERS ACADEMY?">
+      <div class="red-pane">
+        <div class="topbar label-mono">DEFINITION</div>
+
+        <div class="hero">
+          <div class="label label-mono">— WHAT IS THE PLAYERS ACADEMY?</div>
+          <h2 data-anim="reveal-2">PARTNERSHIP<br/>PLATFORM.</h2>
+          <div class="expand" data-anim="rise-3">
+            <span class="accent">PROFESSIONAL LEARNING AND<br/>YEAR-ROUND EXPERIENTIAL READINESS</span>
+          </div>
+          <p class="body body-lead" data-anim="rise-4">The Business of Sports' dedicated experiential engine. A structured, accountable, credit-bearing program that places students inside Utah's sports industry with vetted employer partners.</p>
+        </div>
+
+        <div class="footer">
+          <div class="lockup label-mono-sm"><span class="strong">PLAYERS ACADEMY</span> &nbsp;·&nbsp; A PARTNERSHIP PLATFORM</div>
+        </div>
+      </div>
+
+      <div class="white-pane">
+        <div class="topbar">
+          <span class="crumb label-mono">WHO BENEFITS &nbsp;·&nbsp; AND HOW</span>
+          <div class="eccles-mark sm"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB" /></div>
+        </div>
+
+        <div class="cards">
+          <div class="card" data-anim="rise-2">
+            <div class="label">FOR STUDENTS</div>
+            <div class="body body-med"><strong>Curated placements, academic credit, and a clear path</strong> from classroom to career in the sports industry.</div>
+          </div>
+
+          <div class="card" data-anim="rise-3">
+            <div class="label">FOR EMPLOYERS</div>
+            <div class="body body-med"><strong>Access to trained, motivated DESB talent</strong> with structured onboarding expectations and defined responsibilities.</div>
+          </div>
+
+          <div class="card" data-anim="rise-4">
+            <div class="label">FOR THE PROGRAM</div>
+            <div class="body body-med"><strong>Real-world outcomes</strong> that strengthen the minor's credibility, donor appeal, and industry reputation.</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <span class="label-mono-sm">PLAYERS ACADEMY &nbsp;·&nbsp; THREE AUDIENCES &nbsp;·&nbsp; ONE PROGRAM</span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 09 — DAAP MODEL (big number callouts with definitions)
+         ================================================================= -->
+    <section class="slide s-daap" data-section="THE DAAP MODEL · A PROVEN BLUEPRINT">
+      <div class="topbar">
+        <span class="crumb label-mono">INSPIRATION &nbsp;·&nbsp; A PROVEN BLUEPRINT</span>
+        <h2>THE DAAP MODEL. <span class="red">WHAT WE BORROW.</span></h2>
+      </div>
+
+      <div class="lead">
+        <div class="portrait">
+          <img src="https://www.daap.uc.edu/content/daap/academic-programs/jcr:content/main/responsive_section/par/multi_image_copy_cop_841475069/image1.img.jpeg/1685633388289/eva-maddox-linder.jpeg" alt="University of Cincinnati DAAP" referrerpolicy="no-referrer" />
+          <div class="portrait-tag">UC DAAP &nbsp;·&nbsp; THE CO-OP IN THE FIELD</div>
+        </div>
+        <div class="source">
+          <div class="label label-mono">SOURCE</div>
+          <div class="name">UNIVERSITY OF CINCINNATI<br/><span style="color:var(--utah-red)">DAAP CO-OP, EST. 1906.</span></div>
+        </div>
+        <div class="desc body-med">Cincinnati's Design Art, Architecture and Planning co-op program is <strong>nationally ranked</strong> and renowned for turning classroom learning into career readiness. The PLAYERS Academy borrows its best DNA.</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat" data-anim="count">
+          <div class="n">2,000<span class="small">+</span></div>
+          <div class="label label-mono-sm">METRIC 01</div>
+          <div class="name">Employer Partners</div>
+          <div class="def">The size of DAAP's active partner network — the bench Utah's industry advisors are quietly already building.</div>
+        </div>
+
+        <div class="stat" data-anim="count-2">
+          <div class="n">37</div>
+          <div class="label label-mono-sm">METRIC 02</div>
+          <div class="name">U.S. States</div>
+          <div class="def">The geographic reach of DAAP placements — proof that a co-op program built in one city can scale national.</div>
+        </div>
+
+        <div class="stat" data-anim="count-3">
+          <div class="n">22</div>
+          <div class="label label-mono-sm">METRIC 03</div>
+          <div class="name">Countries</div>
+          <div class="def">Global placement footprint — a useful benchmark as Utah hosts the 2034 Winter Games and the world arrives.</div>
+        </div>
+
+        <div class="stat" data-anim="count-4">
+          <div class="n">#1</div>
+          <div class="label label-mono-sm">METRIC 04</div>
+          <div class="name">Nationally Ranked</div>
+          <div class="def">The model isn't theoretical. It's the #1 co-op program in the U.S. — proven for over a century.</div>
+        </div>
+      </div>
+
+      <div class="borrow">
+        <div class="h">WHAT<br/>WE <span class="red">BORROW.</span></div>
+        <ul>
+          <li>Proven university infrastructure</li>
+          <li>Pre-placement readiness</li>
+          <li>Mutual accountability contracts</li>
+          <li>Credit integrated into curriculum</li>
+          <li>End-of-term showcase deliverable</li>
+          <li>Vetted employer network</li>
+          <li>Focus-based placements (not random)</li>
+          <li>Two-sided commitment, in writing</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 10 — 8 PLAYER PILLARS
+         ================================================================= -->
+    <section class="slide s-pillars" data-section="8 PLAYER PILLARS · HOW IT'S BUILT">
+      <div class="topbar">
+        <div class="left">
+          <div class="crumb label-mono">PLAYERS ACADEMY · ARCHITECTURE</div>
+          <h2><span class="red">EIGHT</span> PILLARS.<br/>HOW IT'S BUILT.</h2>
+        </div>
+        <div class="right">The eight structural commitments that hold the PLAYERS Academy together. Each one is non-negotiable.</div>
+      </div>
+
+      <div class="grid">
+        <div class="pillar" data-anim="rise-2">
+          <div class="n">01</div>
+          <h4>Readiness<br/>Coursework</h4>
+          <p>Pre-placement coursework: industry landscape, networking, salary negotiation, front office culture.</p>
+        </div>
+        <div class="pillar" data-anim="rise-2">
+          <div class="n">02</div>
+          <h4>Credit Bearing.<br/>By Design.</h4>
+          <p>Every internship placement earns credit toward your degree. Non-negotiable. A signal that this work counts.</p>
+        </div>
+        <div class="pillar" data-anim="rise-2">
+          <div class="n">03</div>
+          <h4>Mutual<br/>Accountability</h4>
+          <p>Two-sided contract: employers commit to structure; students commit to attendance &amp; deliverables.</p>
+        </div>
+        <div class="pillar" data-anim="rise-2">
+          <div class="n">04</div>
+          <h4>Dedicated<br/>Academy</h4>
+          <p>In collaboration with University Career Success, a platform that ensures proper matchmaking, placement quality, and continuous data collection.</p>
+        </div>
+
+        <div class="pillar" data-anim="rise-3">
+          <div class="n">05</div>
+          <h4>The Roster<br/>Network</h4>
+          <p>Curated sports industry partners across Utah &amp; USA — teams, resorts, brands, NGBs.</p>
+        </div>
+        <div class="pillar" data-anim="rise-3">
+          <div class="n">06</div>
+          <h4>Flexible<br/>Options</h4>
+          <p>Internships (full-semester), Projects (group or individual), Events (volunteer opportunities).</p>
+        </div>
+        <div class="pillar" data-anim="rise-3">
+          <div class="n">07</div>
+          <h4>Capstone<br/>Showcase</h4>
+          <p>Students present a case study, campaign, or analysis at a public end-of-term event.</p>
+        </div>
+        <div class="pillar" data-anim="rise-3">
+          <div class="n">08</div>
+          <h4>Three<br/>Pathways</h4>
+          <p>Track-based placements aligned to the minor's focus: Analytics, Brands &amp; Experiences.</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">PLAYERS ACADEMY &nbsp;·&nbsp; <strong>EIGHT NON-NEGOTIABLES</strong></span>
+        
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 11 — READINESS COURSE (split)
+         ================================================================= -->
+    <section class="slide s-readiness" data-section="READINESS · BEFORE YOU PLAY">
+      <div class="red-pane">
+        <div class="topbar label-mono">PILLAR 01</div>
+
+        <div class="hero">
+          <div class="label label-mono">— BEFORE YOU PLAY</div>
+          <h2 data-anim="reveal-2">THE READINESS<br/>COURSE.</h2>
+          <div class="body body-lead" data-anim="rise-3">Before any placement, every PLAYERS Academy student completes <strong>Sports Business Readiness Coursework</strong> — the foundation for professional success in the sports industry. Delivered via training videos and tracked in the Academy platform.</div>
+
+          <div class="outcome" data-anim="rise-4">
+            <div class="h">THE OUTCOME</div>
+            <div class="body body-med"><strong>Students arrive prepared</strong> — not learning the basics on the employer's time. Employers notice the difference. That's the quality signal that brings them back.</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="lockup label-mono-sm"><span class="strong">FROM CORE CLASSES TO PLACEMENT</span> &nbsp;·&nbsp; THE GATE WE WON'T MOVE</div>
+        </div>
+      </div>
+
+      <div class="white-pane">
+        <div class="photo-hero" data-anim="fade-2">
+          <div class="photo-meta">
+            <span class="label">DAVID ECCLES SCHOOL OF BUSINESS &nbsp;·&nbsp; GARFF BUILDING</span>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="topbar">
+            <span class="crumb label-mono">COURSE MODULES &nbsp;·&nbsp; FIVE GATES</span>
+            <div class="eccles-mark sm"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB" /></div>
+          </div>
+
+          <h3><span class="red">FIVE</span> MODULES.<br/>EVERY PLAYER COMPLETES THEM.</h3>
+
+          <div class="modules">
+            <div class="module" data-anim="rise-2">
+              <div class="n">01</div>
+              <div class="name">Sports industry landscape &amp; career mapping</div>
+            </div>
+            <div class="module" data-anim="rise-3">
+              <div class="n">02</div>
+              <div class="name">Resume, cover letter &amp; mock interviews</div>
+            </div>
+            <div class="module" data-anim="rise-3">
+              <div class="n">03</div>
+              <div class="name">Front office &amp; agency culture</div>
+            </div>
+            <div class="module" data-anim="rise-4">
+              <div class="n">04</div>
+              <div class="name">Networking &amp; professional ethics</div>
+            </div>
+            <div class="module" data-anim="rise-4">
+              <div class="n">05</div>
+              <div class="name">Expectations &amp; accountability</div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <span class="label-mono-sm">READINESS COURSEWORK &nbsp;·&nbsp; THE PRE-PLACEMENT REQUIREMENT</span>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 12 — MUTUAL ACCOUNTABILITY
+         ================================================================= -->
+    <section class="slide s-accountability" data-section="MUTUAL ACCOUNTABILITY · TWO-SIDED CONTRACT">
+      <div class="topbar">
+        <span class="crumb label-mono">PILLAR 03 &nbsp;·&nbsp; MUTUAL ACCOUNTABILITY</span>
+        <div class="eccles-mark md"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB" /></div>
+      </div>
+
+      <h2>THE TWO-SIDED<br/><span class="red">CONTRACT.</span></h2>
+      <div class="subhead body-med"><strong>Every party has a vested interest.</strong> Two columns, equal weight. This is what the PLAYERS Academy puts in writing — what students sign, and what employers sign.</div>
+
+      <div class="cols">
+        <div class="col" data-anim="rise-2">
+          <div class="who label-mono">STUDENT COMMITS TO</div>
+          <h3>The PLAYER.</h3>
+          <ul>
+            <li>Complete core classes before placement</li>
+            <li>Show up — attendance is non-negotiable</li>
+            <li>Submit weekly check-ins to the Academy</li>
+            <li>Complete assigned deliverables on schedule</li>
+            <li>Attend the mid-semester review meeting</li>
+            <li>Present capstone at end-of-term Showcase</li>
+            <li>Maintain professional conduct at all times</li>
+          </ul>
+        </div>
+
+        <div class="col" data-anim="rise-3">
+          <div class="who label-mono">EMPLOYER COMMITS TO</div>
+          <h3>The PARTNER.</h3>
+          <ul>
+            <li>Pay interns a defined hourly wage</li>
+            <li>Provide a named supervisor of record</li>
+            <li>Define role responsibilities in writing</li>
+            <li>Hold a structured onboarding session</li>
+            <li>Complete the mid-semester evaluation form</li>
+            <li>Attend the end-of-term Showcase event</li>
+            <li>Submit a post-placement feedback survey</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">MUTUAL ACCOUNTABILITY &nbsp;·&nbsp; <strong>SIGNED. BOTH SIDES.</strong></span>
+        
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 13 — STUDENT PERSPECTIVES
+         ================================================================= -->
+    <section class="slide s-perspectives" data-section="STUDENT PERSPECTIVES">
+      <div class="topbar">
+        <div class="left">
+          <div class="crumb label-mono">STUDENT PERSPECTIVES</div>
+          <h2><span class="red">WHY</span> WE'RE<br/>BUILDING IT.</h2>
+        </div>
+      </div>
+
+      <div class="quotes">
+        <div class="quote" data-anim="rise-2">
+          <div class="mark">"</div>
+          <div class="text">The hardest part about breaking into the sports industry is landing that first opportunity. I wish I'd had access to a program like this — it's going to be incredibly popular.</div>
+          <div class="credit">
+            <div class="portrait"><img src="../_legacy/img/sullivan-evans.jpeg" alt="Sullivan Evans"/></div>
+            <div class="info">
+              <div class="name">Sullivan Evans</div>
+              <div class="role">Aspiring Sports &amp; Entertainment Professional &nbsp;<span class="red">·</span>&nbsp; Class of 2026 &nbsp;<span class="red">·</span>&nbsp; DESB Alumni</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote" data-anim="rise-3">
+          <div class="mark">"</div>
+          <div class="text lg">I have lots of experience struggling to find internships and professional opportunities as a college student, so I am in full support of a program-specific office dedicated to student networking.<br/><br/>I'm excited for future students to have a great network like the PLAYERS Academy — and it has been an amazing opportunity to help shape this program from the student perspective.</div>
+          <div class="credit">
+            <div class="portrait"><img src="../_legacy/img/audrey-artz.jpeg" alt="Audrey Artz"/></div>
+            <div class="info">
+              <div class="name">Audrey Artz</div>
+              <div class="role">QAMO Major &nbsp;<span class="red">·</span>&nbsp; Class of 2028 &nbsp;<span class="red">·</span>&nbsp; Founding Student Voice</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote" data-anim="rise-4">
+          <div class="mark">"</div>
+          <div class="text lg">After hearing about the PLAYERS Academy, I thought it helped to bridge a gap that students are constantly looking to fill. Getting your foot in the door within the sports industry can be difficult, so I think this program will give students entering the program the experience they need to enter the industry.<br/><br/>I especially loved how internships are required for students to participate in, and that the school will help them find one within sports. I think this will help students stand out amongst applicants from other schools due to the early experience they'll have.</div>
+          <div class="credit">
+            <div class="portrait"><img src="../_legacy/img/winter.jpeg" alt="Winter Chamberlain"/></div>
+            <div class="info">
+              <div class="name">Winter Chamberlain</div>
+              <div class="role">Marketing Major &nbsp;<span class="red">·</span>&nbsp; Business Analytics Minor &nbsp;<span class="red">·</span>&nbsp; Class of 2027</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">STUDENT VOICES &nbsp;·&nbsp; <strong>SHAPING THE PROGRAM FROM THE INSIDE</strong></span>
+        
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 14 — DISCUSSION (cinematic close)
+         ================================================================= -->
+    <section class="slide s-discussion" data-section="DISCUSSION / WHAT WE WANT TO SOLVE">
+      <div class="topbar">
+        <span class="crumb label-mono"><span class="pip"></span>DISCUSSION &nbsp;·&nbsp; FOUR THINGS WE WANT TO SOLVE</span>
+        <div class="eccles-mark md"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="DESB" /></div>
+      </div>
+
+      <h2>THINGS TO <span class="red">SOLVE.</span></h2>
+
+      <div class="grid">
+        <div class="q" data-anim="rise-2">
+          <div class="n">01</div>
+          <div class="topic">Student Compensation &amp; Credit</div>
+          <div class="body">The model calls for paid internships, with the financial transaction kept between student and employer (not routed through the program). Students earn course credit. Is that workable within university policy — and how do we reconcile the "paid" commitment with project-based engagements that may not carry compensation?</div>
+        </div>
+
+        <div class="q" data-anim="rise-3">
+          <div class="n">02</div>
+          <div class="topic">Projects vs. Internships</div>
+          <div class="body">How should structured projects (e.g. Utah Baseball analytics) be classified and managed within the Academy? Do they follow the same accountability framework as internships, and how do credit, compensation, and employer expectations differ?</div>
+        </div>
+
+        <div class="q" data-anim="rise-4">
+          <div class="n">03</div>
+          <div class="topic">Operational Roles &amp; Responsibilities</div>
+          <div class="body">What does Career Services' day-to-day involvement look like? What's the realistic staffing and workflow required to run placements, manage employer relationships, and track outcomes — especially given a Fall 2027 launch? When should a leader be activated?</div>
+        </div>
+
+        <div class="q" data-anim="rise-5">
+          <div class="n">04</div>
+          <div class="topic">Coordination With Career Success</div>
+          <div class="body">All positions should likely be posted through U Career Success for institutional alignment. But the Academy's value proposition to employers is a <em>curated</em> candidate pipeline — not a public job board. How do we preserve that curation while working within the university's existing career infrastructure?</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">DAVID ECCLES SCHOOL OF BUSINESS &nbsp;·&nbsp; <span class="strong">BUSINESS OF SPORTS · PARTNERSHIP PLATFORM</span></span>
+        <span class="label-mono-sm">SHAPING THIS TOGETHER</span>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SLIDE 15 — CLOSE (cinematic bookend)
+         ================================================================= -->
+    <section class="slide s-close" data-section="FIN / DAVID ECCLES SCHOOL OF BUSINESS">
+      <div class="photo" data-anim="zoom"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>BUSINESS OF SPORTS &nbsp;·&nbsp; FALL 2027</span>
+        <div class="eccles-mark md"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="David Eccles School of Business" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="num label-mono" data-anim="reveal">— THANK YOU</div>
+        <h2 data-anim="reveal-2">ASCENT BEGINS <span class="red">HERE.</span></h2>
+        <p class="signoff" data-anim="rise-3">
+          DAVID ECCLES SCHOOL OF BUSINESS &nbsp;<span class="accent">·</span>&nbsp; UNIVERSITY OF UTAH<br/>
+          BUSINESS OF SPORTS &nbsp;<span class="accent">·</span>&nbsp; PLAYERS ACADEMY &nbsp;<span class="accent">·</span>&nbsp; FALL 2027
+        </p>
+      </div>
+
+      <div class="bottombar">
+        <div class="lockup label-mono-sm" data-anim="fade-3">
+          PARTNERSHIP PLATFORM<br/>
+          <span class="strong">BUILT IN UTAH</span>
+        </div>
+        <div></div>
+        <div class="right" data-anim="fade-3">
+          Shaping this together<span class="accent">.</span>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /.stage -->
+
+  <div class="hud">
+    <div class="hud-left">
+      <span class="pip"></span>
+      <span id="hud-section">000 / PLAYERS ACADEMY</span>
+    </div>
+    <div class="hud-right">
+      <span id="hud-slide">01 / 14</span>
+    </div>
+  </div>
+
+  <div class="progress-bar" id="progress"></div>
+
+  <div class="help" id="help">
+    <kbd>F</kbd> FULLSCREEN &nbsp; <kbd>←</kbd><kbd>→</kbd> NAVIGATE &nbsp; <kbd>HOME</kbd> RESET
+  </div>
+</div>
+
+<script>
+(() => {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const sectionEl = document.getElementById('hud-section');
+  const counterEl = document.getElementById('hud-slide');
+  const progress  = document.getElementById('progress');
+  const help      = document.getElementById('help');
+  const stage     = document.getElementById('stage');
+  let i = 0;
+  const pad = n => String(n).padStart(2,'0');
+
+  // ─── Fall 2027 launch countdown (slide 3) ──────────────────────────────
+  // First class: Mon Aug 23, 2027 at 7:30 AM MDT (UTC−6).
+  const LAUNCH_UTC_MS = Date.UTC(2027, 7, 23, 13, 30, 0);
+  const bosDaysEl = document.getElementById('bos-days');
+  const bosHrsEl  = document.getElementById('bos-hrs');
+  const bosMinsEl = document.getElementById('bos-mins');
+  const bosSecsEl = document.getElementById('bos-secs');
+  const pad2 = n => String(n).padStart(2, '0');
+  function updateLaunchCountdown() {
+    if (!bosDaysEl) return;
+    const diff = Math.max(0, LAUNCH_UTC_MS - Date.now());
+    const totalSec = Math.floor(diff / 1000);
+    const days = Math.floor(totalSec / 86400);
+    const hrs  = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    const secs = totalSec % 60;
+    bosDaysEl.textContent = days.toLocaleString('en-US');
+    bosHrsEl.textContent  = pad2(hrs);
+    bosMinsEl.textContent = pad2(mins);
+    bosSecsEl.textContent = pad2(secs);
+  }
+  updateLaunchCountdown();
+  // Tick every second so the clock reads truly live.
+  setInterval(updateLaunchCountdown, 1000);
+
+  // ─── DAAP stat count-up animation ──────────────────────────────────────
+  // Cache the target HTML for each .stat .n so we can reset & replay.
+  const daapStatNs = Array.from(document.querySelectorAll('.s-daap .stat .n'));
+  daapStatNs.forEach(n => { n.dataset.targetHtml = n.innerHTML; });
+  let daapTimers = [];
+  function clearDaapTimers() { daapTimers.forEach(t => clearTimeout(t)); daapTimers = []; }
+  function resetDaapStats() {
+    clearDaapTimers();
+    daapStatNs.forEach(n => {
+      n.classList.remove('snap');
+      n.style.opacity = '';
+      n.innerHTML = n.dataset.targetHtml;
+    });
+  }
+  function animateDaapStats() {
+    resetDaapStats();
+    daapStatNs.forEach((n, idx) => {
+      const targetHtml = n.dataset.targetHtml;
+      const targetText = n.textContent.trim();
+      // Leading numeric (with optional commas): "2,000+" → 2000 + suffix
+      const m = targetText.match(/^([\d,]+)(.*)$/);
+      if (m) {
+        const num = parseInt(m[1].replace(/,/g, ''), 10);
+        const hasComma = m[1].includes(',');
+        // Initial state: replace leading number with 0
+        n.innerHTML = targetHtml.replace(/^[\d,]+/, '0');
+        const delay = 320 + idx * 180;
+        daapTimers.push(setTimeout(() => {
+          const start = performance.now();
+          const duration = 1100;
+          (function tick(now) {
+            const t = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - t, 3);
+            const current = Math.floor(eased * num);
+            const formatted = hasComma ? current.toLocaleString('en-US') : String(current);
+            n.innerHTML = targetHtml.replace(/^[\d,]+/, formatted);
+            if (t < 1) requestAnimationFrame(tick);
+            else n.innerHTML = targetHtml;
+          })(performance.now());
+        }, delay));
+      } else if (targetText.startsWith('#')) {
+        // "#1" — snap in after the others finish counting up
+        n.style.opacity = '0';
+        daapTimers.push(setTimeout(() => {
+          n.style.opacity = '';
+          n.classList.add('snap');
+          daapTimers.push(setTimeout(() => n.classList.remove('snap'), 700));
+        }, 1700));
+      }
+    });
+  }
+
+  let flipTimer = null;
+  function setActive(next) {
+    const total = slides.length;
+    next = Math.max(0, Math.min(total - 1, next));
+    // Clear any in-flight stagger timer
+    if (flipTimer) { clearTimeout(flipTimer); flipTimer = null; }
+    slides.forEach((s, idx) => {
+      if (idx === next) {
+        s.classList.remove('active');
+        s.classList.remove('flipping');
+        void s.offsetWidth;
+        // Ecosystem slide: add .flipping AT THE SAME TIME as .active so the
+        // animation's first keyframe (back side) is applied immediately —
+        // no front-flash before the flip. Remove .flipping after the longest
+        // delay + animation finishes so hover takes over cleanly.
+        if (s.classList.contains('s-ecosystem')) {
+          s.classList.add('active');
+          s.classList.add('flipping');
+          flipTimer = setTimeout(() => {
+            s.classList.remove('flipping');
+            flipTimer = null;
+          }, 3400);
+        } else {
+          s.classList.add('active');
+        }
+        if (s.classList.contains('s-daap')) animateDaapStats();
+      } else {
+        s.classList.remove('active');
+        s.classList.remove('flipping');
+        if (s.classList.contains('s-daap')) resetDaapStats();
+      }
+    });
+    i = next;
+    const section = slides[i].dataset.section || '—';
+    sectionEl.textContent = section.toUpperCase();
+    counterEl.textContent = `${pad(i + 1)} / ${pad(total)}`;
+    progress.style.width = ((i) / (total - 1) * 100) + '%';
+  }
+
+  setActive(0);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown' || e.key === 'Enter') { e.preventDefault(); setActive(i + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); setActive(i - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
+    else if (e.key === 'End') { e.preventDefault(); setActive(slides.length - 1); }
+    else if (e.key === 'f' || e.key === 'F') {
+      e.preventDefault();
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+  });
+
+  stage.addEventListener('click', (e) => {
+    const rect = stage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (x > rect.width * 0.4) setActive(i + 1);
+    else setActive(i - 1);
+  });
+
+  setTimeout(() => help.classList.add('fade'), 6000);
+  let helpTimer;
+  window.addEventListener('mousemove', () => {
+    help.classList.remove('fade');
+    clearTimeout(helpTimer);
+    helpTimer = setTimeout(() => help.classList.add('fade'), 3500);
+  });
+
+  let touchStart = 0;
+  stage.addEventListener('touchstart', (e) => { touchStart = e.changedTouches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStart;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) setActive(i + 1); else setActive(i - 1);
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>

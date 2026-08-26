@@ -1,0 +1,2852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>THE BUSINESS OF SPORTS — Design Directions v1</title>
+<link rel="icon" type="image/svg+xml" href="../_legacy/logos/desb_logo_2024_digital_verticalblack.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,200..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@300;400;500;600;700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     THE BUSINESS OF SPORTS — DESIGN DIRECTIONS COMP
+     Three concepts, two slides each, presentation-grade.
+     Brand: Utah Red #BE0000 | Black | White
+     Press F for full screen. Arrow keys / space / clicker advance.
+     ============================================================ */
+
+  :root {
+    --utah-red: #BE0000;
+    --utah-red-bright: #E60012;
+    --utah-red-deep: #7A0000;
+    --ink: #0A0A0A;
+    --ink-soft: #141414;
+    --bone: #F4F1EC;
+    --paper: #FFFFFF;
+    --steel: #1C1C1C;
+    --steel-mid: #2A2A2A;
+    --steel-light: #6B6B6B;
+    --line: rgba(255,255,255,0.14);
+    --line-dark: rgba(0,0,0,0.12);
+
+    --f-display: 'Anton', 'Oswald', Impact, sans-serif;
+    --f-display-2: 'Archivo Black', 'Archivo', system-ui, sans-serif;
+    --f-condensed: 'Oswald', 'Archivo Narrow', sans-serif;
+    --f-cinema: 'Bebas Neue', 'Oswald', sans-serif;
+    --f-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'JetBrains Mono', ui-monospace, monospace;
+    /* Premium Minimal direction.
+       - Hero/giant display: Fraunces (variable editorial serif with optical sizing axis;
+         designed to feel elegant at large display sizes).
+       - Secondary/body/labels: Outfit (closest Google match to Utah's Iskra brand display). */
+    --f-premium-hero: 'Fraunces', 'Source Serif 4', 'GT Sectra', Georgia, serif;
+    --f-premium: 'Outfit', 'Iskra', 'Open Sauce Sans', system-ui, sans-serif;
+    --f-premium-body: 'Source Sans 3', 'Open Sauce Sans', 'Myriad Pro', system-ui, sans-serif;
+  }
+
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; color: var(--paper); font-family: var(--f-body); -webkit-font-smoothing: antialiased; }
+
+  /* ---------- DECK STAGE ---------- */
+  .deck {
+    position: fixed; inset: 0;
+    display: grid;
+    place-items: center;
+    background: #000;
+  }
+
+  .stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100vw;
+    max-width: calc(100vh * 16 / 9);
+    height: 100vh;
+    max-height: calc(100vw * 9 / 16);
+    overflow: hidden;
+    background: #000;
+    container-type: size;
+    container-name: slide;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 600ms cubic-bezier(.22,1,.36,1);
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; pointer-events: auto; z-index: 2; }
+
+  /* ---------- HUD ---------- */
+  .hud {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 22px;
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.5);
+    pointer-events: none;
+    z-index: 50;
+    mix-blend-mode: difference;
+  }
+  .hud .hud-left, .hud .hud-right { display: flex; gap: 18px; align-items: center; }
+  .hud .pip { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--utah-red); box-shadow: 0 0 14px var(--utah-red); }
+  .hud .progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--utah-red), var(--utah-red-bright));
+    transition: width 600ms cubic-bezier(.22,1,.36,1);
+    z-index: 60;
+  }
+
+  .help {
+    position: fixed; right: 22px; top: 22px;
+    font-family: var(--f-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    background: rgba(0,0,0,0.35);
+    padding: 8px 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    z-index: 60;
+    transition: opacity .6s;
+  }
+  .help.fade { opacity: 0; }
+  .help kbd {
+    font-family: var(--f-mono);
+    background: rgba(255,255,255,0.12);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--paper);
+    margin: 0 3px;
+  }
+
+  /* ---------- ARRIVE ANIMATIONS ---------- */
+  [data-anim] { opacity: 0; will-change: transform, opacity, clip-path; }
+  .active [data-anim="rise"]      { animation: rise .9s .15s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-2"]    { animation: rise .9s .35s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-3"]    { animation: rise .9s .55s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-4"]    { animation: rise .9s .75s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="rise-5"]    { animation: rise .9s .95s cubic-bezier(.22,1,.36,1) forwards; }
+  .active [data-anim="fade"]      { animation: fade 1.2s .2s ease forwards; }
+  .active [data-anim="fade-2"]    { animation: fade 1.2s .5s ease forwards; }
+  .active [data-anim="fade-3"]    { animation: fade 1.2s .8s ease forwards; }
+  .active [data-anim="reveal"]    { animation: reveal 1.1s .15s cubic-bezier(.65,0,.35,1) forwards; }
+  .active [data-anim="reveal-2"]  { animation: reveal 1.1s .35s cubic-bezier(.65,0,.35,1) forwards; }
+  .active [data-anim="reveal-3"]  { animation: reveal 1.1s .55s cubic-bezier(.65,0,.35,1) forwards; }
+  .active [data-anim="reveal-4"]  { animation: reveal 1.1s .75s cubic-bezier(.65,0,.35,1) forwards; }
+  .active [data-anim="zoom"]      { animation: zoomBleed 6s .1s ease-out forwards; }
+  .active [data-anim="ticker"]    { animation: tick 14s 1s linear infinite; }
+  .active [data-anim="bar"]       { animation: barGrow 1.4s .4s cubic-bezier(.7,0,.2,1) forwards; }
+  .active [data-anim="bar-2"]     { animation: barGrow 1.4s .6s cubic-bezier(.7,0,.2,1) forwards; }
+  .active [data-anim="bar-3"]     { animation: barGrow 1.4s .8s cubic-bezier(.7,0,.2,1) forwards; }
+  .active [data-anim="bar-4"]     { animation: barGrow 1.4s 1.0s cubic-bezier(.7,0,.2,1) forwards; }
+  .active [data-anim="glow"]      { animation: glow 2.4s .8s ease-in-out forwards; }
+  .active [data-anim="count"]     { animation: count 1.5s .4s cubic-bezier(.22,1,.36,1) forwards; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes reveal {
+    from { opacity: 1; clip-path: inset(0 100% 0 0); transform: translateY(8px); }
+    to   { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+  }
+  @keyframes zoomBleed {
+    from { transform: scale(1.12); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  @keyframes tick {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes barGrow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @keyframes glow {
+    0%   { opacity: 0; filter: blur(40px); transform: scale(.8); }
+    60%  { opacity: 1; filter: blur(0); transform: scale(1.02); }
+    100% { opacity: 1; filter: blur(0); transform: scale(1); }
+  }
+  @keyframes count {
+    from { opacity: 0; transform: translateY(20px) scale(.96); letter-spacing: -.05em; }
+    to   { opacity: 1; transform: translateY(0) scale(1); letter-spacing: -.04em; }
+  }
+  @keyframes pulseRed {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(190,0,0,0.6); }
+    50%      { box-shadow: 0 0 0 14px rgba(190,0,0,0); }
+  }
+  @keyframes broadcastSweep {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(120%); }
+  }
+
+  /* ---------- COMMON DECK ELEMENTS ---------- */
+  .eccles-mark { display: inline-block; height: 4.2cqh; width: auto; }
+  .eccles-mark img, .eccles-mark svg { height: 100%; width: auto; display: block; }
+
+  .meta-tag {
+    font-family: var(--f-mono);
+    font-size: 1.0cqh;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .red-dot { display: inline-block; width: 0.8cqh; height: 0.8cqh; border-radius: 50%; background: var(--utah-red); box-shadow: 0 0 12px var(--utah-red); vertical-align: middle; margin-right: 0.6cqh; }
+
+  /* =================================================================
+     INTRO SLIDE 0
+     ================================================================= */
+  .slide-intro {
+    background: #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3cqh 4.5cqw;
+  }
+  .slide-intro::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 40%, rgba(190,0,0,0.35), transparent 55%),
+      radial-gradient(ellipse at 20% 80%, rgba(190,0,0,0.18), transparent 50%);
+    z-index: 0;
+  }
+  .slide-intro > * { position: relative; z-index: 1; }
+  .slide-intro .topbar { display: flex; justify-content: space-between; align-items: center; }
+  .slide-intro .topbar .brand-stack { display: flex; gap: 2cqw; align-items: center; }
+  .slide-intro .topbar .meta-tag { font-size: 1.1cqh; }
+  .slide-intro .body { display: grid; align-content: center; gap: 1.4cqh; }
+  .slide-intro h1 {
+    font-family: var(--f-display);
+    font-size: 6.6cqw;
+    line-height: 1.0;
+    letter-spacing: -0.035em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .slide-intro h1 .red { color: var(--utah-red); }
+  .slide-intro .kicker {
+    font-family: var(--f-mono);
+    font-size: 1.0cqh;
+    letter-spacing: 0.42em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    margin-bottom: 0.4cqh;
+  }
+  .slide-intro .sub {
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-size: 1.55cqh;
+    max-width: 58cqw;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.85);
+    margin-top: 0.6cqh;
+  }
+  .slide-intro .three-up {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 1cqw;
+    margin-top: 1cqh;
+  }
+  .slide-intro .three-up .card {
+    border-top: 2px solid var(--utah-red);
+    padding-top: 1.0cqh;
+  }
+  .slide-intro .three-up .card .num {
+    font-family: var(--f-mono);
+    font-size: 0.8cqh;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.5cqh;
+  }
+  .slide-intro .three-up .card .name {
+    font-family: var(--f-display);
+    font-size: 2.1cqh;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+  }
+  .slide-intro .three-up .card .blurb {
+    margin-top: 0.5cqh;
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-size: 1.0cqh;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.7);
+  }
+  .slide-intro .footer-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: var(--f-mono);
+    font-size: 1cqh;
+    letter-spacing: 0.28em;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+
+  /* =================================================================
+     ============ LOOK 1 — STADIUM EDITORIAL =========================
+     Aesthetic: cinematic full-bleed photo, oversized editorial type,
+     deep blacks, Utah Red as accent, generous negative space.
+     ================================================================= */
+
+  /* --- L1 Slide 1.1 — COVER --- */
+  .l1-cover {
+    background: #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .l1-cover .photo {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.85) 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 50%),
+      url('../_legacy/img/10152022_uu_fb_utah-utes-vs.-usc-hd-edits-58-1.jpg');
+    background-size: cover;
+    background-position: center 35%;
+    filter: contrast(1.08) saturate(1.05);
+    z-index: 0;
+  }
+  .l1-cover .photo::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 60%, rgba(190,0,0,0.18), transparent 55%);
+    mix-blend-mode: screen;
+  }
+  .l1-cover .topbar, .l1-cover .midbar, .l1-cover .bottombar { position: relative; z-index: 2; }
+  .l1-cover .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4cqh 5cqw 0;
+  }
+  .l1-cover .topbar .meta-tag .red-dot { animation: pulseRed 2.4s infinite; }
+  .l1-cover .midbar {
+    display: grid;
+    align-content: end;
+    padding: 0 5cqw 0;
+  }
+  .l1-cover .midbar .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 1.1cqh;
+    letter-spacing: 0.45em;
+    color: var(--utah-red-bright);
+    text-transform: uppercase;
+    margin-bottom: 2cqh;
+    text-shadow: 0 0 24px rgba(230,0,18,0.5);
+  }
+  .l1-cover .midbar h1 {
+    font-family: var(--f-display);
+    font-size: 13cqw;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--paper);
+  }
+  .l1-cover .midbar h1 .red { color: var(--utah-red); }
+  .l1-cover .midbar h1 .ghost {
+    -webkit-text-stroke: 2px var(--paper);
+    color: transparent;
+  }
+  .l1-cover .bottombar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    gap: 3cqw;
+    padding: 0 5cqw 4cqh;
+  }
+  .l1-cover .tagline {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 2.2cqh;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--paper);
+    line-height: 1.1;
+    max-width: 30cqw;
+  }
+  .l1-cover .tagline .accent {
+    color: var(--utah-red-bright);
+  }
+  .l1-cover .rule {
+    width: 8cqw; height: 1px; background: var(--paper); opacity: 0.5;
+    transform-origin: left;
+  }
+  .l1-cover .credit {
+    text-align: right;
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+  .l1-cover .credit .strong { color: var(--paper); }
+
+  /* --- L1 Slide 1.2 — THE OPPORTUNITY (editorial split) --- */
+  .l1-opportunity {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+  }
+  .l1-opportunity .photo {
+    position: relative;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.0) 50%, rgba(0,0,0,0.55) 100%),
+      url('../_legacy/img/gymnastics-vs-lsu-120.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+  .l1-opportunity .photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(190,0,0,0.18), transparent 60%);
+    mix-blend-mode: multiply;
+  }
+  .l1-opportunity .photo .caption {
+    position: absolute; left: 3cqw; bottom: 3cqh; right: 3cqw;
+    font-family: var(--f-mono);
+    font-size: 1.0cqh;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    display: flex; justify-content: space-between;
+  }
+  .l1-opportunity .content {
+    padding: 6cqh 4.5cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 2cqh;
+    position: relative;
+  }
+  .l1-opportunity .content::before {
+    content: ""; position: absolute; left: 0; top: 6cqh; bottom: 6cqh;
+    width: 2px; background: var(--utah-red);
+  }
+  .l1-opportunity .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 1.05cqh;
+    letter-spacing: 0.4em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    padding-left: 2cqw;
+  }
+  .l1-opportunity .stat-cluster { padding-left: 2cqw; }
+  .l1-opportunity .stat-big {
+    font-family: var(--f-display);
+    font-size: 17cqh;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .l1-opportunity .stat-big .unit {
+    font-family: var(--f-display);
+    font-size: 7cqh;
+    vertical-align: top;
+    color: var(--utah-red);
+    margin-left: 0.4cqw;
+    line-height: 1;
+  }
+  .l1-opportunity h2 {
+    font-family: var(--f-display);
+    font-size: 5cqh;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    padding-left: 2cqw;
+    margin-top: 2cqh;
+  }
+  .l1-opportunity .body {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.7cqh;
+    line-height: 1.55;
+    color: var(--steel-mid);
+    padding-left: 2cqw;
+    max-width: 38cqw;
+    margin-top: 1cqh;
+  }
+  .l1-opportunity .stat-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 2cqw;
+    padding-left: 2cqw;
+    padding-top: 2cqh;
+    border-top: 1px solid var(--line-dark);
+  }
+  .l1-opportunity .stat-row .cell .n {
+    font-family: var(--f-display);
+    font-size: 4.5cqh;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .l1-opportunity .stat-row .cell .n .red { color: var(--utah-red); }
+  .l1-opportunity .stat-row .cell .l {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.22em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    margin-top: 0.6cqh;
+    line-height: 1.4;
+  }
+  .l1-opportunity .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 2cqh;
+    border-top: 1px solid var(--line-dark);
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.3em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    padding-left: 2cqw;
+  }
+  .l1-opportunity .footer .eccles-mark { height: 3.4cqh; }
+
+  /* =================================================================
+     ============ LOOK 2 — FRANCHISE BRIEF ==========================
+     Aesthetic: dossier / front-office / analytics. Modular grid,
+     monospace metadata, technical confidence, ink-on-paper with
+     red as a data accent.
+     ================================================================= */
+
+  /* --- L2 Slide 2.1 — COVER (dossier) --- */
+  .l2-cover {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 4cqh 4.5cqw;
+  }
+  .l2-cover::before {
+    content: "";
+    position: absolute; inset: 4cqh 4.5cqw;
+    background-image:
+      linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: calc(100cqw / 12) calc(100cqh / 8);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .l2-cover > * { position: relative; z-index: 1; }
+  .l2-cover .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 2cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .l2-cover .topbar .lockup {
+    display: flex; gap: 2cqw; align-items: center;
+    font-family: var(--f-mono);
+    font-size: 1.1cqh;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .l2-cover .topbar .lockup .file {
+    background: var(--ink); color: var(--paper);
+    padding: 0.4cqh 0.8cqw;
+    font-weight: 700;
+  }
+  .l2-cover .topbar .stamp {
+    display: flex; gap: 1.2cqw; align-items: center;
+    font-family: var(--f-mono);
+    font-size: 1.0cqh;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  .l2-cover .topbar .stamp .red-box {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 0.4cqh 0.9cqw;
+    letter-spacing: 0.3em;
+    font-weight: 700;
+  }
+
+  .l2-cover .midbar {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 4cqw;
+    padding: 4cqh 0 0;
+    align-content: start;
+  }
+  .l2-cover .midbar .left { display: grid; gap: 3cqh; align-content: end; }
+  .l2-cover .midbar .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 1.0cqh;
+    letter-spacing: 0.45em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+  }
+  .l2-cover .midbar h1 {
+    font-family: var(--f-display-2);
+    font-size: 8cqw;
+    line-height: 0.94;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .l2-cover .midbar h1 .underline {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 0 0.4cqw 0.4cqh;
+    display: inline-block;
+    line-height: 0.86;
+  }
+  .l2-cover .midbar .right {
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    gap: 1.4cqh;
+    align-self: end;
+    border-left: 2px solid var(--ink);
+    padding-left: 2cqw;
+  }
+  .l2-cover .midbar .right .row {
+    display: grid;
+    grid-template-columns: 9cqw 1fr;
+    gap: 1cqw;
+    align-items: baseline;
+    border-bottom: 1px solid var(--line-dark);
+    padding-bottom: 1.2cqh;
+  }
+  .l2-cover .midbar .right .row:last-child { border-bottom: 0; }
+  .l2-cover .midbar .right .row .k {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.28em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+  }
+  .l2-cover .midbar .right .row .v {
+    font-family: var(--f-condensed);
+    font-weight: 600;
+    font-size: 2cqh;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+  .l2-cover .midbar .right .row .v .pill {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 0.2cqh 0.6cqw;
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.18em;
+    margin-left: 0.4cqw;
+    vertical-align: middle;
+  }
+
+  .l2-cover .bottombar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 3cqw;
+    align-items: end;
+    padding-top: 2cqh;
+    border-top: 2px solid var(--ink);
+  }
+  .l2-cover .tagline-block { display: grid; gap: 0.4cqh; }
+  .l2-cover .tagline-block .k {
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.3em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+  }
+  .l2-cover .tagline-block .v {
+    font-family: var(--f-display-2);
+    font-size: 2.4cqh;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .l2-cover .barcode-block {
+    text-align: right;
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.28em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+  .l2-cover .barcode-block .strong { color: var(--ink); }
+
+  .l2-cover .barcode {
+    display: flex;
+    gap: 2px;
+    height: 2.4cqh;
+    margin-bottom: 0.6cqh;
+    justify-content: flex-end;
+  }
+  .l2-cover .barcode i {
+    display: block;
+    background: var(--ink);
+    width: 2px;
+    height: 100%;
+  }
+  .l2-cover .barcode i:nth-child(3n) { height: 70%; align-self: flex-end; }
+  .l2-cover .barcode i:nth-child(4n) { width: 4px; }
+  .l2-cover .barcode i:nth-child(7n) { background: var(--utah-red); }
+
+  /* --- L2 Slide 2.2 — PROGRAM OVERVIEW (tracks) --- */
+  .l2-program {
+    background: var(--bone);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 4cqh 4.5cqw;
+  }
+  .l2-program .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 2cqh;
+    border-bottom: 2px solid var(--ink);
+  }
+  .l2-program .topbar .left {
+    display: flex; gap: 1.6cqw; align-items: center;
+    font-family: var(--f-mono);
+    font-size: 1cqh;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .l2-program .topbar .left .file {
+    background: var(--ink); color: var(--paper);
+    padding: 0.4cqh 0.8cqw;
+  }
+  .l2-program .topbar h2 {
+    font-family: var(--f-display-2);
+    font-size: 2.4cqh;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .l2-program .topbar h2 .red { color: var(--utah-red); }
+
+  .l2-program .tracks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.4cqw;
+    padding: 3cqh 0;
+  }
+  .l2-program .track {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1.6cqh;
+    padding: 2cqh 1.4cqw;
+    background: var(--paper);
+    border: 1px solid var(--line-dark);
+    position: relative;
+    overflow: hidden;
+  }
+  .l2-program .track::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: var(--utah-red);
+  }
+  .l2-program .track .label {
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.32em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+  }
+  .l2-program .track .num {
+    font-family: var(--f-display-2);
+    font-size: 7.5cqh;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .l2-program .track .num .slash { color: var(--utah-red); }
+  .l2-program .track .name {
+    font-family: var(--f-display-2);
+    font-size: 2.4cqh;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .l2-program .track .body {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.35cqh;
+    line-height: 1.5;
+    color: var(--steel-mid);
+  }
+  .l2-program .track .courses {
+    border-top: 1px solid var(--line-dark);
+    padding-top: 1.2cqh;
+    display: grid;
+    gap: 0.5cqh;
+  }
+  .l2-program .track .courses .row {
+    display: grid;
+    grid-template-columns: 4cqw 1fr;
+    gap: 0.6cqw;
+    font-family: var(--f-mono);
+    font-size: 1.0cqh;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .l2-program .track .courses .row .c {
+    color: var(--steel-light);
+    letter-spacing: 0.2em;
+  }
+  .l2-program .track .courses .row .t {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+
+  .l2-program .footer-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 3cqw;
+    align-items: end;
+    padding-top: 2cqh;
+    border-top: 2px solid var(--ink);
+  }
+  .l2-program .footer-row .summary {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 2.4cqw;
+  }
+  .l2-program .footer-row .summary .cell .n {
+    font-family: var(--f-display-2);
+    font-size: 3.6cqh;
+    line-height: 0.9;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .l2-program .footer-row .summary .cell .n .red { color: var(--utah-red); }
+  .l2-program .footer-row .summary .cell .l {
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.26em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    margin-top: 0.5cqh;
+  }
+  .l2-program .footer-row .right-end {
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.28em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.7;
+  }
+  .l2-program .footer-row .right-end .strong { color: var(--ink); }
+
+  /* =================================================================
+     ============ LOOK 3 — BROADCAST PRIME ===========================
+     Aesthetic: prime-time broadcast intro. Cinematic photography,
+     lower-thirds, ticker, glow, red as broadcast accent. Motion.
+     ================================================================= */
+
+  /* --- L3 Slide 3.1 — COVER (broadcast open) --- */
+  .l3-cover {
+    background: #000;
+    color: var(--paper);
+    overflow: hidden;
+  }
+  .l3-cover .photo {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 35%, rgba(0,0,0,0.4) 65%, rgba(0,0,0,0.85) 100%),
+      linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 100%),
+      url('../_legacy/img/10152022_uu_fb_utah-utes-vs.-usc-hd-edits-29.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    filter: contrast(1.12) saturate(0.95);
+  }
+  .l3-cover .photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(190,0,0,0.35), transparent 60%);
+    mix-blend-mode: screen;
+  }
+  .l3-cover .scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0) 0px,
+      rgba(255,255,255,0) 3px,
+      rgba(255,255,255,0.025) 3px,
+      rgba(255,255,255,0.025) 4px
+    );
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .l3-cover .vignette-sweep {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(190,0,0,0.18), transparent);
+    transform: translateX(-100%);
+    animation: broadcastSweep 7s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .l3-cover .liveband {
+    position: absolute;
+    top: 4cqh; left: 4cqw;
+    display: flex; gap: 1.2cqw; align-items: center;
+    font-family: var(--f-mono);
+    font-size: 1.1cqh;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--paper);
+    z-index: 4;
+  }
+  .l3-cover .liveband .live {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 0.5cqh 1cqw;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    box-shadow: 0 0 24px rgba(190,0,0,0.7);
+    animation: pulseRed 2s infinite;
+  }
+  .l3-cover .topright {
+    position: absolute;
+    top: 4cqh; right: 4cqw;
+    text-align: right;
+    z-index: 4;
+  }
+  .l3-cover .topright .ts {
+    font-family: var(--f-mono);
+    font-size: 1cqh;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+  }
+  .l3-cover .topright .city {
+    font-family: var(--f-cinema);
+    font-size: 2.4cqh;
+    letter-spacing: 0.18em;
+    color: var(--paper);
+    margin-top: 0.4cqh;
+    text-shadow: 0 0 20px rgba(0,0,0,0.6);
+  }
+
+  .l3-cover .center {
+    position: absolute; inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    z-index: 4;
+    padding: 0 5cqw;
+  }
+  .l3-cover .center .preheader {
+    font-family: var(--f-mono);
+    font-size: 1.2cqh;
+    letter-spacing: 0.55em;
+    color: var(--utah-red-bright);
+    text-transform: uppercase;
+    margin-bottom: 2.2cqh;
+    text-shadow: 0 0 24px rgba(230,0,18,0.6);
+  }
+  .l3-cover h1 {
+    font-family: var(--f-cinema);
+    font-size: 11.5cqw;
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+    text-transform: uppercase;
+    text-shadow:
+      0 0 60px rgba(190,0,0,0.45),
+      0 0 12px rgba(255,255,255,0.2);
+  }
+  .l3-cover h1 .of { color: var(--utah-red-bright); font-style: italic; padding: 0 0.4cqw; }
+  .l3-cover .center .sub {
+    font-family: var(--f-mono);
+    font-size: 1.2cqh;
+    letter-spacing: 0.45em;
+    color: rgba(255,255,255,0.85);
+    text-transform: uppercase;
+    margin-top: 2.4cqh;
+  }
+  .l3-cover .center .sub .sep { color: var(--utah-red); margin: 0 0.8cqw; }
+
+  /* Lower-third broadcast bar */
+  .l3-cover .lowerthird {
+    position: absolute;
+    left: 0; right: 0; bottom: 6cqh;
+    z-index: 4;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 0 4cqw;
+    gap: 2cqw;
+  }
+  .l3-cover .lowerthird .tag {
+    background: var(--utah-red);
+    padding: 1cqh 1.6cqw;
+    box-shadow: 0 0 30px rgba(190,0,0,0.6);
+    display: grid;
+    gap: 0.4cqh;
+  }
+  .l3-cover .lowerthird .tag .label {
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+  }
+  .l3-cover .lowerthird .tag .v {
+    font-family: var(--f-cinema);
+    font-size: 2cqh;
+    letter-spacing: 0.06em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .l3-cover .lowerthird .line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--utah-red), transparent);
+  }
+  .l3-cover .lowerthird .credits {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .l3-cover .ticker {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 5;
+    background: var(--ink);
+    border-top: 2px solid var(--utah-red);
+    overflow: hidden;
+    height: 4.4cqh;
+    display: flex;
+    align-items: center;
+  }
+  .l3-cover .ticker .strip {
+    display: flex;
+    gap: 4cqw;
+    white-space: nowrap;
+    padding-left: 4cqw;
+    will-change: transform;
+  }
+  .l3-cover .ticker .strip span {
+    font-family: var(--f-mono);
+    font-size: 1.1cqh;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 1cqw;
+  }
+  .l3-cover .ticker .strip span::before {
+    content: "";
+    display: inline-block;
+    width: 0.6cqh; height: 0.6cqh;
+    background: var(--utah-red);
+    border-radius: 50%;
+  }
+
+  /* --- L3 Slide 3.2 — INDUSTRY PARTNER VALUE --- */
+  .l3-partner {
+    background: #000;
+    color: var(--paper);
+    overflow: hidden;
+  }
+  .l3-partner .photo {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(110deg, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.25) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.85) 100%),
+      url('../_legacy/img/football-statue-7.jpg');
+    background-size: cover;
+    background-position: right center;
+    filter: contrast(1.12) saturate(0.95);
+  }
+  .l3-partner .scanlines {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0) 0px,
+      rgba(255,255,255,0) 3px,
+      rgba(255,255,255,0.025) 3px,
+      rgba(255,255,255,0.025) 4px
+    );
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .l3-partner .topbar {
+    position: absolute; top: 4cqh; left: 4cqw; right: 4cqw;
+    z-index: 3;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .l3-partner .topbar .lockup {
+    display: flex; gap: 1cqw; align-items: center;
+    font-family: var(--f-mono);
+    font-size: 1.05cqh;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+  }
+  .l3-partner .topbar .lockup .seg {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 0.5cqh 1cqw;
+    font-weight: 700;
+    box-shadow: 0 0 24px rgba(190,0,0,0.55);
+  }
+  .l3-partner .topbar .right { font-family: var(--f-mono); font-size: 1cqh; letter-spacing: 0.32em; color: rgba(255,255,255,0.6); text-transform: uppercase; }
+
+  .l3-partner .grid {
+    position: absolute; inset: 12cqh 4cqw 12cqh 4cqw;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 4cqw;
+    align-items: center;
+  }
+  .l3-partner .grid .lede { display: grid; gap: 2.4cqh; align-content: center; }
+  .l3-partner .grid .lede .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 1.1cqh;
+    letter-spacing: 0.45em;
+    color: var(--utah-red-bright);
+    text-transform: uppercase;
+    text-shadow: 0 0 18px rgba(230,0,18,0.45);
+  }
+  .l3-partner .grid .lede h2 {
+    font-family: var(--f-cinema);
+    font-size: 7.4cqh;
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-shadow: 0 0 40px rgba(190,0,0,0.35);
+  }
+  .l3-partner .grid .lede h2 .pop { color: var(--utah-red-bright); }
+  .l3-partner .grid .lede .body {
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-size: 1.7cqh;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+    max-width: 40cqw;
+  }
+
+  .l3-partner .pipeline {
+    display: grid;
+    gap: 1.2cqh;
+    align-content: center;
+  }
+  .l3-partner .pipeline .row {
+    display: grid;
+    grid-template-columns: 3.4cqw 1fr auto;
+    gap: 1.4cqw;
+    align-items: center;
+    padding: 1.4cqh 1.6cqw;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+  .l3-partner .pipeline .row::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--utah-red);
+    box-shadow: 0 0 14px var(--utah-red);
+  }
+  .l3-partner .pipeline .row .n {
+    font-family: var(--f-cinema);
+    font-size: 3.4cqh;
+    letter-spacing: 0.04em;
+    color: var(--utah-red-bright);
+    line-height: 1;
+  }
+  .l3-partner .pipeline .row .name {
+    font-family: var(--f-cinema);
+    font-size: 2.3cqh;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper);
+    line-height: 1.1;
+  }
+  .l3-partner .pipeline .row .name .sub {
+    display: block;
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.2cqh;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: rgba(255,255,255,0.7);
+    margin-top: 0.3cqh;
+  }
+  .l3-partner .pipeline .row .bar {
+    width: 7cqw;
+    height: 6px;
+    background: rgba(255,255,255,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .l3-partner .pipeline .row .bar i {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, var(--utah-red), var(--utah-red-bright));
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  .l3-partner .lowerthird {
+    position: absolute; left: 0; right: 0; bottom: 4.4cqh;
+    z-index: 4;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 0 4cqw;
+    gap: 2cqw;
+  }
+  .l3-partner .lowerthird .tag {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 1cqh 1.4cqw;
+    display: grid;
+    gap: 0.3cqh;
+  }
+  .l3-partner .lowerthird .tag .label {
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.4em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+  }
+  .l3-partner .lowerthird .tag .v {
+    font-family: var(--f-cinema);
+    font-size: 2cqh;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .l3-partner .lowerthird .line { height: 2px; background: linear-gradient(90deg, transparent, var(--utah-red), transparent); }
+  .l3-partner .lowerthird .right {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .l3-partner .ticker {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 5;
+    background: var(--ink);
+    border-top: 2px solid var(--utah-red);
+    overflow: hidden;
+    height: 3.6cqh;
+    display: flex;
+    align-items: center;
+  }
+  .l3-partner .ticker .strip {
+    display: flex; gap: 4cqw; white-space: nowrap; padding-left: 4cqw; will-change: transform;
+  }
+  .l3-partner .ticker .strip span {
+    font-family: var(--f-mono);
+    font-size: 1cqh;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 1cqw;
+  }
+  .l3-partner .ticker .strip span::before {
+    content: ""; display: inline-block; width: 0.5cqh; height: 0.5cqh; background: var(--utah-red); border-radius: 50%;
+  }
+
+  /* =================================================================
+     OUTRO — Decision screen
+     ================================================================= */
+  .slide-outro {
+    background: #000;
+    color: var(--paper);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 4cqh 4.5cqw;
+    overflow: hidden;
+  }
+  .slide-outro::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(190,0,0,0.22), transparent 55%);
+  }
+  .slide-outro > * { position: relative; z-index: 1; }
+  .slide-outro .topbar { display: flex; justify-content: space-between; align-items: center; }
+  .slide-outro .topbar .meta-tag { font-size: 1.1cqh; }
+  .slide-outro .body { display: grid; align-content: center; gap: 3cqh; }
+  .slide-outro h2 {
+    font-family: var(--f-display);
+    font-size: 9cqw;
+    line-height: 1.0;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+  }
+  .slide-outro h2 .red { color: var(--utah-red); }
+  .slide-outro .picker {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1cqw;
+    margin-top: 1cqh;
+  }
+  .slide-outro .pick {
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 2cqh 1.4cqw 2cqh;
+    background: rgba(255,255,255,0.025);
+    display: grid;
+    gap: 1cqh;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-outro .pick::after {
+    content: "";
+    position: absolute; left: 0; right: 0; top: 0;
+    height: 4px; background: var(--utah-red);
+  }
+  .slide-outro .pick .label {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+  }
+  .slide-outro .pick .name {
+    font-family: var(--f-display);
+    font-size: 2.5cqh;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .slide-outro .pick .tag {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 1.15cqh;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--utah-red-bright);
+    line-height: 1.3;
+  }
+  .slide-outro .pick .blurb {
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-size: 1.1cqh;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.75);
+  }
+  .slide-outro .footer-row {
+    display: flex; justify-content: space-between; align-items: end;
+    font-family: var(--f-mono);
+    font-size: 1cqh;
+    letter-spacing: 0.28em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+  }
+
+  /* =================================================================
+     ============ LOOK 4 — PREMIUM MINIMAL ===========================
+     Aesthetic: 90%+ white, generous negative space, black primary,
+     Utah Red ONLY for accents. Utah Stripe as the signature device.
+     Apple keynote × Bloomberg Businessweek × luxury sports brand.
+     ================================================================= */
+
+  /* The official Utah Stripe — four equal horizontal red bars with
+     transparent gaps (the U of U Athletics stripe motif).
+     7 equal segments: 4 bars + 3 gaps. Uses currentColor so the same
+     element can render red (default), white (on Crimson direction), or
+     any other color via a parent / utility class. */
+  .utah-stripe {
+    display: block;
+    width: 100%;
+    height: 4.4cqh;
+    color: var(--utah-red);
+    background:
+      linear-gradient(
+        to bottom,
+        currentColor 0% 14.28%,
+        transparent  14.28% 28.57%,
+        currentColor 28.57% 42.85%,
+        transparent  42.85% 57.14%,
+        currentColor 57.14% 71.42%,
+        transparent  71.42% 85.71%,
+        currentColor 85.71% 100%
+      );
+  }
+  .utah-stripe.thin  { height: 3.2cqh; }
+  .utah-stripe.thick { height: 6cqh; }
+  .utah-stripe.white { color: var(--paper); }
+  .utah-stripe svg, .utah-stripe use { display: none; }
+
+  /* --- L4 Slide 4.1 — COVER (Premium Minimal — Myriad-class type) --- */
+  .l4-cover {
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3.5cqh 4.5cqw;
+  }
+  .l4-cover .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 2cqh;
+  }
+  .l4-cover .topbar .meta {
+    font-family: var(--f-premium);
+    font-weight: 600;
+    font-size: 1.1cqh;
+    letter-spacing: 0.38em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+  }
+  .l4-cover .topbar .meta .accent {
+    color: var(--utah-red);
+    font-weight: 700;
+  }
+  .l4-cover .topbar .eccles-mark { height: 3.6cqh; }
+
+  .l4-cover .body {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 4cqw;
+    align-items: center;
+  }
+  .l4-cover .body .lede { display: grid; gap: 3cqh; align-content: center; }
+  .l4-cover .body .lede .eyebrow {
+    font-family: var(--f-premium);
+    font-weight: 600;
+    font-size: 1.15cqh;
+    letter-spacing: 0.4em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    display: flex; gap: 1cqw; align-items: center;
+  }
+  .l4-cover .body .lede .eyebrow::after {
+    content: "";
+    display: block;
+    flex: 1;
+    height: 1px;
+    background: var(--ink);
+    opacity: 0.18;
+  }
+  .l4-cover .body h1 {
+    font-family: var(--f-premium-hero);
+    font-weight: 300;
+    font-size: 8.4cqw;
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    word-spacing: 0.04em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+  }
+  .l4-cover .body h1 .red { color: var(--utah-red); font-weight: 500; font-style: italic; }
+  .l4-cover .body h1 .light {
+    font-family: var(--f-premium-hero);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--steel-light);
+  }
+  .l4-cover .body .signature {
+    font-family: var(--f-premium);
+    font-weight: 400;
+    font-size: 1.85cqh;
+    line-height: 1.55;
+    color: var(--steel-mid);
+    max-width: 38cqw;
+  }
+  .l4-cover .body .signature strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .l4-cover .body .photo-card {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    max-height: 62cqh;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.0) 60%, rgba(0,0,0,0.55) 100%),
+      url('../_legacy/img/gymnastics-vs-lsu-120.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .l4-cover .body .photo-card::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--utah-red);
+    z-index: 2;
+  }
+  .l4-cover .body .photo-card .photo-meta {
+    position: absolute; left: 1.4cqw; right: 1.4cqw; bottom: 1.4cqh;
+    display: flex; justify-content: space-between; align-items: end;
+    font-family: var(--f-premium);
+    font-weight: 600;
+    font-size: 0.95cqh;
+    letter-spacing: 0.28em;
+    color: rgba(255,255,255,0.92);
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .l4-cover .body .photo-card .photo-meta .frame-num {
+    font-family: var(--f-premium);
+    font-weight: 300;
+    font-size: 3.2cqh;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+  }
+
+  /* Stripe band uses real Utah Stripe (4 horizontal bars) flanking center text */
+  .l4-cover .stripe-band {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2cqw;
+    align-items: center;
+    padding: 1.8cqh 0;
+    margin-top: 1.5cqh;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .l4-cover .stripe-band .stripe-text {
+    font-family: var(--f-premium);
+    font-weight: 500;
+    font-size: 1.3cqh;
+    letter-spacing: 0.5em;
+    color: var(--ink);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .l4-cover .stripe-band .stripe-text .red { color: var(--utah-red); margin: 0 0.4cqw; }
+
+  .l4-cover .footer-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2cqw;
+    align-items: end;
+    padding-top: 2.4cqh;
+  }
+  .l4-cover .footer-row .credit-l, .l4-cover .footer-row .credit-r {
+    font-family: var(--f-premium);
+    font-weight: 500;
+    font-size: 1.05cqh;
+    letter-spacing: 0.28em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+  .l4-cover .footer-row .credit-r { text-align: right; }
+  .l4-cover .footer-row .credit-l .strong, .l4-cover .footer-row .credit-r .strong { color: var(--ink); font-weight: 700; }
+  .l4-cover .footer-row .mark-center { display: flex; align-items: center; gap: 1.2cqw; }
+  .l4-cover .footer-row .mark-center .eccles-mark { height: 3cqh; }
+  .l4-cover .footer-row .mark-center .ascent {
+    font-family: var(--f-premium);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.5cqh;
+    color: var(--ink);
+    border-left: 1px solid rgba(0,0,0,0.18);
+    padding-left: 1.2cqw;
+    line-height: 1;
+  }
+
+  /* --- L4 Slide 4.2 — VISION (Stadium to Summit — Myriad-class type) --- */
+  .l4-vision {
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    padding: 4cqh 5cqw;
+  }
+  .l4-vision .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.4cqh;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+  }
+  .l4-vision .topbar .crumb {
+    font-family: var(--f-premium);
+    font-weight: 600;
+    font-size: 1.1cqh;
+    letter-spacing: 0.3em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+  }
+  .l4-vision .topbar .crumb .accent { color: var(--utah-red); }
+  .l4-vision .topbar .eccles-mark { height: 3.2cqh; }
+
+  .l4-vision .hero {
+    padding: 3cqh 0 2cqh;
+    max-width: 90cqw;
+  }
+  .l4-vision .hero .label {
+    font-family: var(--f-premium);
+    font-weight: 600;
+    font-size: 1.1cqh;
+    letter-spacing: 0.5em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    margin-bottom: 1.6cqh;
+  }
+  .l4-vision .hero h2 {
+    font-family: var(--f-premium-hero);
+    font-weight: 300;
+    font-size: 8cqw;
+    line-height: 1.04;
+    letter-spacing: -0.012em;
+    word-spacing: 0.05em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+  }
+  .l4-vision .hero h2 .accent { color: var(--utah-red); font-weight: 500; font-style: italic; }
+  .l4-vision .hero .dek {
+    margin-top: 1.8cqh;
+    font-family: var(--f-premium);
+    font-weight: 400;
+    font-size: 1.9cqh;
+    line-height: 1.5;
+    color: var(--steel-mid);
+    max-width: 60cqw;
+  }
+  .l4-vision .hero .dek strong { color: var(--ink); font-weight: 600; }
+
+  /* Stripe divider uses the real Utah Stripe — 4 horizontal bars */
+  .l4-vision .stripe-divider {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2cqw;
+    align-items: center;
+    margin: 1cqh 0 2cqh;
+  }
+  .l4-vision .stripe-divider .tag {
+    font-family: var(--f-premium);
+    font-weight: 500;
+    font-size: 1.2cqh;
+    letter-spacing: 0.45em;
+    color: var(--ink);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .l4-vision .stripe-divider .tag .red { color: var(--utah-red); }
+
+  .l4-vision .three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3cqw;
+    align-content: center;
+  }
+  .l4-vision .three .reason {
+    display: grid;
+    gap: 1.2cqh;
+    align-content: start;
+    padding-top: 1.6cqh;
+    border-top: 1px solid rgba(0,0,0,0.18);
+    position: relative;
+  }
+  .l4-vision .three .reason::before {
+    content: "";
+    position: absolute; left: 0; top: -1px;
+    width: 6cqw; height: 2px;
+    background: var(--utah-red);
+  }
+  .l4-vision .three .reason .num {
+    font-family: var(--f-premium);
+    font-weight: 600;
+    font-size: 1.05cqh;
+    letter-spacing: 0.35em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+  }
+  .l4-vision .three .reason h3 {
+    font-family: var(--f-premium);
+    font-weight: 400;
+    font-size: 2.6cqh;
+    line-height: 1.22;
+    letter-spacing: 0;
+    word-spacing: 0.08em;
+    color: var(--ink);
+  }
+  .l4-vision .three .reason h3 .accent { color: var(--utah-red); font-weight: 600; font-style: italic; }
+  .l4-vision .three .reason p {
+    font-family: var(--f-premium);
+    font-weight: 400;
+    font-size: 1.55cqh;
+    line-height: 1.55;
+    color: var(--steel-mid);
+  }
+  .l4-vision .three .reason p strong { color: var(--ink); font-weight: 600; }
+
+  .l4-vision .footer-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2cqw;
+    align-items: center;
+    padding-top: 2cqh;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    margin-top: 1.4cqh;
+  }
+  .l4-vision .footer-row .credit-l, .l4-vision .footer-row .credit-r {
+    font-family: var(--f-premium);
+    font-weight: 500;
+    font-size: 1.0cqh;
+    letter-spacing: 0.3em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+  }
+  .l4-vision .footer-row .credit-r { text-align: right; }
+  .l4-vision .footer-row .credit-l .strong, .l4-vision .footer-row .credit-r .strong { color: var(--ink); font-weight: 700; }
+  .l4-vision .footer-row .ascent {
+    font-family: var(--f-premium);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.5cqh;
+    color: var(--ink);
+    text-align: center;
+  }
+
+  /* =================================================================
+     ============ LOOK 5 — CRIMSON (RED/WHITE SPLIT) ================
+     Red dominant + white panels. Cover is vertical split (red hero
+     left, white photo + content right). Vision is red header band
+     above a white content card. More balanced than monolithic red.
+     ================================================================= */
+
+  /* --- L5 Slide 5.1 — COVER (red/white vertical split) --- */
+  .l5-cover {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    overflow: hidden;
+  }
+  .l5-cover .red-pane {
+    background: var(--utah-red);
+    color: var(--paper);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3.5cqh 3.5cqw 3.5cqh 4cqw;
+    position: relative;
+  }
+  .l5-cover .red-pane::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 85% 0%, rgba(255,255,255,0.08), transparent 55%),
+      radial-gradient(ellipse at 15% 100%, rgba(0,0,0,0.18), transparent 55%);
+    pointer-events: none;
+  }
+  .l5-cover .red-pane > * { position: relative; z-index: 1; }
+
+  .l5-cover .white-pane {
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3.5cqh 3.5cqw 3.5cqh 3cqw;
+  }
+
+  /* Shared top bars */
+  .l5-cover .topbar { display: flex; justify-content: space-between; align-items: center; }
+  .l5-cover .red-pane .topbar .meta {
+    font-family: var(--f-mono);
+    font-size: 1cqh;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+    display: flex; gap: 0.8cqw; align-items: center;
+  }
+  .l5-cover .red-pane .topbar .meta::before {
+    content: "";
+    display: inline-block;
+    width: 0.7cqh; height: 0.7cqh;
+    background: var(--paper);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  }
+  .l5-cover .red-pane .topbar .eccles-mark { height: 3.4cqh; }
+
+  .l5-cover .white-pane .topbar .label {
+    font-family: var(--f-mono);
+    font-size: 1cqh;
+    letter-spacing: 0.4em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .l5-cover .white-pane .topbar .meta {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.32em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+  }
+
+  /* Hero on the red pane */
+  .l5-cover .red-pane .hero {
+    display: grid;
+    align-content: center;
+    gap: 2cqh;
+  }
+  .l5-cover .red-pane .hero .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 1.05cqh;
+    letter-spacing: 0.5em;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+  }
+  .l5-cover .red-pane .hero h1 {
+    font-family: var(--f-display);
+    font-size: 12cqw;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .l5-cover .red-pane .hero h1 .outline {
+    -webkit-text-stroke: 1.4px var(--paper);
+    color: transparent;
+  }
+  .l5-cover .red-pane .hero .tagline {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 1.5cqh;
+    letter-spacing: 0.18em;
+    line-height: 1.25;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .l5-cover .red-pane .hero .tagline .accent { color: rgba(255,255,255,0.7); }
+
+  /* Photo card lives in the white pane */
+  .l5-cover .white-pane .photo {
+    position: relative;
+    margin-top: 1.4cqh;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.55) 100%),
+      url('../_legacy/img/gymnastics-vs-lsu-120.jpg');
+    background-size: cover;
+    background-position: center 25%;
+    overflow: hidden;
+  }
+  .l5-cover .white-pane .photo::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 5px; background: var(--utah-red);
+  }
+  .l5-cover .white-pane .photo .photo-meta {
+    position: absolute; left: 1.2cqw; right: 1.2cqw; bottom: 1.2cqh;
+    display: flex; justify-content: space-between; align-items: end;
+    font-family: var(--f-mono);
+    font-size: 0.85cqh;
+    letter-spacing: 0.28em;
+    color: rgba(255,255,255,0.95);
+    text-transform: uppercase;
+  }
+  .l5-cover .white-pane .photo .frame-num {
+    font-family: var(--f-display);
+    font-size: 2.8cqh;
+    letter-spacing: -0.02em;
+    color: var(--paper);
+  }
+
+  /* Footers on each pane */
+  .l5-cover .red-pane .footer { display: grid; gap: 1cqh; padding-top: 1.4cqh; border-top: 1px solid rgba(255,255,255,0.22); }
+  .l5-cover .red-pane .footer .credits {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+  .l5-cover .red-pane .footer .credits .strong { color: var(--paper); font-weight: 700; }
+
+  .l5-cover .white-pane .footer {
+    display: grid;
+    gap: 0.8cqh;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.12);
+  }
+  .l5-cover .white-pane .footer .ascent {
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.4cqh;
+    color: var(--ink);
+    text-align: right;
+  }
+  .l5-cover .white-pane .footer .credits {
+    font-family: var(--f-mono);
+    font-size: 0.95cqh;
+    letter-spacing: 0.3em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.7;
+  }
+  .l5-cover .white-pane .footer .credits .strong { color: var(--ink); font-weight: 700; }
+
+  /* --- L5 Slide 5.2 — VISION (red header + white content card) --- */
+  .l5-vision {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: var(--paper);
+    overflow: hidden;
+  }
+  .l5-vision .red-band {
+    background: var(--utah-red);
+    color: var(--paper);
+    padding: 3.2cqh 4cqw;
+    display: grid;
+    gap: 2cqh;
+    position: relative;
+  }
+  .l5-vision .red-band::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 0%, rgba(255,255,255,0.08), transparent 55%);
+    pointer-events: none;
+  }
+  .l5-vision .red-band > * { position: relative; z-index: 1; }
+
+  .l5-vision .red-band .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .l5-vision .red-band .topbar .crumb {
+    font-family: var(--f-mono);
+    font-size: 1.05cqh;
+    letter-spacing: 0.32em;
+    color: rgba(255,255,255,0.85);
+    text-transform: uppercase;
+  }
+  .l5-vision .red-band .topbar .crumb .accent { color: var(--paper); font-weight: 700; }
+  .l5-vision .red-band .topbar .eccles-mark { height: 3.2cqh; }
+
+  .l5-vision .red-band .hero { display: grid; gap: 1.2cqh; }
+  .l5-vision .red-band .hero .label {
+    font-family: var(--f-mono);
+    font-size: 1.05cqh;
+    letter-spacing: 0.5em;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+  }
+  .l5-vision .red-band .hero h2 {
+    font-family: var(--f-display);
+    font-size: 9.5cqw;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+  .l5-vision .red-band .hero h2 .outline {
+    -webkit-text-stroke: 1.5px var(--paper);
+    color: transparent;
+  }
+
+  .l5-vision .white-band {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 2.8cqh 4cqw 3cqh;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1.6cqh;
+  }
+  .l5-vision .white-band .dek {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.75cqh;
+    line-height: 1.5;
+    color: var(--steel-mid);
+    max-width: 70cqw;
+  }
+  .l5-vision .white-band .dek strong { color: var(--ink); font-weight: 600; }
+
+  .l5-vision .white-band .stripe-divider {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2cqw;
+    align-items: center;
+  }
+  .l5-vision .white-band .stripe-divider .tag {
+    font-family: var(--f-mono);
+    font-weight: 500;
+    font-size: 1.15cqh;
+    letter-spacing: 0.45em;
+    color: var(--ink);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .l5-vision .white-band .stripe-divider .tag .red { color: var(--utah-red); }
+
+  .l5-vision .white-band .three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5cqw;
+    align-content: start;
+  }
+  .l5-vision .white-band .three .reason {
+    display: grid;
+    gap: 1cqh;
+    padding-top: 1.2cqh;
+    border-top: 2px solid var(--ink);
+    position: relative;
+  }
+  .l5-vision .white-band .three .reason::before {
+    content: "";
+    position: absolute; left: 0; top: -2px;
+    width: 6cqw; height: 2px;
+    background: var(--utah-red);
+  }
+  .l5-vision .white-band .three .reason .num {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1cqh;
+    letter-spacing: 0.35em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+  }
+  .l5-vision .white-band .three .reason h3 {
+    font-family: var(--f-display);
+    font-size: 3.2cqh;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .l5-vision .white-band .three .reason h3 .red { color: var(--utah-red); }
+  .l5-vision .white-band .three .reason p {
+    font-family: var(--f-body);
+    font-weight: 400;
+    font-size: 1.45cqh;
+    line-height: 1.55;
+    color: var(--steel-mid);
+  }
+  .l5-vision .white-band .three .reason p strong { color: var(--ink); font-weight: 600; }
+
+  .l5-vision .white-band .footer-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2cqw;
+    align-items: end;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.12);
+  }
+  .l5-vision .white-band .footer-row .credit-l,
+  .l5-vision .white-band .footer-row .credit-r {
+    font-family: var(--f-mono);
+    font-size: 0.9cqh;
+    letter-spacing: 0.3em;
+    color: var(--steel-light);
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+  .l5-vision .white-band .footer-row .credit-r { text-align: right; }
+  .l5-vision .white-band .footer-row .credit-l .strong,
+  .l5-vision .white-band .footer-row .credit-r .strong { color: var(--ink); font-weight: 700; }
+  .l5-vision .white-band .footer-row .ascent {
+    font-family: var(--f-body);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.4cqh;
+    color: var(--ink);
+    text-align: center;
+  }
+
+  /* ---------- responsive guard ---------- */
+  @media (max-aspect-ratio: 16/9) {
+    .stage { width: 100vw; height: calc(100vw * 9 / 16); }
+  }
+</style>
+</head>
+<body>
+
+<!-- =============================================================
+     UTAH STRIPE — inline SVG (EPS won't render in browsers).
+     Chevron motif that reads as Wasatch peaks / mountain skyline.
+     Reusable via <svg class="utah-stripe"><use href="#stripe"/></svg>
+     ============================================================ -->
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <pattern id="stripe-chevron" x="0" y="0" width="12" height="10" patternUnits="userSpaceOnUse">
+      <path d="M0 10 L6 0 L12 10 Z" fill="currentColor"/>
+    </pattern>
+    <symbol id="stripe" viewBox="0 0 240 10" preserveAspectRatio="none">
+      <rect width="240" height="10" fill="url(#stripe-chevron)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="deck" id="deck">
+
+  <div class="stage" id="stage">
+
+    <!-- ===================== SLIDE 0 — INTRO ===================== -->
+    <section class="slide slide-intro" data-section="000 / Intro">
+      <div class="topbar">
+        <div class="brand-stack">
+          <img class="eccles-mark" src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="David Eccles School of Business" />
+          <span class="meta-tag" data-anim="fade">DESIGN DIRECTIONS &nbsp;·&nbsp; ROUND 01</span>
+        </div>
+        <div class="meta-tag" data-anim="fade">
+          <span class="red-dot"></span>BUSINESS OF SPORTS &nbsp;·&nbsp; INTERNAL REVIEW
+        </div>
+      </div>
+
+      <div class="body">
+        <div class="kicker" data-anim="rise">VISION &nbsp;·&nbsp; STADIUM TO SUMMIT</div>
+        <h1 data-anim="rise-2">FIVE WAYS<br/>TO LAUNCH<br/><span class="red">THE BUSINESS<br/>OF SPORTS.</span></h1>
+        <p class="sub" data-anim="rise-3">Five identity directions for the Business of Sports minor — a new program from the David Eccles School of Business, opening to all U of U undergrads in <strong>Fall 2027</strong>. Each look serves all three audiences (recruit, internal, industry partner) with a different point of view, while carrying the program's vision — <strong>Stadium to Summit</strong> — through every slide.</p>
+
+        <div class="three-up">
+          <div class="card" data-anim="rise-4">
+            <div class="num">DIR — 001</div>
+            <div class="name">STADIUM<br/>EDITORIAL</div>
+            <div class="blurb">Cinematic, photo-led, oversized type. The Athletic meets a championship banner.</div>
+          </div>
+          <div class="card" data-anim="rise-4" style="animation-delay:.85s;">
+            <div class="num">DIR — 002</div>
+            <div class="name">FRANCHISE<br/>BRIEF</div>
+            <div class="blurb">Front-office dossier. Modular, technical, data-confident, ink-on-paper.</div>
+          </div>
+          <div class="card" data-anim="rise-4" style="animation-delay:.95s;">
+            <div class="num">DIR — 003</div>
+            <div class="name">BROADCAST<br/>PRIME</div>
+            <div class="blurb">Prime-time energy. Lower-thirds, tickers, glow — feels like Sunday night.</div>
+          </div>
+          <div class="card" data-anim="rise-4" style="animation-delay:1.05s;">
+            <div class="num">DIR — 004</div>
+            <div class="name">PREMIUM<br/>MINIMAL</div>
+            <div class="blurb">Mostly white. Fraunces hero + Outfit. Real Utah Stripe. Editorial, quiet.</div>
+          </div>
+          <div class="card" data-anim="rise-4" style="animation-delay:1.15s;">
+            <div class="num">DIR — 005</div>
+            <div class="name">CRIMSON</div>
+            <div class="blurb">Utah Red ground, white type. Title-sponsor poster confidence. Monolithic.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-row">
+        <span data-anim="fade-3">UNIV. OF UTAH &nbsp;·&nbsp; DAVID ECCLES SCHOOL OF BUSINESS</span>
+        <span data-anim="fade-3">PRESS <kbd style="font-family:var(--f-mono);background:rgba(255,255,255,.1);padding:0 6px;border-radius:3px;color:var(--paper);">F</kbd> FOR FULLSCREEN &nbsp;·&nbsp; <kbd style="font-family:var(--f-mono);background:rgba(255,255,255,.1);padding:0 6px;border-radius:3px;color:var(--paper);">→</kbd> TO ADVANCE</span>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 1 / SLIDE 1.1 — COVER (Stadium Editorial) ===================== -->
+    <section class="slide l1-cover" data-section="DIR 001 · STADIUM EDITORIAL">
+      <div class="photo" data-anim="zoom"></div>
+
+      <div class="topbar">
+        <span class="meta-tag"><span class="red-dot"></span>DIRECTION 001 &nbsp;·&nbsp; STADIUM EDITORIAL</span>
+        <div class="eccles-mark"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="DESB"/></div>
+      </div>
+
+      <div class="midbar">
+        <div class="eyebrow" data-anim="reveal">— A NEW MINOR FROM THE DAVID ECCLES SCHOOL OF BUSINESS &nbsp;·&nbsp; FALL 2027</div>
+        <h1 data-anim="reveal-2">
+          <span>THE BUSINESS</span><br/>
+          <span class="ghost">OF</span> <span class="red">SPORTS.</span>
+        </h1>
+      </div>
+
+      <div class="bottombar">
+        <div class="tagline" data-anim="rise-3">
+          STADIUM TO <span class="accent">SUMMIT.</span><br/>
+          BUILDING THE NEXT GENERATION<br/>OF SPORTS LEADERS.
+        </div>
+        <div class="rule" data-anim="reveal-3"></div>
+        <div class="credit" data-anim="fade-3">
+          DEPT. OF <span class="strong">ENTREPRENEURSHIP &amp; STRATEGY</span><br/>
+          21 CR &nbsp;/&nbsp; <span class="strong">OPEN TO ALL UNDERGRADS</span><br/>
+          ISSUE <span class="strong">04.26</span> &nbsp;·&nbsp; V1.0
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 1 / SLIDE 1.2 — THE OPPORTUNITY ===================== -->
+    <section class="slide l1-opportunity" data-section="DIR 001 · WHY WE CAN WIN">
+      <div class="photo">
+        <div class="caption">
+          <span>UTAH ATHLETICS &nbsp;·&nbsp; PLACEHOLDER — RICE-ECCLES STADIUM</span>
+          <span>PHOTO &nbsp;·&nbsp; UMC SOURCED</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="eyebrow" data-anim="reveal">— 02 &nbsp;·&nbsp; LANDSCAPE / WHY WE CAN WIN</div>
+
+        <div class="stat-cluster">
+          <div class="stat-big" data-anim="count">31<span class="unit">×</span></div>
+          <h2 data-anim="rise-2">A foundation only this<br/>university can provide.</h2>
+          <p class="body" data-anim="rise-3">Thirty-one championship teams. An AAU research university. Host of the 2002 Olympic and Paralympic Winter Games — and the <strong>2034 Games</strong>. A student body that comes to Utah for outdoor adventure and collegiate sport. No other school in the country sits where Utah sits. The Business of Sports minor is what happens when you put a top-15 athletic department and a top business school under one roof.</p>
+        </div>
+
+        <div class="stat-row">
+          <div class="cell" data-anim="rise-4">
+            <div class="n"><span class="red">2034</span></div>
+            <div class="l">OLYMPIC &amp; PARALYMPIC<br/>WINTER GAMES — UTAH HOSTS</div>
+          </div>
+          <div class="cell" data-anim="rise-4" style="animation-delay:.85s;">
+            <div class="n">30</div>
+            <div class="l">U OF U ATHLETES COMPETING<br/>AT THE 2026 WINTER GAMES</div>
+          </div>
+          <div class="cell" data-anim="rise-4" style="animation-delay:.95s;">
+            <div class="n"><span class="red">AAU</span></div>
+            <div class="l">MEMBER — TOP TIER U.S. RESEARCH<br/>UNIVERSITY &nbsp;·&nbsp; MUSS-NATION READY</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>SECTION 02 &nbsp;·&nbsp; WHERE UNIVERSITY ASSETS MEET INDUSTRY OPPORTUNITY</span>
+          <div class="eccles-mark"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB"/></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 2 / SLIDE 2.1 — COVER (Franchise Brief) ===================== -->
+    <section class="slide l2-cover" data-section="DIR 002 · FRANCHISE BRIEF">
+      <div class="topbar">
+        <div class="lockup">
+          <span class="file">BRIEF · 002</span>
+          <span data-anim="fade">DAVID ECCLES SCHOOL OF BUSINESS &nbsp;·&nbsp; OFFICE OF THE DEAN</span>
+        </div>
+        <div class="stamp">
+          <span>CLASSIFICATION</span>
+          <span class="red-box">PROPOSAL — INTERNAL REVIEW</span>
+        </div>
+      </div>
+
+      <div class="midbar">
+        <div class="left">
+          <div class="eyebrow" data-anim="reveal">— FILE · BOS-MINOR-2027 / V1.0</div>
+          <h1 data-anim="reveal-2">
+            THE<br/>
+            BUSINESS<br/>
+            <span class="underline">OF SPORTS</span>
+          </h1>
+        </div>
+        <div class="right">
+          <div class="row" data-anim="rise-3">
+            <div class="k">PROGRAM</div>
+            <div class="v">ACADEMIC MINOR &nbsp;<span class="pill">21 CR</span></div>
+          </div>
+          <div class="row" data-anim="rise-3" style="animation-delay:.45s;">
+            <div class="k">DEPARTMENT</div>
+            <div class="v">ENTREPRENEURSHIP &amp; STRATEGY</div>
+          </div>
+          <div class="row" data-anim="rise-3" style="animation-delay:.55s;">
+            <div class="k">LAUNCH</div>
+            <div class="v">FALL 2027 &nbsp;<span class="pill">TARGET</span></div>
+          </div>
+          <div class="row" data-anim="rise-3" style="animation-delay:.65s;">
+            <div class="k">AUDIENCE</div>
+            <div class="v">UNDERGRAD &nbsp;·&nbsp; UNIVERSITY-WIDE</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottombar">
+        <div class="tagline-block" data-anim="rise-4">
+          <div class="k">VISION — STADIUM TO SUMMIT</div>
+          <div class="v">TRAINED IN BUSINESS. BUILT FOR SPORTS.</div>
+        </div>
+        <div></div>
+        <div class="barcode-block" data-anim="fade-3">
+          <div class="barcode">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          ISSUE <span class="strong">001</span> &nbsp;·&nbsp; <span class="strong">UTAH.EDU/BIZ-OF-SPORTS</span><br/>
+          PREPARED BY <span class="strong">DESB STRATEGY OFFICE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 2 / SLIDE 2.2 — PROGRAM OVERVIEW ===================== -->
+    <section class="slide l2-program" data-section="DIR 002 · ANALYTICS · BRAND · EXPERIENCE">
+      <div class="topbar">
+        <div class="left">
+          <span class="file">BRIEF · 002</span>
+          <span>SECTION 04 &nbsp;·&nbsp; FOCUS / BUSINESS OF SPORTS THEMES</span>
+        </div>
+        <h2 data-anim="reveal">THREE<span class="red"> PILLARS.</span> ONE PROGRAM.</h2>
+      </div>
+
+      <div class="tracks">
+        <div class="track" data-anim="rise">
+          <div class="label">PILLAR</div>
+          <div>
+            <div class="num">01<span class="slash">/</span></div>
+            <div class="name">ANALYTICS</div>
+          </div>
+          <div class="body"><strong>Transforming numbers into strategy.</strong> Sponsorship ROI, media rights valuation, fan intelligence, athlete analytics, and the data-driven decisions that run the modern front office.</div>
+          <div class="courses">
+            <div class="row"><span class="c">QAMO 3100</span><span class="t">Sports Analytics</span></div>
+            <div class="row"><span class="c">MKTG 4780</span><span class="t">Media Rights Valuation</span></div>
+            <div class="row"><span class="c">CORE</span><span class="t">Data-Driven Decisions</span></div>
+          </div>
+        </div>
+
+        <div class="track" data-anim="rise" style="animation-delay:.55s;">
+          <div class="label">PILLAR</div>
+          <div>
+            <div class="num">02<span class="slash">/</span></div>
+            <div class="name">BRAND</div>
+          </div>
+          <div class="body"><strong>Where sports meets culture.</strong> Brand &amp; product development, storytelling &amp; activation, athlete brand management, and the cultural intersection that builds modern franchises.</div>
+          <div class="courses">
+            <div class="row"><span class="c">MKTG 3000</span><span class="t">Intro to Marketing</span></div>
+            <div class="row"><span class="c">MKTG 4780</span><span class="t">Sports Marketing</span></div>
+            <div class="row"><span class="c">ELEC</span><span class="t">Sports Media</span></div>
+          </div>
+        </div>
+
+        <div class="track" data-anim="rise" style="animation-delay:.65s;">
+          <div class="label">PILLAR</div>
+          <div>
+            <div class="num">03<span class="slash">/</span></div>
+            <div class="name">EXPERIENCE</div>
+          </div>
+          <div class="body"><strong>From concept to legacy.</strong> Venue design, corporate partner integration, universal access, community impact, and the legacy-building operations behind world-class events.</div>
+          <div class="courses">
+            <div class="row"><span class="c">ELEC</span><span class="t">Event Mgmt &amp; Facility Ops</span></div>
+            <div class="row"><span class="c">ELEC</span><span class="t">Intro to the Winter Olympics</span></div>
+            <div class="row"><span class="c">ELEC</span><span class="t">Law &amp; Sports</span></div>
+          </div>
+        </div>
+
+        <div class="track" data-anim="rise" style="animation-delay:.75s;">
+          <div class="label">INTEGRATED ACROSS ALL COURSES</div>
+          <div>
+            <div class="num">+</div>
+            <div class="name">CROSS-<br/>CUTTING<br/>THEMES</div>
+          </div>
+          <div class="body"><strong>Embedded in every course</strong> — so students don't take an "AI elective," they graduate fluent. Reinforced across contexts and applications.</div>
+          <div class="courses">
+            <div class="row"><span class="c">+ AI</span><span class="t">AI Fluent. Fundamentals Strong.</span></div>
+            <div class="row"><span class="c">+ FAN</span><span class="t">Fan Engagement</span></div>
+            <div class="row"><span class="c">+ SALES</span><span class="t">Sales Strategy</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-row">
+        <div class="summary">
+          <div class="cell" data-anim="rise-4">
+            <div class="n">21<span class="red"> CR</span></div>
+            <div class="l">TOTAL CREDITS</div>
+          </div>
+          <div class="cell" data-anim="rise-4" style="animation-delay:.85s;">
+            <div class="n">9 + 3 + 9</div>
+            <div class="l">CORE &nbsp;/&nbsp; EXPERIENTIAL &nbsp;/&nbsp; ELECTIVE</div>
+          </div>
+          <div class="cell" data-anim="rise-4" style="animation-delay:.95s;">
+            <div class="n">1<span class="red"> CAPSTONE</span></div>
+            <div class="l">INDUSTRY-PARTNERED</div>
+          </div>
+          <div class="cell" data-anim="rise-4" style="animation-delay:1.05s;">
+            <div class="n">FALL<span class="red"> '27</span></div>
+            <div class="l">PROGRAM OFFICIALLY LAUNCHES</div>
+          </div>
+        </div>
+        <div class="right-end">
+          <div style="margin-bottom:.6cqh;">FILE <span class="strong">BOS-MINOR / V1.0</span></div>
+          PAGE <span class="strong">04 / 09</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 3 / SLIDE 3.1 — COVER (Broadcast Prime) ===================== -->
+    <section class="slide l3-cover" data-section="DIR 003 · BROADCAST PRIME">
+      <div class="photo" data-anim="zoom"></div>
+      <div class="scanlines"></div>
+      <div class="vignette-sweep"></div>
+
+      <div class="liveband" data-anim="fade">
+        <span class="live">● LIVE</span>
+        <span>UTAH ATHLETICS &nbsp;·&nbsp; PRESENTED BY DESB</span>
+      </div>
+
+      <div class="topright" data-anim="fade">
+        <div class="ts">FALL · 2027 · CHANNEL 001</div>
+        <div class="city">SALT LAKE CITY</div>
+      </div>
+
+      <div class="center">
+        <div class="preheader" data-anim="reveal">STADIUM TO SUMMIT &nbsp;·&nbsp; FALL 2027</div>
+        <h1 data-anim="reveal-2">
+          THE BUSINESS<br/>
+          <span class="of">/</span>OF<span class="of">/</span><br/>
+          SPORTS
+        </h1>
+        <div class="sub" data-anim="rise-3">
+          FROM THE STANDS <span class="sep">/</span> TO THE FRONT OFFICE
+        </div>
+      </div>
+
+      <div class="lowerthird">
+        <div class="tag" data-anim="rise-4">
+          <div class="label">— A MINOR FROM</div>
+          <div class="v">DAVID ECCLES SCHOOL OF BUSINESS</div>
+        </div>
+        <div class="line" data-anim="reveal-4"></div>
+        <div class="credits" data-anim="fade-3">
+          21 CR &nbsp;/&nbsp; ANALYTICS · BRAND · EXPERIENCE<br/>
+          ECCLES.UTAH.EDU
+        </div>
+      </div>
+
+      <div class="ticker">
+        <div class="strip" data-anim="ticker">
+          <span>BREAKING — UTAH ANNOUNCES BUSINESS OF SPORTS MINOR</span>
+          <span>3 PILLARS · 21 CREDITS · 1 INDUSTRY CAPSTONE</span>
+          <span>ANALYTICS · BRAND · EXPERIENCE — AI FLUENT BY GRADUATION</span>
+          <span>STADIUM TO SUMMIT — BUILDING THE NEXT GENERATION OF SPORTS LEADERS</span>
+          <span>FRENCH ALPS OLYMPIC INTERNSHIP — NICE, FRANCE</span>
+          <span>HOST CITY OF THE 2034 OLYMPIC &amp; PARALYMPIC WINTER GAMES</span>
+          <span>BREAKING — UTAH ANNOUNCES BUSINESS OF SPORTS MINOR</span>
+          <span>3 PILLARS · 21 CREDITS · 1 INDUSTRY CAPSTONE</span>
+          <span>ANALYTICS · BRAND · EXPERIENCE — AI FLUENT BY GRADUATION</span>
+          <span>STADIUM TO SUMMIT — BUILDING THE NEXT GENERATION OF SPORTS LEADERS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 3 / SLIDE 3.2 — INDUSTRY PARTNER VALUE ===================== -->
+    <section class="slide l3-partner" data-section="DIR 003 · INDUSTRY PARTNERS">
+      <div class="photo"></div>
+      <div class="scanlines"></div>
+
+      <div class="topbar">
+        <div class="lockup">
+          <span class="seg">SEG · 06</span>
+          <span>INDUSTRY PARTNER VALUE</span>
+        </div>
+        <div class="right">RUNTIME 00:06:00 &nbsp;·&nbsp; CH 001</div>
+      </div>
+
+      <div class="grid">
+        <div class="lede">
+          <div class="eyebrow" data-anim="reveal">— BUILT WITH JAZZ · SEG · MILLER · SKI UTAH · UOLF · CYNOSURE</div>
+          <h2 data-anim="reveal-2">
+            BUILT <span class="pop">WITH</span> THE INDUSTRY.<br/>
+            HIRED <span class="pop">BY</span> THE INDUSTRY.
+          </h2>
+          <p class="body" data-anim="rise-3">
+            The Business of Sports minor launches with an advisory group already in the room — from the Utah Jazz and Smith Entertainment Group to Real Salt Lake, Ski Utah, the Miller and Eccles family offices, and the 2034 Olympic Legacy team. Partner with us and own a seat where the next generation of sports leaders is trained.
+          </p>
+        </div>
+
+        <div class="pipeline">
+          <div class="row" data-anim="rise-3" style="animation-delay:.45s;">
+            <div class="n">01</div>
+            <div class="name">INDUSTRY PERSPECTIVE<span class="sub">Shape skills, trends, and curriculum focus from inside the field</span></div>
+            <div class="bar"><i data-anim="bar"></i></div>
+          </div>
+          <div class="row" data-anim="rise-3" style="animation-delay:.55s;">
+            <div class="n">02</div>
+            <div class="name">CAPSTONE &amp; INTERNSHIP PIPELINE<span class="sub">Real briefs and live placements — incl. French Alps Olympic Internship, Nice</span></div>
+            <div class="bar"><i data-anim="bar-2"></i></div>
+          </div>
+          <div class="row" data-anim="rise-3" style="animation-delay:.65s;">
+            <div class="n">03</div>
+            <div class="name">CONNECTED TO THE ECOSYSTEM<span class="sub">Leagues, brands, NGBs, Olympic legacy — Utah's full sports stack</span></div>
+            <div class="bar"><i data-anim="bar-3"></i></div>
+          </div>
+          <div class="row" data-anim="rise-3" style="animation-delay:.75s;">
+            <div class="n">04</div>
+            <div class="name">FOUNDING ADVISORY SEAT<span class="sub">A high-impact, focused-time role shaping how Utah educates the next generation</span></div>
+            <div class="bar"><i data-anim="bar-4"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lowerthird">
+        <div class="tag" data-anim="rise-4">
+          <div class="label">SEG 06 — INDUSTRY VALUE</div>
+          <div class="v">PARTNER WITH UTAH · FALL 2027</div>
+        </div>
+        <div class="line"></div>
+        <div class="right" data-anim="fade-3">
+          ECCLES.UTAH.EDU &nbsp;·&nbsp; SHAPING THIS TOGETHER
+        </div>
+      </div>
+
+      <div class="ticker">
+        <div class="strip" data-anim="ticker">
+          <span>SHAPING THIS TOGETHER — UTAH BUSINESS OF SPORTS</span>
+          <span>FOUNDING ADVISORS — JAZZ · SEG · MILLER · CYNOSURE · RSL · SKI UTAH · UOLF · KEN GARFF</span>
+          <span>INDUSTRY PERSPECTIVE · CAPSTONE PIPELINE · ADVISORY SEAT</span>
+          <span>HOST CITY OF THE 2034 OLYMPIC &amp; PARALYMPIC WINTER GAMES</span>
+          <span>SHAPING THIS TOGETHER — UTAH BUSINESS OF SPORTS</span>
+          <span>FOUNDING ADVISORS — JAZZ · SEG · MILLER · CYNOSURE · RSL · SKI UTAH · UOLF · KEN GARFF</span>
+          <span>INDUSTRY PERSPECTIVE · CAPSTONE PIPELINE · ADVISORY SEAT</span>
+          <span>HOST CITY OF THE 2034 OLYMPIC &amp; PARALYMPIC WINTER GAMES</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 4 / SLIDE 4.1 — COVER (Premium Minimal) ===================== -->
+    <section class="slide l4-cover" data-section="DIR 004 · PREMIUM MINIMAL">
+      <div class="topbar">
+        <span class="meta"><span class="accent">●</span> &nbsp;DIRECTION 004 &nbsp;·&nbsp; PREMIUM MINIMAL</span>
+        <div class="eccles-mark"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB"/></div>
+      </div>
+
+      <div class="body">
+        <div class="lede">
+          <div class="eyebrow" data-anim="reveal">— A New Minor &nbsp;·&nbsp; Fall 2027</div>
+          <h1 data-anim="reveal-2">
+            The Business<br/>
+            <span class="light">of</span> <span class="red">Sports.</span>
+          </h1>
+          <p class="signature" data-anim="rise-3">
+            A minor from the <strong>David Eccles School of Business</strong>, opening Fall 2027 to all University of Utah undergraduates. Twenty-one credits. Three pillars. One ambition — <strong>building the next generation of sports leaders.</strong>
+          </p>
+        </div>
+
+        <div class="photo-card" data-anim="fade-2">
+          <div class="photo-meta">
+            <span class="frame-num">04<span style="color:var(--utah-red)">/</span></span>
+            <span>Utah Gymnastics &nbsp;·&nbsp; vs. LSU</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stripe-band" data-anim="reveal-3">
+        <div class="utah-stripe thin"></div>
+        <span class="stripe-text">Stadium <span class="red">/</span> to <span class="red">/</span> Summit</span>
+        <div class="utah-stripe thin"></div>
+      </div>
+
+      <div class="footer-row">
+        <div class="credit-l" data-anim="fade-3">
+          DEPT. <span class="strong">ENTREPRENEURSHIP &amp; STRATEGY</span><br/>
+          21 CR &nbsp;·&nbsp; <span class="strong">OPEN UNIVERSITY-WIDE</span>
+        </div>
+        <div class="mark-center">
+          <span class="ascent">Ascent Begins Here.</span>
+        </div>
+        <div class="credit-r" data-anim="fade-3">
+          ISSUE <span class="strong">04.26</span> &nbsp;·&nbsp; V1.0<br/>
+          ECCLES.UTAH.EDU
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 4 / SLIDE 4.2 — VISION: STADIUM TO SUMMIT ===================== -->
+    <section class="slide l4-vision" data-section="DIR 004 · STADIUM TO SUMMIT">
+      <div class="topbar">
+        <span class="crumb"><span class="accent">04</span> &nbsp;·&nbsp; Vision &nbsp;·&nbsp; Stadium to Summit</span>
+        <div class="eccles-mark"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalblack.svg" alt="DESB"/></div>
+      </div>
+
+      <div class="hero">
+        <div class="label" data-anim="reveal">— Vision / We Are Creating This Program for Three Reasons</div>
+        <h2 data-anim="reveal-2">Stadium to <span class="accent">Summit.</span></h2>
+        <p class="dek" data-anim="rise-3">A path for students. A lens for business. A catalyst for the community of sport. Built inside the David Eccles School of Business and accountable to all three.</p>
+      </div>
+
+      <div class="stripe-divider">
+        <div class="utah-stripe thin"></div>
+        <span class="tag">Three <span class="red">/</span> Reasons</span>
+        <div class="utah-stripe thin"></div>
+      </div>
+
+      <div class="three">
+        <div class="reason" data-anim="rise-3">
+          <div class="num">Reason 01</div>
+          <h3>A career path <span class="accent">in sport.</span></h3>
+          <p>Open every door in the industry — front office, brand house, venue floor. Graduates leave with a vetted résumé, a capstone in the field, and a network of <strong>Utah's founding industry advisors</strong> behind them.</p>
+        </div>
+        <div class="reason" data-anim="rise-3" style="animation-delay:.5s;">
+          <div class="num">Reason 02</div>
+          <h3>Business taught through the <span class="accent">lens of sport.</span></h3>
+          <p>Analytics, brand, and operations — taught the way the industry actually runs them. Every course is grounded in real teams, real briefs, and three integrated themes: <strong>AI, fan engagement, and sales strategy</strong>.</p>
+        </div>
+        <div class="reason" data-anim="rise-3" style="animation-delay:.6s;">
+          <div class="num">Reason 03</div>
+          <h3>A catalyst for the <span class="accent">community of sport.</span></h3>
+          <p>Salt Lake hosts the 2034 Olympic and Paralympic Winter Games. The Jazz, RSL, Smith Entertainment, Miller, and Ski Utah are already at the table. The minor is how Utah supplies the talent the moment requires.</p>
+        </div>
+      </div>
+
+      <div class="footer-row">
+        <div class="credit-l" data-anim="fade-3">Page <span class="strong">04 / 12</span> &nbsp;·&nbsp; Dir 004</div>
+        <div class="ascent">Ascent Begins Here.</div>
+        <div class="credit-r" data-anim="fade-3"><span class="strong">David Eccles School of Business</span></div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 5 / SLIDE 5.1 — COVER (red/white vertical split) ===================== -->
+    <section class="slide l5-cover" data-section="DIR 005 · CRIMSON">
+      <div class="red-pane">
+        <div class="topbar">
+          <span class="meta">DIRECTION 005 &nbsp;·&nbsp; CRIMSON</span>
+          <div class="eccles-mark"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="DESB"/></div>
+        </div>
+
+        <div class="hero">
+          <div class="eyebrow" data-anim="reveal">— FALL 2027 &nbsp;·&nbsp; A NEW MINOR</div>
+          <h1 data-anim="reveal-2">
+            THE BUSINESS<br/>
+            OF <span class="outline">SPORTS.</span>
+          </h1>
+          <div class="tagline" data-anim="rise-3">
+            STADIUM TO SUMMIT.<br/>
+            BUILDING THE NEXT GENERATION <span class="accent">OF SPORTS LEADERS.</span>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="utah-stripe thin white" data-anim="reveal-3"></div>
+          <div class="credits">
+            DEPT. <span class="strong">ENTREPRENEURSHIP &amp; STRATEGY</span><br/>
+            21 CR &nbsp;·&nbsp; <span class="strong">OPEN UNIVERSITY-WIDE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="white-pane">
+        <div class="topbar">
+          <span class="label">— DAVID ECCLES SCHOOL OF BUSINESS</span>
+          <span class="meta">ISSUE 04.26 &nbsp;·&nbsp; V1.0</span>
+        </div>
+
+        <div class="photo" data-anim="fade-2">
+          <div class="photo-meta">
+            <span class="frame-num">04<span style="color:var(--utah-red)">/</span></span>
+            <span>Utah Gymnastics &nbsp;·&nbsp; vs. LSU</span>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="ascent">Ascent Begins Here.</div>
+          <div class="utah-stripe thin"></div>
+          <div class="credits">
+            COHORT 01 &nbsp;·&nbsp; FALL 2027<br/>
+            <span class="strong">ECCLES.UTAH.EDU</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOOK 5 / SLIDE 5.2 — VISION (red header band + white content card) ===================== -->
+    <section class="slide l5-vision" data-section="DIR 005 · STADIUM TO SUMMIT">
+      <div class="red-band">
+        <div class="topbar">
+          <span class="crumb"><span class="accent">05</span> &nbsp;·&nbsp; VISION &nbsp;·&nbsp; STADIUM TO SUMMIT</span>
+          <div class="eccles-mark"><img src="../_legacy/logos/desb_logo_2024_digital_horizontalwhite.svg" alt="DESB"/></div>
+        </div>
+
+        <div class="hero">
+          <div class="label" data-anim="reveal">— VISION / WE ARE CREATING THIS PROGRAM FOR THREE REASONS</div>
+          <h2 data-anim="reveal-2">STADIUM TO <span class="outline">SUMMIT.</span></h2>
+        </div>
+      </div>
+
+      <div class="white-band">
+        <p class="dek" data-anim="rise-3">A path for students. A lens for business. A catalyst for the community of sport. Built inside the David Eccles School of Business and accountable to all three.</p>
+
+        <div class="stripe-divider">
+          <div class="utah-stripe thin"></div>
+          <span class="tag">THREE <span class="red">/</span> REASONS</span>
+          <div class="utah-stripe thin"></div>
+        </div>
+
+        <div class="three">
+          <div class="reason" data-anim="rise-3">
+            <div class="num">REASON 01</div>
+            <h3>A career path <span class="red">in sport.</span></h3>
+            <p>Open every door in the industry — front office, brand house, venue floor. Graduates leave with a vetted résumé, a capstone in the field, and a network of <strong>Utah's founding industry advisors</strong> behind them.</p>
+          </div>
+          <div class="reason" data-anim="rise-3" style="animation-delay:.5s;">
+            <div class="num">REASON 02</div>
+            <h3>Business through the <span class="red">lens of sport.</span></h3>
+            <p>Analytics, brand, and operations — taught the way the industry actually runs them. Every course is grounded in real teams, real briefs, and three integrated themes: <strong>AI, fan engagement, and sales strategy</strong>.</p>
+          </div>
+          <div class="reason" data-anim="rise-3" style="animation-delay:.6s;">
+            <div class="num">REASON 03</div>
+            <h3>A catalyst for the <span class="red">community of sport.</span></h3>
+            <p>Salt Lake hosts the 2034 Olympic and Paralympic Winter Games. The Jazz, RSL, Smith Entertainment, Miller, and Ski Utah are already at the table. The minor is how Utah supplies the talent the moment requires.</p>
+          </div>
+        </div>
+
+        <div class="footer-row">
+          <div class="credit-l" data-anim="fade-3">PAGE <span class="strong">05 / 12</span> &nbsp;·&nbsp; DIR 005</div>
+          <div class="ascent">Ascent Begins Here.</div>
+          <div class="credit-r" data-anim="fade-3"><span class="strong">DAVID ECCLES SCHOOL OF BUSINESS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== OUTRO — Decision ===================== -->
+    <section class="slide slide-outro" data-section="DECISION · WHICH DIRECTION">
+      <div class="topbar">
+        <span class="meta-tag"><span class="red-dot"></span>ROUND 01 &nbsp;·&nbsp; INTERNAL REVIEW</span>
+        <span class="meta-tag">STADIUM TO SUMMIT &nbsp;·&nbsp; ASCENT BEGINS HERE.</span>
+      </div>
+
+      <div class="body">
+        <h2 data-anim="rise"><span class="red">WHICH ONE</span><br/>WINS THE ROOM?</h2>
+
+        <div class="picker">
+          <div class="pick" data-anim="rise-3">
+            <div class="label">DIRECTION 001</div>
+            <div class="name">STADIUM<br/>EDITORIAL</div>
+            <div class="tag">STADIUM TO SUMMIT. BUILDING THE NEXT GENERATION OF SPORTS LEADERS.</div>
+            <div class="blurb">Wins when the room needs to <strong>feel something first</strong>. Strongest with student recruits and industry partners who buy on energy. Quietly credible for stakeholders.</div>
+          </div>
+          <div class="pick" data-anim="rise-3" style="animation-delay:.5s;">
+            <div class="label">DIRECTION 002</div>
+            <div class="name">FRANCHISE<br/>BRIEF</div>
+            <div class="tag">STADIUM TO SUMMIT. TRAINED IN BUSINESS. BUILT FOR SPORTS.</div>
+            <div class="blurb">Wins when academic credibility is the first hurdle. Strongest with the dean, faculty, and athletics — without losing any sharpness for students or partners.</div>
+          </div>
+          <div class="pick" data-anim="rise-3" style="animation-delay:.6s;">
+            <div class="label">DIRECTION 003</div>
+            <div class="name">BROADCAST<br/>PRIME</div>
+            <div class="tag">STADIUM TO SUMMIT. FROM THE STANDS TO THE FRONT OFFICE.</div>
+            <div class="blurb">Wins when we want a stage moment. Strongest with industry partners and student fandom. The most cinematic. The most expensive to maintain at quality.</div>
+          </div>
+          <div class="pick" data-anim="rise-3" style="animation-delay:.7s;">
+            <div class="label">DIRECTION 004</div>
+            <div class="name">PREMIUM<br/>MINIMAL</div>
+            <div class="tag">STADIUM TO SUMMIT. ASCENT BEGINS HERE.</div>
+            <div class="blurb">Wins when the room is sophisticated. Strongest with the dean, donors, and prestige industry partners. Quiet confidence. Easiest to maintain at quality.</div>
+          </div>
+          <div class="pick" data-anim="rise-3" style="animation-delay:.8s;">
+            <div class="label">DIRECTION 005</div>
+            <div class="name">CRIMSON</div>
+            <div class="tag">STADIUM TO SUMMIT. BUILT IN UTAH.</div>
+            <div class="blurb">Wins when we want unmistakably Utah. Strongest with student fans and athletics. Title-sponsor poster energy. Highest brand-equity moment.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-row">
+        <span data-anim="fade-3">DAVID ECCLES SCHOOL OF BUSINESS &nbsp;·&nbsp; ASCENT BEGINS HERE.</span>
+        <span data-anim="fade-3">NEXT — DOWNSELECT &amp; FULL DECK BUILDOUT</span>
+      </div>
+    </section>
+
+  </div><!-- /.stage -->
+
+  <!-- HUD -->
+  <div class="hud">
+    <div class="hud-left">
+      <span class="pip"></span>
+      <span id="hud-section">000 / INTRO</span>
+    </div>
+    <div class="hud-right">
+      <span id="hud-slide">01 / 12</span>
+    </div>
+  </div>
+
+  <div class="progress-bar" id="progress"></div>
+
+  <div class="help" id="help">
+    <kbd>F</kbd> FULLSCREEN &nbsp; <kbd>←</kbd><kbd>→</kbd> NAVIGATE &nbsp; <kbd>HOME</kbd> RESET
+  </div>
+
+</div>
+
+<script>
+(() => {
+  const slides   = Array.from(document.querySelectorAll('.slide'));
+  const sectionEl = document.getElementById('hud-section');
+  const counterEl = document.getElementById('hud-slide');
+  const progress  = document.getElementById('progress');
+  const help      = document.getElementById('help');
+  const stage     = document.getElementById('stage');
+  const deck      = document.getElementById('deck');
+  let i = 0;
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function setActive(next, dir = 1) {
+    const total = slides.length;
+    next = Math.max(0, Math.min(total - 1, next));
+    if (next === i && slides[i].classList.contains('active')) return;
+
+    slides.forEach((s, idx) => {
+      if (idx === next) {
+        // Reset animations by toggling .active class with a frame gap
+        s.classList.remove('active');
+        // force reflow so animations re-fire
+        void s.offsetWidth;
+        s.classList.add('active');
+      } else {
+        s.classList.remove('active');
+      }
+    });
+
+    i = next;
+
+    const section = slides[i].dataset.section || '—';
+    sectionEl.textContent = section.toUpperCase();
+    counterEl.textContent = `${pad(i + 1)} / ${pad(total)}`;
+    progress.style.width = ((i) / (total - 1) * 100) + '%';
+  }
+
+  function next(){ setActive(i + 1, 1); }
+  function prev(){ setActive(i - 1, -1); }
+  function first(){ setActive(0, 1); }
+  function last(){ setActive(slides.length - 1, 1); }
+
+  // Initial paint
+  setActive(0);
+
+  // Keyboard nav
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown' || e.key === 'Enter') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); first(); }
+    else if (e.key === 'End') { e.preventDefault(); last(); }
+    else if (e.key === 'f' || e.key === 'F') {
+      e.preventDefault();
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    }
+  });
+
+  // Click-to-advance (right side advances, left side goes back)
+  stage.addEventListener('click', (e) => {
+    const rect = stage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (x > rect.width * 0.4) next();
+    else prev();
+  });
+
+  // Fade out the helper after a few seconds
+  setTimeout(() => help.classList.add('fade'), 6000);
+
+  // Show help on mouse move briefly
+  let helpTimer;
+  window.addEventListener('mousemove', () => {
+    help.classList.remove('fade');
+    clearTimeout(helpTimer);
+    helpTimer = setTimeout(() => help.classList.add('fade'), 3500);
+  });
+
+  // Touch / swipe nav
+  let touchStart = 0;
+  stage.addEventListener('touchstart', (e) => { touchStart = e.changedTouches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStart;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) next(); else prev();
+  }, { passive: true });
+
+})();
+</script>
+
+</body>
+</html>

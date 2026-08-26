@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Business of Sports Minor — Faculty Review</title>
+
+<!-- Standalone one-pager. Borrows the brand stylesheet, none of the deck engine.
+     LAYOUT: a full-bleed red spine carries identity, the pillars and the ask;
+     the argument runs beside it as three numbered movements. The earlier
+     version was a four-quadrant dashboard — this reads as a case being made,
+     top to bottom, with the ask anchored where the eye lands last. -->
+<link rel="stylesheet" href="../_brand/utah/brand.css" />
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; background: #000; }
+
+  .shell { position: fixed; inset: 0; display: grid; place-items: center; background: #000; }
+  .sheet {
+    position: relative; aspect-ratio: 16 / 9;
+    width: 100vw; max-width: calc(100vh * 16 / 9);
+    height: 100vh; max-height: calc(100vw * 9 / 16);
+    container-type: size; container-name: sheet;
+    background: var(--paper); color: var(--ink);
+    display: grid; grid-template-columns: 33.5% 1fr;
+    overflow: hidden;
+  }
+
+  /* ================= RED SPINE ================= */
+  .spine {
+    background: var(--utah-red); color: var(--paper); position: relative;
+    padding: 4.2cqh 2.6cqw 3.4cqh;
+    display: grid; grid-template-rows: auto 1fr auto; gap: 2.4cqh;
+  }
+  .spine::after {                       /* depth, so the flat red does not sit dead */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse at 84% 4%, rgba(255,255,255,0.14), transparent 58%),
+      radial-gradient(ellipse at 10% 100%, rgba(0,0,0,0.26), transparent 62%);
+  }
+  .spine > * { position: relative; z-index: 1; }
+
+  .spine .mark img { height: 5.0cqh; width: auto; display: block; }
+  .spine .kicker {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.25cqh;
+    letter-spacing: 0.34em; text-transform: uppercase;
+    color: rgba(255,255,255,0.82); margin-top: 3.0cqh;
+  }
+  .spine h1 {
+    font-family: var(--f-display); font-weight: 400; font-size: 7.4cqh;
+    line-height: 0.94; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--paper); margin-top: 1.0cqh;
+  }
+  .spine .stat {
+    margin-top: 1.8cqh; padding-top: 1.6cqh;
+    border-top: 2px solid rgba(255,255,255,0.34);
+    font-family: var(--f-body); font-weight: 500; font-size: 1.85cqh;
+    line-height: 1.42; color: rgba(255,255,255,0.94);
+  }
+  .spine .stat b { color: var(--paper); font-weight: 700; }
+
+  /* pillars as a numbered stack rather than three boxes */
+  .pillars { display: grid; align-content: center; gap: 1.5cqh; }
+  .pil { display: grid; grid-template-columns: 3.0cqw 1fr; gap: 0.9cqw; align-items: start; }
+  .pil .n {
+    font-family: var(--f-display); font-weight: 400; font-size: 2.6cqh;
+    line-height: 1; color: rgba(255,255,255,0.55);
+  }
+  .pil .t {
+    font-family: var(--f-condensed); font-weight: 600; font-size: 2.1cqh;
+    letter-spacing: 0.03em; text-transform: uppercase; color: var(--paper); line-height: 1.1;
+  }
+  .pil p {
+    font-family: var(--f-body); font-weight: 500; font-size: 1.4cqh; line-height: 1.34;
+    color: rgba(255,255,255,0.82); margin-top: 0.35cqh;
+  }
+
+  /* the ask, inverted so it reads as the conclusion */
+  .ask { background: var(--ink); padding: 1.6cqh 1.5cqw 1.7cqh; }
+  .ask .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.0cqh;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--utah-red-bright); margin-bottom: 0.6cqh;
+  }
+  .ask p {
+    font-family: var(--f-body); font-weight: 500; font-size: 1.6cqh; line-height: 1.4;
+    color: var(--paper);
+  }
+  .ask p strong { font-weight: 700; color: var(--paper); }
+
+  /* ================= ARGUMENT ================= */
+  .field { padding: 3.4cqh 3.0cqw 2.6cqh; display: grid; grid-template-rows: auto 1fr auto; }
+
+  .meta {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 2cqw;
+    padding-bottom: 1.2cqh; border-bottom: 2px solid var(--ink);
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.1cqh;
+    letter-spacing: 0.2em; text-transform: uppercase; color: #7A7A7A;
+  }
+  .meta .r { color: var(--ink); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5cqh 1.6cqw; margin: 1.3cqh 0 2.0cqh; }
+  .chip { display: grid; gap: 0.2cqh; }
+  .chip .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 0.95cqh;
+    letter-spacing: 0.18em; text-transform: uppercase; color: #9A9A9A;
+  }
+  .chip .v {
+    font-family: var(--f-condensed); font-weight: 600; font-size: 1.7cqh;
+    letter-spacing: 0.02em; color: var(--ink); line-height: 1.15;
+  }
+
+  .movements { display: grid; align-content: space-between; gap: 2.2cqh; padding: 1.6cqh 0 2.0cqh; }
+  .mv { display: block; }
+  .mv h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 2.95cqh;
+    line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+    padding-bottom: 0.7cqh; border-bottom: 1px solid rgba(0,0,0,0.2); margin-bottom: 1.0cqh;
+  }
+
+  ul.dash { list-style: none; display: grid; gap: 0.85cqh; }
+  ul.dash li {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.15cqh; line-height: 1.42;
+    color: var(--ink); padding-left: 1.1cqw; position: relative;
+  }
+  ul.dash li::before {                    /* em-based, so it tracks any type change */
+    content: ""; position: absolute; left: 0; top: calc(0.68em - 1px);
+    width: 0.5cqw; height: 2px; background: var(--utah-red);
+  }
+  ul.dash li b { font-weight: 700; }
+  .tag {
+    font-family: var(--f-mono); font-weight: 700; font-size: 0.92cqh;
+    letter-spacing: 0.14em; text-transform: uppercase; margin-left: 0.35cqw;
+    color: var(--utah-red); white-space: nowrap;
+  }
+  .tag.exist { color: #A0A0A0; }
+
+  /* curriculum: three groups side by side under one movement */
+  .curric { display: grid; grid-template-columns: 1.18fr 0.86fr 1.02fr; gap: 1.3cqw; }
+  .grp .h {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.0cqh;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--utah-red);
+    padding-bottom: 0.55cqh; margin-bottom: 0.75cqh; border-bottom: 1px solid rgba(190,0,0,0.35);
+  }
+  .grp ul.dash li { font-size: 1.84cqh; line-height: 1.28; }
+  .grp .tag { display: block; margin-left: 0; margin-top: 0.28cqh; }
+
+  /* evidence: ramp and note side by side */
+  .evid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 2.0cqw; align-items: start; }
+  .ramp { display: grid; gap: 1.0cqh; }
+  .rw { display: grid; grid-template-columns: 5.6cqw 1fr 5.4cqw; align-items: center; gap: 0.9cqw;
+        padding-bottom: 0.7cqh; border-bottom: 1px solid rgba(0,0,0,0.13); }
+  .rw .yr {
+    font-family: var(--f-condensed); font-weight: 700; font-size: 1.55cqh;
+    letter-spacing: 0.05em; text-transform: uppercase; color: #6A6A6A; line-height: 1.2;
+  }
+  .rw .yr em { display: block; font-style: normal; color: var(--ink); }
+  .rw .bar { display: block; height: 1.15cqh; background: var(--utah-red); width: var(--w); }
+  .rw .v {
+    font-family: var(--f-body); font-weight: 600; font-size: 2.1cqh; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .sidenote { padding-left: 1.1cqw; border-left: 3px solid var(--utah-red); display: grid; gap: 1.0cqh; }
+  .sidenote p { font-family: var(--f-body); font-weight: 500; font-size: 1.64cqh; line-height: 1.42; color: #4A4A4A; }
+  .sidenote p strong { color: var(--utah-red); font-weight: 700; }
+  .sidenote p b { color: var(--ink); font-weight: 700; }
+
+  .field .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.1cqh; border-top: 1px solid rgba(0,0,0,0.18);
+    font-family: var(--f-mono); font-weight: 600; font-size: 1.0cqh;
+    letter-spacing: 0.2em; text-transform: uppercase; color: #8A8A8A;
+  }
+  .field .foot .strong { color: var(--ink); font-weight: 700; }
+
+  /* ---- PDF: one 16:9 page, colour preserved ---- */
+  @media print {
+    @page { size: 13.333in 7.5in; margin: 0; }
+    html, body { height: auto; background: #fff; }
+    .shell { position: static; display: block; }
+    .sheet {
+      width: 13.333in; height: 7.5in; max-width: none; max-height: none;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="sheet">
+
+    <!-- ========== red spine ========== -->
+    <aside class="spine">
+      <div>
+        <div class="mark"><img src="../_brand/utah/logos/desb-horizontal-reverse.svg" alt="David Eccles School of Business" /></div>
+        <div class="kicker">Stadium to Summit</div>
+        <h1>Business of Sports <br/>Minor.</h1>
+        <div class="stat">
+          An <b>18-credit interdisciplinary minor</b>, open to every University of Utah
+          undergraduate, built on three education pillars.
+        </div>
+      </div>
+
+      <div class="pillars">
+        <div class="pil">
+          <div class="n">01</div>
+          <div>
+            <div class="t">Analytics</div>
+            <p>Sponsorship ROI, media-rights valuation, fan intelligence, data-driven decisions.</p>
+          </div>
+        </div>
+        <div class="pil">
+          <div class="n">02</div>
+          <div>
+            <div class="t">Brand</div>
+            <p>Sports marketing, product and brand building, sponsorship, fan engagement and sales.</p>
+          </div>
+        </div>
+        <div class="pil">
+          <div class="n">03</div>
+          <div>
+            <div class="t">Experience</div>
+            <p>Event management, facility operations, and large-event delivery.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ask">
+        <div class="k">— The Ask</div>
+        <p>Approved by the Department of Entrepreneurship &amp; Strategy. We ask for
+           <strong>full faculty endorsement</strong> to advance the minor toward a
+           <strong>Fall 2027 launch</strong>.</p>
+      </div>
+    </aside>
+
+    <!-- ========== the argument ========== -->
+    <main class="field">
+      <div>
+        <div class="meta">
+          <span>Faculty Review &nbsp;·&nbsp; Curriculum Committee</span>
+          <span class="r">Proposed Launch &nbsp;·&nbsp; Fall 2027</span>
+        </div>
+
+        <div class="chips">
+          <div class="chip"><div class="k">Program Type</div><div class="v">Undergraduate minor · all majors</div></div>
+          <div class="chip"><div class="k">Credit Hours</div><div class="v">18 credits</div></div>
+          <div class="chip"><div class="k">Administrative Home</div><div class="v">David Eccles School of Business</div></div>
+          <div class="chip"><div class="k">New Resources</div><div class="v">Hire in place · existing courses</div></div>
+        </div>
+      </div>
+
+      <div class="movements">
+        <section class="mv">
+            <h2>The Case</h2>
+            <ul class="dash">
+              <li>A <b>$500B+ global industry</b> needs cross-functional business and sport talent.</li>
+              <li>Utah's unrivaled ecosystem: pro franchises, Olympic legacy venues, and the <b>2034 Winter Games</b>.</li>
+              <li>No comparable interdisciplinary sports business minor exists at the University of Utah.</li>
+            </ul>
+        </section>
+
+        <section class="mv">
+            <h2>Curriculum &nbsp;·&nbsp; 18 Credits</h2>
+            <div class="curric">
+              <div class="grp">
+                <div class="h">Core · 9 Credits</div>
+                <ul class="dash">
+                  <li>Sports Business Leadership Speaker Series <span class="tag">New FA26</span></li>
+                  <li>Introduction to Sports Business <span class="tag">New</span></li>
+                  <li>Principles of Marketing <span class="tag exist">Existing</span></li>
+                </ul>
+              </div>
+              <div class="grp">
+                <div class="h">Experiential · 3 Credits</div>
+                <ul class="dash">
+                  <li>Sports Business Internship / Capstone Project <span class="tag">New · via the PLAYERS Academy</span></li>
+                </ul>
+              </div>
+              <div class="grp">
+                <div class="h">Electives · 6 Credits, Choose 2</div>
+                <ul class="dash">
+                  <li>Sports Analytics <span class="tag">New</span></li>
+                  <li>Sports Marketing (MKTG 4780) <span class="tag exist">Existing</span></li>
+                  <li>Sports Product Management <span class="tag">New</span></li>
+                </ul>
+              </div>
+            </div>
+        </section>
+
+        <section class="mv">
+            <h2>Projections</h2>
+            <div class="evid">
+              <div class="ramp">
+                <div class="rw"><span class="yr">Year 1<em>FY28</em></span><span class="bar" style="--w:25%"></span><span class="v">40&ndash;60</span></div>
+                <div class="rw"><span class="yr">Year 2<em>FY29</em></span><span class="bar" style="--w:75%"></span><span class="v">130&ndash;170</span></div>
+                <div class="rw"><span class="yr">Year 3<em>FY30</em></span><span class="bar" style="--w:100%"></span><span class="v">200+</span></div>
+              </div>
+              <div class="sidenote">
+                <p>Sport-management roles were a <strong>Top 10 U.S. job</strong> in 2023, median
+                   <strong>$88,720</strong>, with about <strong>99,000 openings a year</strong> through 2034.</p>
+                <p>Hosted by the Department of Entrepreneurship &amp; Strategy, with an Academic
+                   Advisory Committee twice yearly and an Industry Advisory Working Group of senior
+                   Utah sports leaders. <b>Department of Marketing letter of support in hand.</b></p>
+              </div>
+            </div>
+        </section>
+      </div>
+
+      <div class="foot">
+        <span>David Eccles School of Business &nbsp;·&nbsp; <span class="strong">The University of Utah</span></span>
+        <span>Business of Sports &nbsp;·&nbsp; <span class="strong">Faculty Review</span></span>
+      </div>
+    </main>
+
+  </div>
+</div>
+</body>
+</html>

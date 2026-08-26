@@ -1,0 +1,313 @@
+/* ============================================================
+   DECK ENGINE — v1
+   Brand-agnostic presentation chrome. Contains NO brand values.
+
+   Every colour and typeface resolves from a --brand-* custom
+   property supplied by a brand stylesheet (see _brand/brand.css).
+   The fallbacks below are neutral greys so a missing brand file
+   degrades to something readable rather than invisible.
+
+   Consumed by both HTML decks and (eventually) TSX decks — a React
+   component reads var(--brand-primary) exactly like a stylesheet.
+
+   VERSIONED: decks pin a version. Never edit v1 in a way that
+   changes rendering; ship v2 instead. This is what lets an
+   archived deck stay pixel-stable forever.
+   ============================================================ */
+
+:root {
+  /* ---- brand tokens (override in brand.css) ---- */
+  --brand-primary:        #666;
+  --brand-primary-bright: #888;
+  --brand-primary-deep:   #333;
+  --brand-ink:            #0A0A0A;
+  --brand-ink-soft:       #1A1A1A;
+  --brand-paper:          #FFFFFF;
+  --brand-bone:           #F2F2F2;
+
+  --brand-f-display:   Impact, sans-serif;
+  --brand-f-condensed: 'Archivo Narrow', sans-serif;
+  --brand-f-body:      system-ui, -apple-system, sans-serif;
+  --brand-f-mono:      ui-monospace, monospace;
+
+  /* ---- engine constants (structural, not brand) ---- */
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --slide-fade: 600ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #000;
+  color: var(--brand-paper);
+  font-family: var(--brand-f-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- STAGE ----------
+   Fixed 16:9 stage sized in CSS, not JS. container-type:size makes
+   every child sizable in cqw/cqh, so type scales with the stage and
+   renders deterministically to PDF (no resize listener, no reflow). */
+.deck-shell { position: fixed; inset: 0; display: grid; place-items: center; background: #000; }
+.stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100vw;
+  max-width: calc(100vh * 16 / 9);
+  height: 100vh;
+  max-height: calc(100vw * 9 / 16);
+  overflow: hidden;
+  background: #000;
+  container-type: size;
+  container-name: slide;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+/* Slides overlay the stage and cross-fade. Selected as `.stage > .slide`
+   (specificity 0,2,0) rather than `.slide` (0,1,0) on purpose: a deck's
+   own `.s-cover { position: relative }` would otherwise win on source
+   order, drop the slide into normal flow, and stack the deck vertically
+   down the page. That failure is invisible in PDF export — print mode
+   makes every slide relative anyway — so it must be prevented here. */
+.stage > .slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  /* The OUTGOING slide holds full opacity for the length of the fade and then
+     snaps off underneath. It must not fade out in step with the incoming one:
+     two half-opaque slides over the black stage composite darker than either,
+     which is the dark flash between slides. Holding it opaque means the
+     background is never visible through the transition. */
+  transition: opacity 0s var(--slide-fade);
+}
+.stage > .slide.active {
+  opacity: 1; pointer-events: auto; z-index: 2;
+  /* the incoming slide dissolves in ON TOP of the one it replaces */
+  transition: opacity var(--slide-fade) var(--ease-out);
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 22px;
+  font-family: var(--brand-f-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.6);
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: difference;
+}
+.hud .pip {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--brand-primary);
+  box-shadow: 0 0 14px var(--brand-primary);
+}
+.hud .hud-left, .hud .hud-right { display: flex; gap: 18px; align-items: center; }
+
+.progress-bar {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--brand-primary), var(--brand-primary-bright));
+  transition: width var(--slide-fade) var(--ease-out);
+  z-index: 60;
+}
+
+.help {
+  position: fixed; right: 22px; top: 22px;
+  font-family: var(--brand-f-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.45);
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  z-index: 60;
+  transition: opacity .6s;
+}
+.help.fade { opacity: 0; }
+.help kbd {
+  font-family: var(--brand-f-mono);
+  background: rgba(255,255,255,0.18);
+  padding: 2px 6px; border-radius: 3px;
+  color: var(--brand-paper); margin: 0 3px;
+}
+
+/* ---------- ARRIVE ANIMATIONS ---------- */
+[data-anim] { opacity: 0; will-change: transform, opacity; }
+.active [data-anim="rise"]     { animation: rise .9s .15s var(--ease-out) forwards; }
+.active [data-anim="rise-2"]   { animation: rise .9s .35s var(--ease-out) forwards; }
+.active [data-anim="rise-3"]   { animation: rise .9s .55s var(--ease-out) forwards; }
+.active [data-anim="rise-4"]   { animation: rise .9s .75s var(--ease-out) forwards; }
+.active [data-anim="rise-5"]   { animation: rise .9s .95s var(--ease-out) forwards; }
+.active [data-anim="rise-6"]   { animation: rise .9s 1.15s var(--ease-out) forwards; }
+.active [data-anim="fade"]     { animation: fade 1.2s .2s ease forwards; }
+.active [data-anim="fade-2"]   { animation: fade 1.2s .5s ease forwards; }
+.active [data-anim="fade-3"]   { animation: fade 1.2s .8s ease forwards; }
+.active [data-anim="zoom"]     { animation: zoomBleed 6s .1s ease-out forwards; }
+.active [data-anim="count"]    { animation: count 1.5s .3s var(--ease-out) forwards; }
+.active [data-anim="count-2"]  { animation: count 1.5s .5s var(--ease-out) forwards; }
+.active [data-anim="count-3"]  { animation: count 1.5s .7s var(--ease-out) forwards; }
+.active [data-anim="count-4"]  { animation: count 1.5s .9s var(--ease-out) forwards; }
+.active [data-anim="reveal"]   { animation: rise 1.0s .2s var(--ease-out) forwards; }
+.active [data-anim="reveal-2"] { animation: rise 1.0s .4s var(--ease-out) forwards; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(36px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes zoomBleed { from { transform: scale(1.1); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes count {
+  from { opacity: 0; transform: translateY(20px) scale(.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- TYPE SCALE ----------
+   Display faces need POSITIVE letter-spacing. Condensed grotesques
+   (Anton, Impact) bleed into each other at 0 or negative tracking. */
+.display-mega { font-family: var(--brand-f-display); font-weight: 400; line-height: 1.02; letter-spacing: 0.015em; text-transform: uppercase; }
+.display-big  { font-family: var(--brand-f-display); font-weight: 400; line-height: 1.04; letter-spacing: 0.018em; text-transform: uppercase; }
+.display-med  { font-family: var(--brand-f-display); font-weight: 400; line-height: 1.06; letter-spacing: 0.02em;  text-transform: uppercase; }
+.stat-mega    { font-family: var(--brand-f-display); font-weight: 400; line-height: 0.92; letter-spacing: 0.005em; }
+
+.label-mono    { font-family: var(--brand-f-mono); font-weight: 600; font-size: 1.35cqh; letter-spacing: 0.3em;  text-transform: uppercase; }
+.label-mono-sm { font-family: var(--brand-f-mono); font-weight: 600; font-size: 1.25cqh; letter-spacing: 0.28em; text-transform: uppercase; }
+
+/* MINIMUM READABLE SIZE — 2.0cqh.
+   A deck is read across a room, not at desk distance. At a 720px stage
+   2.0cqh is ~14px, which is already the floor; on a projector it scales
+   with the stage. Do NOT set body copy below 2.0cqh to make content fit
+   — cut words, or trim padding and min-heights instead. Labels (mono,
+   heavily tracked, ALL CAPS) may sit lower, but not under 1.15cqh. */
+.body-lead { font-family: var(--brand-f-body); font-weight: 400; font-size: 2.6cqh;  line-height: 1.45; }
+.body-med  { font-family: var(--brand-f-body); font-weight: 400; font-size: 2.3cqh;  line-height: 1.45; }
+.body-sm   { font-family: var(--brand-f-body); font-weight: 400; font-size: 2.05cqh; line-height: 1.45; }
+
+/* ---------- LOGO MARK ---------- */
+.brand-mark img { display: block; width: auto; }
+.brand-mark.lg img { height: 4.6cqh; }
+.brand-mark.md img { height: 3.6cqh; }
+.brand-mark.sm img { height: 3.0cqh; }
+
+/* ---------- LIVE COUNTDOWN ----------
+   Generic. Markup:
+     <div class="countdown" data-countdown="2027-08-23T13:30:00Z">
+       <span data-cd="days"></span> <span data-cd="hrs"></span> …
+   Engine fills the values; the deck styles the container. */
+.countdown [data-cd] { font-variant-numeric: tabular-nums; }
+
+/* ---------- SLIDE NAVIGATOR ----------
+   Presenter chrome. Opens on "N" or a click on the HUD counter; the engine
+   builds it from the DOM so a deck needs no extra markup. Lives outside
+   .stage, so its clicks never reach the stage's advance handler. */
+.hud .hud-right { pointer-events: auto; }
+#hud-slide {
+  cursor: pointer; padding: 3px 7px; border-radius: 3px;
+  transition: background .18s ease;
+}
+#hud-slide:hover { background: rgba(255,255,255,0.25); }
+
+.nav-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  display: none; place-items: center;
+  background: rgba(0,0,0,0.74);
+  backdrop-filter: blur(10px);
+}
+.nav-overlay.open { display: grid; }
+.nav-inner { width: min(1120px, 92vw); max-height: 84vh; overflow: auto; padding: 4px; }
+.nav-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--brand-f-mono); font-weight: 600; font-size: 11px;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  padding-bottom: 14px; margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.22);
+}
+.nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(186px, 1fr)); gap: 10px; }
+.nav-card {
+  display: block; text-align: left; cursor: pointer;
+  padding: 12px 14px; font: inherit; color: var(--brand-paper);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-left: 3px solid transparent;
+  transition: background .16s ease, border-color .16s ease;
+}
+.nav-card:hover   { background: rgba(255,255,255,0.15); border-left-color: var(--brand-primary); }
+.nav-card.current { background: rgba(255,255,255,0.17); border-left-color: var(--brand-primary); }
+/* keyboard cursor — distinct from .current, so you can see where the deck is
+   AND where Enter would take it */
+.nav-card.sel {
+  background: rgba(255,255,255,0.22);
+  outline: 2px solid var(--brand-primary-bright); outline-offset: -2px;
+}
+.nav-card .nc-n {
+  display: block; font-family: var(--brand-f-mono); font-weight: 700;
+  font-size: 10px; letter-spacing: 0.24em;
+  color: var(--brand-primary-bright); margin-bottom: 5px;
+}
+.nav-card .nc-t {
+  display: block; font-family: var(--brand-f-condensed); font-weight: 600;
+  font-size: 14px; line-height: 1.2; letter-spacing: 0.02em; text-transform: uppercase;
+}
+
+/* ---------- PRINT / PDF EXPORT ----------
+   Any deck on this engine exports to PDF with no extra work:
+     chrome --headless --print-to-pdf=out.pdf <deck.html>
+
+   Each slide becomes one 16:9 page. The container context moves from
+   .stage to .slide so every cqw/cqh unit resolves against the same
+   box it did on screen — which is why the CSS-container approach
+   renders identically in print and a JS fit-box does not. */
+@media print {
+  @page { size: 13.333in 7.5in; margin: 0; }
+
+  html, body {
+    width: auto; height: auto;
+    overflow: visible; background: #fff;
+  }
+  .deck-shell { position: static; display: block; place-items: initial; }
+  .stage {
+    position: static;
+    width: auto; height: auto;
+    max-width: none; max-height: none;
+    aspect-ratio: auto;
+    container-type: normal;
+    box-shadow: none;
+    overflow: visible;
+  }
+  /* matches the 0,2,0 specificity of the screen rule above */
+  .stage > .slide {
+    position: relative; inset: auto;
+    width: 13.333in; height: 7.5in;
+    opacity: 1 !important;
+    pointer-events: auto;
+    transition: none;
+    container-type: size;
+    container-name: slide;
+    overflow: hidden;
+    break-after: page;
+    page-break-after: always;
+  }
+  .stage > .slide:last-child { break-after: auto; page-break-after: auto; }
+
+  /* freeze arrival animations in their finished state */
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* 3D FLIP CARDS — print the front face only.
+     Print renderers do not honour backface-visibility, so a card whose
+     back is rotateY(180deg) paints OVER the front and comes out
+     mirrored (reversed text). Convention: a deck's flip card is
+     .card-inner wrapping .card-front + .card-back; the engine then
+     handles its print behaviour for free. */
+  .card-inner { transform: none !important; animation: none !important; }
+  .card-back  { display: none !important; }
+
+  /* presentation chrome is screen-only */
+  .hud, .progress-bar, .help, .nav-overlay { display: none !important; }
+}

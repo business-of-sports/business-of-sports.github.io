@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>About Me — Michael Rueckert — Business of Sports — David Eccles School of Business</title>
+<link rel="icon" type="image/svg+xml" href="../_brand/utah/logos/desb-vertical-black.svg" />
+
+<!-- Engine (versioned, brand-agnostic) then brand tokens. Order matters. -->
+<link rel="stylesheet" href="../_engine/deck.v1.css?r=4" />
+<link rel="stylesheet" href="../_brand/utah/brand.css" />
+
+<style>
+  /* ============================================================
+     DECK — ABOUT ME · MICHAEL RUECKERT
+     Lecture opener for a University of Utah class.
+
+     Slide-specific layout only. All colour/type resolves from
+     _brand/brand.css; all chrome from _engine/deck.v1.css.
+
+     Deck-local assets live beside this file:
+       img/      photography (resized, self-hosted)
+       badges/   Snowbasin-era award laurels
+
+     Convention: one .s-* block per slide, in slide order.
+     NB: never set `position: relative` on a .s-* root — the engine's
+     `.stage > .slide` supplies absolute positioning and overriding it
+     drops the deck into normal flow.
+     ============================================================ */
+
+  /* ============================================================
+     01 — COVER
+     ============================================================ */
+  .s-cover { background: #000; display: grid; grid-template-rows: auto 1fr auto auto; overflow: hidden; }
+
+  /* Portrait bleeds from the right and dissolves into the black field
+     rather than sitting in a box: the mask does the fade so the photo
+     needs no matching edge, and the scrim keeps the type side dark
+     enough for Anton at full weight. */
+  .s-cover .photo {
+    position: absolute; top: 0; right: 0; bottom: 0; width: 56%; z-index: 0;
+    background-image:
+      linear-gradient(90deg, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.12) 100%),
+      linear-gradient(0deg, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.10) 46%),
+      url('img/portrait-michael.jpg');
+    background-size: cover; background-position: 42% 40%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
+    opacity: 0;
+  }
+  .s-cover.active .photo { animation: coverIn 5s .1s ease-out forwards; }
+  @keyframes coverIn { from { opacity: 0; transform: scale(1.07); } to { opacity: 1; transform: scale(1); } }
+  @media print { .s-cover .photo { opacity: 1 !important; transform: none !important; animation: none !important; } }
+
+  .s-cover .topbar, .s-cover .midbar, .s-cover .roles, .s-cover .utah-stripe { position: relative; z-index: 2; }
+  .s-cover .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4cqh 5cqw 0; color: var(--paper);
+  }
+  .s-cover .midbar { display: grid; align-content: center; padding: 0 5cqw; gap: 1.6cqh; }
+  .s-cover .eyebrow {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.35cqh;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-cover h1 {
+    font-family: var(--f-display); font-weight: 400; font-size: 10.6cqw;
+    line-height: 0.94; letter-spacing: 0.015em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-cover h1 .red { color: var(--utah-red-bright); }
+
+  /* three roles, divided by hairlines — one column each, no boxes */
+  .s-cover .roles {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin: 0 5cqw; padding: 2.4cqh 0 2.8cqh;
+    border-top: 1px solid rgba(255,255,255,0.28);
+  }
+  .s-cover .role { padding: 0 2.0cqw; border-left: 1px solid rgba(255,255,255,0.18); }
+  .s-cover .role:first-child { padding-left: 0; border-left: 0; }
+  .s-cover .role .k {
+    display: block; font-family: var(--f-condensed); font-weight: 600; font-size: 2.55cqh;
+    line-height: 1.1; letter-spacing: 0.03em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-cover .role .k::before {
+    content: ""; display: block; width: 3.0cqw; height: 3px;
+    background: var(--utah-red-bright); margin-bottom: 1.0cqh;
+  }
+  .s-cover .role .v {
+    display: block; margin-top: 0.7cqh;
+    font-family: var(--f-body); font-weight: 500; font-size: 2.05cqh; line-height: 1.35;
+    color: rgba(255,255,255,0.72);
+  }
+
+  /* ============================================================
+     02 — THE PATH
+     ============================================================ */
+  .s-path { background: var(--paper); color: var(--ink); display: grid;
+            grid-template-rows: auto auto auto 1fr auto; padding: 3.4cqh 4.5cqw; }
+  .s-path .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.3cqh; border-bottom: 2px solid var(--ink);
+  }
+  .s-path .topbar .crumb { color: var(--utah-red); }
+  .s-path h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 5.2cqw;
+    line-height: 1.0; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--ink); margin: 1.2cqh 0 0.6cqh;
+  }
+  .s-path h2 .red { color: var(--utah-red); }
+
+  .s-path .lede {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.4cqh; line-height: 1.4;
+    color: var(--steel); max-width: 62cqw; margin-bottom: 0.4cqh;
+  }
+  .s-path .lede b { color: var(--ink); font-weight: 700; }
+
+  .s-path .rail { display: grid; grid-template-columns: repeat(6, 1fr); align-content: center; }
+  .s-path .node { display: grid; align-content: start; justify-items: center; text-align: center; }
+
+  /* fixed-height mark well keeps the drum-and-feather and the typographic
+     wordmarks on one optical baseline */
+  .s-path .mark { height: 11.0cqh; display: grid; align-items: end; justify-items: center; }
+  .s-path .mark img { height: 8.2cqh; width: auto; max-width: 12.4cqw; object-fit: contain; display: block; }
+  /* A white-on-transparent source (Grand America) has to be knocked to black
+     for the light slide; brightness(0) keeps the alpha and drops the fill. */
+  .s-path .mark img.knock { filter: brightness(0); }
+  .s-path .mark img.tall  { height: 9.6cqh; }
+  .s-path .mark img.wide  { height: 5.4cqh; }
+  .s-path .wordmark {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.5cqh;
+    line-height: 0.98; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+  }
+  .s-path .wordmark em {
+    display: block; font-style: normal; font-family: var(--f-condensed); font-weight: 500;
+    font-size: 1.7cqh; letter-spacing: 0.22em; color: var(--steel);
+  }
+
+  /* The rail is drawn per-column BEHIND each dot rather than as one absolute
+     bar: the columns are adjacent, so the segments join into a continuous
+     line that cannot drift away from the dots when the row height changes.
+     First and last are half-segments so the line starts and stops on a node. */
+  .s-path .dotwrap {
+    position: relative; width: 100%; height: 4.2cqh; margin-top: 2.2cqh;
+    display: grid; place-items: center;
+  }
+  .s-path .dotwrap::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px;
+    background: var(--utah-red); transform: translateY(-1px);
+  }
+  .s-path .node:first-child .dotwrap::before {
+    left: 50%; background: linear-gradient(90deg, rgba(190,0,0,0.2), var(--utah-red));
+  }
+  .s-path .node:last-child .dotwrap::before { right: 50%; }
+  .s-path .dot {
+    position: relative; z-index: 1;
+    width: 1.5cqh; height: 1.5cqh; border-radius: 50%;
+    background: var(--utah-red); box-shadow: 0 0 0 0.6cqh var(--paper);
+  }
+  .s-path .node.now .dot { background: var(--ink); box-shadow: 0 0 0 0.6cqh var(--paper), 0 0 0 0.9cqh var(--utah-red); }
+  .s-path .yr {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.35cqh;
+    letter-spacing: 0.18em; color: var(--utah-red); margin-top: 1.7cqh; padding: 0 0.8cqw;
+  }
+  .s-path .node.now .yr { color: var(--ink); }
+  .s-path .org {
+    font-family: var(--f-condensed); font-weight: 600; font-size: 2.2cqh;
+    line-height: 1.12; letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--ink); margin-top: 0.7cqh; padding: 0 0.8cqw;
+  }
+  .s-path .sub {
+    font-family: var(--f-body); font-weight: 500; font-size: 1.78cqh; line-height: 1.32;
+    color: var(--steel); margin-top: 0.5cqh; padding: 0 0.15cqw;
+  }
+  .s-path .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.3cqh; border-top: 1px solid rgba(0,0,0,0.18); color: var(--ink); font-weight: 500;
+  }
+  .s-path .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     03 — UTAH ATHLETICS
+     ============================================================ */
+  .s-utah { background: #000; display: grid; grid-template-rows: auto 43cqh 1fr auto; overflow: hidden; }
+  .s-utah .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3.4cqh 4.5cqw 2.2cqh; color: var(--paper);
+  }
+  /* three full houses, side by side — the argument is the room, not the copy */
+  .s-utah .band { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 0.45cqw; }
+  .s-utah .band .ph { background-size: cover; background-position: center 46%; filter: contrast(1.06) saturate(1.02); }
+  .s-utah .band .ph.a { background-image: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.42)), url('img/rice-eccles-sellout.jpg'); }
+  .s-utah .band .ph.b { background-image: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.42)), url('img/muss-byu.jpg'); background-position: center 38%; }
+  .s-utah .band .ph.c { background-image: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.42)), url('img/gymnastics-huntsman.jpg'); background-position: center 52%; }
+
+  .s-utah .body { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 3.4cqw;
+                  padding: 3.0cqh 4.5cqw 0; align-items: start; }
+  .s-utah .eyebrow {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.25cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-utah h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 4.4cqw;
+    line-height: 1.0; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--paper); margin: 1.0cqh 0 1.4cqh;
+  }
+  .s-utah h2 .red { color: var(--utah-red-bright); }
+  .s-utah .lede {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.3cqh; line-height: 1.4;
+    color: rgba(255,255,255,0.86);
+  }
+  .s-utah .lede b { color: var(--paper); font-weight: 700; }
+
+  .s-utah .groups { display: grid; gap: 2.2cqh; }
+  .s-utah .grp .h {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--paper);
+    padding-bottom: 0.7cqh; margin-bottom: 1.3cqh;
+    border-bottom: 1px solid rgba(255,255,255,0.32);
+  }
+  .s-utah .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8cqw; }
+  .s-utah .st .n {
+    display: block; font-family: var(--f-display); font-weight: 400; font-size: 5.4cqh;
+    line-height: 0.92; letter-spacing: 0.005em; color: var(--utah-red-bright);
+  }
+  .s-utah .st .l {
+    display: block; margin-top: 0.7cqh;
+    font-family: var(--f-body); font-weight: 500; font-size: 2.0cqh; line-height: 1.28;
+    color: rgba(255,255,255,0.82);
+  }
+  .s-utah .st .l b { color: var(--paper); font-weight: 700; }
+  .s-utah ul.dash { list-style: none; display: grid; gap: 0.9cqh; }
+  .s-utah ul.dash li {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.1cqh; line-height: 1.34;
+    color: rgba(255,255,255,0.88); padding-left: 1.4cqw; position: relative;
+  }
+  .s-utah ul.dash li::before {
+    content: ""; position: absolute; left: 0; top: calc(0.66em - 1px);
+    width: 0.75cqw; height: 2px; background: var(--utah-red-bright);
+  }
+  .s-utah ul.dash li b { color: var(--paper); font-weight: 700; }
+  .s-utah .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 0 4.5cqw; padding: 2.0cqh 0 3.0cqh;
+    border-top: 1px solid rgba(255,255,255,0.2); color: var(--paper);
+  }
+  .s-utah .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     04 — SNOWBASIN
+     ============================================================ */
+  .s-basin { background: #000; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+  /* Landscape hero: full bleed across the top, with the scrim weighted left
+     so the display type keeps its contrast against bright snow. */
+  .s-basin .photo {
+    position: absolute; top: 0; left: 0; right: 0; height: 76cqh; z-index: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.22) 30%, rgba(0,0,0,0.94) 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.40) 42%, rgba(0,0,0,0.05) 78%),
+      url('img/snowbasin-hero.jpg');
+    background-size: cover; background-position: center 38%;
+  }
+  .s-basin .topbar, .s-basin .midbar, .s-basin .laurels { position: relative; z-index: 2; }
+  .s-basin .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3.6cqh 4.5cqw 0; color: var(--paper);
+  }
+  .s-basin .midbar { display: grid; align-content: center; padding: 0 4.5cqw; gap: 1.4cqh; }
+  .s-basin .eyebrow {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.3cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-basin h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 7.2cqw;
+    line-height: 0.98; letter-spacing: 0.015em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-basin h2 .red { color: var(--utah-red-bright); }
+  .s-basin .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2cqw;
+    margin-top: 2.0cqh; padding-top: 2.2cqh; border-top: 1px solid rgba(255,255,255,0.3);
+  }
+  .s-basin .st .n {
+    display: block; font-family: var(--f-display); font-weight: 400; font-size: 6.6cqh;
+    line-height: 0.92; letter-spacing: 0.005em; color: var(--paper);
+  }
+  .s-basin .st .l {
+    display: block; margin-top: 0.8cqh;
+    font-family: var(--f-body); font-weight: 500; font-size: 2.0cqh; line-height: 1.28;
+    color: rgba(255,255,255,0.78);
+  }
+  .s-basin .st .l b { color: var(--paper); font-weight: 700; }
+
+  /* poster laurels — black artwork, so the strip flips to bone */
+  .s-basin .laurels {
+    background: var(--bone); color: var(--ink);
+    padding: 1.6cqh 3.0cqw 1.8cqh; display: grid; gap: 1.0cqh; justify-items: center;
+  }
+  .s-basin .laurels .h {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.05cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--utah-red);
+  }
+  .s-basin .row { display: flex; align-items: center; justify-content: center; gap: 0.35cqw; width: 100%; }
+  .s-basin .row img { height: 13.0cqh; width: auto; display: block; }
+
+  /* ============================================================
+     05 — CENTIUM
+     Left pane carries the story and the press; right pane carries the
+     proof — who buys it. Both halves of that proof are on one slide on
+     purpose: the photography says what the customers make, the logo wall
+     says how many there are.
+     ============================================================ */
+  .s-centium { display: grid; grid-template-columns: minmax(0, 0.80fr) minmax(0, 1.20fr); overflow: hidden; }
+  .s-centium .left {
+    background: #000; color: var(--paper);
+    padding: 3.6cqh 2.8cqw; display: grid; grid-template-rows: auto 1fr auto; gap: 1.6cqh;
+  }
+  .s-centium .left .eyebrow {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.25cqh;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-centium h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 7.4cqh;
+    line-height: 0.98; letter-spacing: 0.015em; text-transform: uppercase; color: var(--paper);
+    margin-top: 0.9cqh;
+  }
+  .s-centium h2 .red { color: var(--utah-red-bright); }
+  .s-centium .mid { display: grid; align-content: center; gap: 2.6cqh; }
+  .s-centium .lede {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.15cqh; line-height: 1.42;
+    color: rgba(255,255,255,0.86);
+  }
+  .s-centium .lede b { color: var(--paper); font-weight: 700; }
+
+  /* PRESS STRIP
+     Every mark here ships as black-on-transparent. brightness(0) flattens
+     any stray colour to black, then invert(1) lifts it to white — alpha
+     survives both, so the marks sit on the black pane with no plate. */
+  .s-centium .press .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.05cqh;
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--utah-red-bright);
+    padding-bottom: 1.0cqh; margin-bottom: 1.6cqh;
+    border-bottom: 1px solid rgba(255,255,255,0.28);
+  }
+  .s-centium .press .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.0cqh 1.4cqw; }
+  .s-centium .press .fx { display: flex; align-items: center; justify-content: center; height: 4.6cqh; }
+  .s-centium .press .fx img {
+    max-width: 100%; max-height: 4.6cqh; width: auto; height: auto;
+    filter: brightness(0) invert(1); opacity: 0.92;
+  }
+  .s-centium .left .foot {
+    font-family: var(--f-mono); font-weight: 600; font-size: 1.05cqh;
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.58);
+    padding-top: 1.4cqh; border-top: 1px solid rgba(255,255,255,0.22);
+  }
+  .s-centium .left .foot .strong { color: var(--paper); font-weight: 700; }
+
+  .s-centium .right {
+    background: var(--paper); color: var(--ink);
+    padding: 3.6cqh 2.8cqw; display: grid; grid-template-rows: auto auto 1fr; gap: 2.0cqh;
+  }
+  .s-centium .right .h {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--utah-red);
+    padding-bottom: 0.9cqh; border-bottom: 2px solid var(--ink);
+  }
+  .s-centium .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7cqw; }
+  .s-centium .shots .sh {
+    aspect-ratio: 3 / 2; background-size: cover; background-position: center;
+    filter: contrast(1.03);
+  }
+
+  .s-centium .wall {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 2.4cqh 1.3cqw; align-self: center;
+  }
+  /* fixed 5-up track, but flex-wrap means a short final row centres */
+  .s-centium .lg {
+    flex: 0 0 calc((100% - 4 * 1.3cqw) / 5);
+    display: flex; align-items: center; justify-content: center; height: 5.8cqh;
+  }
+  /* max-height in cqh (an ABSOLUTE length here), not a percentage: several of
+     these SVGs ship no viewBox, so a percentage has nothing to resolve against
+     and the mark renders at the 300x150 fallback, straddling its neighbours. */
+  /* Each mark carries its own max-height, computed from its aspect ratio so
+     every logo occupies roughly the same optical AREA. A single shared
+     max-height makes square marks (SCOTT, MSR) tower over wordmarks
+     (SALOMON, ROSSIGNOL) even though both technically "fit". */
+  .s-centium .lg img {
+    max-width: 100%; width: auto; height: auto;
+    filter: brightness(0); opacity: 0.86;
+  }
+  .s-centium .lg .wm {
+    font-family: var(--f-condensed); font-weight: 700; font-size: 2.15cqh;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink);
+    opacity: 0.86; line-height: 1; text-align: center;
+  }
+
+  /* ============================================================
+     06 — GO NORTH  (closer)
+     The billboard is the campaign; the film is the campaign running.
+     NETWORK NOTE: this is the ONLY slide in the deck that reaches the
+     network — the Drive player is an iframe. Everything behind it is
+     local, so on dead venue wifi the slide still reads as a full-bleed
+     billboard with the headline; only the player goes blank.
+     ============================================================ */
+  .s-north { background: #000; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+  .s-north .photo {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.02) 26%, rgba(0,0,0,0.58) 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.58) 26%, rgba(0,0,0,0.00) 52%),
+      url('img/snowbasin-billboard.jpg');
+    background-size: cover; background-position: center 40%;
+    opacity: 0;
+  }
+  .s-north.active .photo { animation: northIn 5s .1s ease-out forwards; }
+  @keyframes northIn { from { opacity: 0; transform: scale(1.06); } to { opacity: 1; transform: scale(1); } }
+  @media print { .s-north .photo { opacity: 1 !important; transform: none !important; animation: none !important; } }
+
+  .s-north .topbar, .s-north .body, .s-north .foot { position: relative; z-index: 2; }
+  .s-north .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3.6cqh 4.5cqw 0; color: var(--paper);
+  }
+  .s-north .body {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.88fr); gap: 3.0cqw;
+    align-items: center; padding: 0 4.5cqw;
+  }
+  .s-north .eyebrow {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.3cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-north h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 12.4cqh;
+    line-height: 0.96; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--paper); margin: 1.2cqh 0 1.8cqh;
+  }
+  .s-north h2 .red { color: var(--utah-red-bright); }
+  .s-north .lede {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.15cqh; line-height: 1.42;
+    color: rgba(255,255,255,0.86);
+  }
+  .s-north .lede b { color: var(--paper); font-weight: 700; }
+  .s-north .brand { margin-top: 2.4cqh; }
+  .s-north .brand img { height: 5.6cqh; width: auto; display: block; }
+
+  /* 16:9 player well. The iframe is absolutely positioned inside a padded
+     box so it keeps ratio at any stage size — an iframe has no intrinsic
+     aspect ratio to honour. */
+  .s-north .player {
+    position: relative; width: 100%; aspect-ratio: 16 / 9;
+    background: #0A0A0A; border: 1px solid rgba(255,255,255,0.28);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+  }
+  .s-north .player iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block;
+  }
+  /* Sits UNDER the iframe: visible only if the embed never paints. */
+  .s-north .player .fallback {
+    position: absolute; inset: 0; z-index: 0;
+    display: grid; place-content: center; gap: 0.8cqh; text-align: center;
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.45);
+  }
+  .s-north .player iframe { position: absolute; z-index: 1; }
+  @media print { .s-north .player iframe { display: none; } }
+
+  .s-north .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    margin: 0 4.5cqw; padding: 2.2cqh 0 3.2cqh;
+    border-top: 1px solid rgba(255,255,255,0.2); color: var(--paper);
+  }
+  .s-north .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     03 — HOW I BROKE IN  (the cover letter)
+     The letter is set as type, not screenshotted: at stage scale a
+     scanned page turns to mush, and the room only needs to READ one
+     sentence — which is pulled out at full size on the left. The page
+     itself is deliberately at document scale, so it reads as an artifact.
+     ============================================================ */
+  .s-break { display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr); overflow: hidden; }
+  .s-break .left {
+    background: #000; color: var(--paper);
+    padding: 3.8cqh 3.0cqw; display: grid; grid-template-rows: auto auto 1fr auto; gap: 1.8cqh;
+  }
+  /* him on the field at Rice-Eccles, the year the letter was written */
+  .s-break .shot {
+    height: 23cqh; background-size: cover; background-position: center 72%;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.30) 100%),
+      url('img/michael-rice-eccles.jpg');
+    border-left: 3px solid var(--utah-red-bright);
+  }
+  .s-break .eyebrow {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.25cqh;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-break h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 6.2cqh;
+    line-height: 0.98; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--paper); margin-top: 1.0cqh;
+  }
+  .s-break h2 .red { color: var(--utah-red-bright); }
+  .s-break .mid { display: grid; align-content: center; gap: 2.0cqh; }
+  .s-break .pull {
+    font-family: var(--f-display); font-weight: 400; font-size: 7.5cqh;
+    line-height: 0.98; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--paper);
+  }
+  .s-break .sub {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.15cqh; line-height: 1.42;
+    color: rgba(255,255,255,0.86);
+  }
+  .s-break .sub b { color: var(--paper); font-weight: 700; }
+  .s-break .left .foot {
+    font-family: var(--f-mono); font-weight: 600; font-size: 1.05cqh;
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.58);
+    padding-top: 1.4cqh; border-top: 1px solid rgba(255,255,255,0.22);
+  }
+  .s-break .left .foot .strong { color: var(--paper); font-weight: 700; }
+
+  /* the page */
+  .s-break .right {
+    background: var(--bone); display: grid; place-items: center; padding: 4.2cqh 3.4cqw;
+  }
+  .s-break .letter {
+    background: var(--paper); color: #111; width: 100%; height: 100%;
+    padding: 3.4cqh 3.0cqw; box-shadow: 0 18px 46px rgba(0,0,0,0.22);
+    display: grid; align-content: center; gap: 1.25cqh;
+    font-family: var(--f-body);
+  }
+  .s-break .letter .name {
+    text-align: center; font-weight: 700; font-size: 2.4cqh; letter-spacing: 0.01em;
+    padding-bottom: 0.8cqh; border-bottom: 1.5px solid #111; margin-bottom: 0.6cqh;
+  }
+  .s-break .letter p { font-size: 1.66cqh; line-height: 1.46; font-weight: 400; }
+  .s-break .letter .addr { color: #333; }
+  /* the sentence the room is here for */
+  .s-break .letter mark {
+    background: rgba(230,0,18,0.13); color: #111; font-weight: 700;
+    box-shadow: inset 0 -0.32em 0 rgba(230,0,18,0.20);
+    padding: 0 0.15em;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="deck-shell">
+  <div class="stage" id="stage">
+
+    <!-- ============================================================
+         01 — COVER
+         ============================================================ -->
+    <section class="slide s-cover" data-section="ABOUT ME">
+      <div class="photo"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>BUSINESS OF SPORTS &nbsp;·&nbsp; UNIVERSITY OF UTAH</span>
+        <div class="eccles-mark lg"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="David Eccles School of Business" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="eyebrow" data-anim="reveal">— ABOUT ME</div>
+        <h1 data-anim="reveal-2">MICHAEL<br/><span class="red">RUECKERT.</span></h1>
+      </div>
+
+      <div class="roles">
+        <div class="role" data-anim="rise-3">
+          <span class="k">Head of<br/>Growth Marketing</span>
+          <span class="v">Grand America Hotels &amp; Resorts</span>
+        </div>
+        <div class="role" data-anim="rise-4">
+          <span class="k">Founder</span>
+          <span class="v">Centium AI</span>
+        </div>
+        <div class="role" data-anim="rise-5">
+          <span class="k">Adjunct Professor</span>
+          <span class="v">David Eccles School of Business</span>
+        </div>
+      </div>
+
+      <span class="utah-stripe thin white"></span>
+    </section>
+
+    <!-- ============================================================
+         02 — THE PATH
+         ============================================================ -->
+    <section class="slide s-path" data-section="THE PATH">
+      <div class="topbar">
+        <span class="crumb label-mono">2013 &nbsp;→&nbsp; PRESENT &nbsp;·&nbsp; COLLEGE SPORTS · RESORT · HOSPITALITY · AI</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">THE <span class="red">PATH.</span></h2>
+      <p class="lede" data-anim="rise-2">Twelve years in one market — <b>college athletics, a destination resort, luxury hospitality, and now AI</b> — selling the same thing every time: a reason to show up.</p>
+
+      <div class="rail">
+        <div class="node" data-anim="rise-2">
+          <div class="mark"><img src="../_brand/utah/logos/utah-utes.svg" alt="University of Utah" /></div>
+          <div class="dotwrap"><span class="dot"></span></div>
+          <div class="yr">2014</div>
+          <div class="org">University of Utah</div>
+          <div class="sub">President of The MUSS<br/>Marketing &amp; Fan Experience Intern</div>
+        </div>
+
+        <div class="node" data-anim="rise-3">
+          <div class="mark"><img src="logos/salt-lake-bees.png" alt="Salt Lake Bees" /></div>
+          <div class="dotwrap"><span class="dot"></span></div>
+          <div class="yr">2013</div>
+          <div class="org">Salt Lake Bees</div>
+          <div class="sub">Game Operations Intern</div>
+        </div>
+
+        <div class="node" data-anim="rise-4">
+          <div class="mark"><img src="../_brand/utah/logos/utah-utes.svg" alt="Utah Athletics" /></div>
+          <div class="dotwrap"><span class="dot"></span></div>
+          <div class="yr">2013 – 2019</div>
+          <div class="org">Utah Athletics</div>
+          <div class="sub">12 teams · 6 years</div>
+        </div>
+
+        <div class="node" data-anim="rise-4">
+          <div class="mark"><img class="wide" src="logos/snowbasin.svg" alt="Snowbasin Resort" /></div>
+          <div class="dotwrap"><span class="dot"></span></div>
+          <div class="yr">2019 – 2024</div>
+          <div class="org">Snowbasin Resort</div>
+          <div class="sub">Head of Marketing</div>
+        </div>
+
+        <div class="node now" data-anim="rise-5">
+          <div class="mark"><img class="knock wide" src="logos/grand-america-white.png" alt="Grand America Hotels &amp; Resorts" /></div>
+          <div class="dotwrap"><span class="dot"></span></div>
+          <div class="yr">2024 – PRESENT</div>
+          <div class="org">Grand America</div>
+          <div class="sub">Head of Growth Marketing</div>
+        </div>
+
+        <div class="node now" data-anim="rise-6">
+          <div class="mark"><img class="wide" src="logos/centium.svg" alt="Centium" /></div>
+          <div class="dotwrap"><span class="dot"></span></div>
+          <div class="yr">2025 – PRESENT</div>
+          <div class="org">Centium</div>
+          <div class="sub">Founder</div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">ONE MARKET &nbsp;·&nbsp; <span class="strong">EVERY SEAT OF THE SPORTS BUSINESS</span></span>
+        <span class="label-mono-sm">SALT LAKE CITY, UTAH</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         03 — HOW I BROKE IN
+         ============================================================ -->
+    <section class="slide s-break" data-section="HOW I BROKE IN · 2013">
+      <div class="left">
+        <div>
+          <div class="eyebrow" data-anim="reveal">— JULY 2013</div>
+          <h2 data-anim="reveal-2">HOW I BROKE<br/>INTO THE<br/><span class="red">SPORTS INDUSTRY.</span></h2>
+        </div>
+
+        <div class="shot" data-anim="fade-2"></div>
+
+        <div class="mid">
+          <div class="pull" data-anim="rise-3">I offered to<br/>work for free.</div>
+          <p class="sub" data-anim="rise-4">Seventeen and a half credits short of a degree, with no title and no leverage — <b>so I removed the only real objection they had.</b></p>
+        </div>
+
+        <div class="foot" data-anim="fade-3">OLYMPIC SPORTS MARKETING COORDINATOR &nbsp;·&nbsp; <span class="strong">UTAH ATHLETICS</span></div>
+      </div>
+
+      <div class="right">
+        <div class="letter" data-anim="rise-2">
+          <div class="name">Michael Rueckert</div>
+          <p class="addr">July 15, 2013</p>
+          <p class="addr">University of Utah<br/>Athletics Department<br/>1825 E. South Campus Dr.<br/>Salt Lake City, UT 84112-0900</p>
+          <p>Dear Mrs. White,</p>
+          <p>The purpose of this letter is to express my interest in the Olympic Sports Marketing Coordinator position through University of Utah Athletics.</p>
+          <p>Although I&rsquo;m still 17.5 credits away from receiving my Bachelor&rsquo;s Degree, I believe that I&rsquo;m a very competitive candidate due to my years of experience within University of Utah Athletics thorough Marketing and The MUSS, as well as directly related experience working with the Salt Lake Bees.</p>
+          <p>This position fits perfectly within my background and skills, allowing me to take Utah Baseball and other Olympic Sports to the next level. I already have established relationships within the Athletics Department and University of Utah that would allow a seamless transition into the position.</p>
+          <p>Due to the fact that I have not yet received my Bachelor&rsquo;s Degree, <mark>I am willing to do the job without pay until I am graduated</mark> as a full time intern or undergraduate assistant. Upon graduation in May, I would then fully step into the position.</p>
+          <p>Thank you for your time and consideration. I look forward to hearing from you.</p>
+          <p>Sincerely,</p>
+          <p>Michael Rueckert</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         04 — UTAH ATHLETICS
+         ============================================================ -->
+    <section class="slide s-utah" data-section="UTAH ATHLETICS · 2013–2019">
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>UTAH ATHLETICS &nbsp;·&nbsp; 2013 – 2019</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/utah-utes.svg" alt="Utah Utes" style="height:4.4cqh" /></div>
+      </div>
+
+      <div class="band">
+        <div class="ph a" data-anim="fade"></div>
+        <div class="ph b" data-anim="fade-2"></div>
+        <div class="ph c" data-anim="fade-3"></div>
+      </div>
+
+      <div class="body">
+        <div>
+          <div class="eyebrow" data-anim="reveal">— WHERE IT BEGAN</div>
+          <h2 data-anim="reveal-2">SPORTS MARKETING<br/><span class="red">CAREER BEGINS.</span></h2>
+          <p class="lede" data-anim="rise-3">Led marketing for <b>12 teams</b> in six years — the full portfolio, from a sold-out football stadium to a record-setting gymnastics arena.</p>
+        </div>
+
+        <div class="groups">
+          <div class="grp" data-anim="rise-3">
+            <div class="h">Utah Football</div>
+            <div class="stats">
+              <div class="st"><span class="n">57</span><span class="l">straight <b>sellouts</b></span></div>
+              <div class="st"><span class="n">102%</span><span class="l">stadium capacity<br/><b>Top-3 NCAA</b></span></div>
+              <div class="st"><span class="n">$80M</span><span class="l"><b>stadium expansion</b></span></div>
+            </div>
+          </div>
+
+          <div class="grp" data-anim="rise-4">
+            <div class="h">Utah Gymnastics</div>
+            <ul class="dash">
+              <li><b>NCAA record attendance</b> for women's sports</li>
+              <li><b>Jon M. Huntsman Center</b> attendance record</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm" data-anim="fade-3">12 TEAMS &nbsp;·&nbsp; <span class="strong">SIX YEARS</span></span>
+        <span class="label-mono-sm" data-anim="fade-3" style="text-align:right">RICE-ECCLES STADIUM &nbsp;·&nbsp; JON M. HUNTSMAN CENTER</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         04 — SNOWBASIN
+         ============================================================ -->
+    <section class="slide s-basin" data-section="SNOWBASIN RESORT · 2019–2024">
+      <div class="photo" data-anim="zoom"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>SNOWBASIN RESORT &nbsp;·&nbsp; 2019 – 2024</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="eyebrow" data-anim="reveal">— BRAND, DEMAND, REVENUE</div>
+        <h2 data-anim="reveal-2">BUILDING A BRAND<br/>TO <span class="red">NO. 1.</span></h2>
+
+        <div class="stats">
+          <div class="st" data-anim="count"><span class="n">3.5x</span><span class="l"><b>earnings growth</b><br/>in five years</span></div>
+          <div class="st" data-anim="count-2"><span class="n">845%</span><span class="l"><b>e-commerce</b> growth</span></div>
+          <div class="st" data-anim="count-3"><span class="n">2.5x</span><span class="l"><b>revenue</b> growth</span></div>
+          <div class="st" data-anim="count-4"><span class="n">$12M</span><span class="l"><b>partnership</b> portfolio</span></div>
+        </div>
+      </div>
+
+      <div class="laurels">
+        <div class="h" data-anim="fade-2">Awards &amp; Recognition</div>
+        <div class="row" data-anim="fade-3">
+          <img src="badges/best-of-marketing.png"     alt="Best of Marketing" />
+          <img src="badges/marketing-team.png"        alt="Marketing Team" />
+          <img src="badges/disruptor.png"             alt="Marketing Disruptor" />
+          <img src="badges/most-visible.png"          alt="Most Visible Campaign" />
+          <img src="badges/most-inspiring.png"        alt="Most Inspiring Campaign" />
+          <img src="badges/outdoor-campaign.png"      alt="Best Outdoor Campaign" />
+          <img src="badges/outdoor-video.png"         alt="Best Outdoor Video" />
+          <img src="badges/tourism-video.png"         alt="Best Tourism Video" />
+          <img src="badges/nsaa-finalist.png"         alt="NSAA Best Marketing Campaign Finalist" />
+          <img src="badges/employee-of-the-year.png"  alt="Employee of the Year" />
+          <img src="badges/senior-leadership.png"     alt="Senior Leadership Award" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         05 — CENTIUM
+         ============================================================ -->
+    <section class="slide s-centium" data-section="CENTIUM · 2025–PRESENT">
+      <div class="left">
+        <div>
+          <div class="eyebrow" data-anim="reveal">— CENTIUM &nbsp;·&nbsp; 2025 – PRESENT</div>
+          <h2 data-anim="reveal-2">MY AI<br/>FOUNDER<br/><span class="red">JOURNEY.</span></h2>
+        </div>
+
+        <div class="mid">
+          <p class="lede" data-anim="rise-3">Built from the operator's side of the desk: <b>a marketer who kept hitting the same wall</b>, then went and built the thing that moved it.</p>
+
+          <div class="press" data-anim="rise-4">
+            <div class="k">Featured by</div>
+            <div class="row">
+            <div class="fx"><img src="featured/wsj.svg" alt="The Wall Street Journal" /></div>
+            <div class="fx"><img src="featured/journal.png" alt="The Journal" /></div>
+            <div class="fx"><img src="featured/mmgy.svg" alt="MMGY Global" /></div>
+            <div class="fx"><img src="featured/redbull-basement.png" alt="Red Bull Basement" /></div>
+            <div class="fx"><img src="featured/nsaa.png" alt="NSAA" /></div>
+            <div class="fx"><img src="featured/second-nature.png" alt="Second Nature" /></div>
+            <div class="fx"><img src="featured/long-run-labs.png" alt="Long Run Labs" /></div>
+            <div class="fx"><img src="featured/mbc.png" alt="Master of Business Creation — David Eccles School of Business" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="foot" data-anim="fade-3">FOUNDER &nbsp;·&nbsp; <span class="strong">CENTIUM AI</span></div>
+      </div>
+
+      <div class="right">
+        <div class="h" data-anim="reveal">Subscriber Brands &nbsp;·&nbsp; Outdoor &amp; Endurance</div>
+
+        <div class="shots" data-anim="rise-2">
+          <div class="sh" style="background-image:url('customers/rab-hydrapak.jpg')"></div>
+          <div class="sh" style="background-image:url('customers/skratch.jpg')"></div>
+          <div class="sh" style="background-image:url('customers/chomps.jpg')"></div>
+        </div>
+
+        <div class="wall" data-anim="rise-3">
+          <div class="lg"><img style="max-height:2.12cqh" src="logos/salomon.svg" alt="Salomon" /></div>
+          <div class="lg"><span class="wm">shimano</span></div>
+          <div class="lg"><img style="max-height:2.23cqh" src="logos/sram.svg" alt="Sram" /></div>
+          <div class="lg"><img style="max-height:3.34cqh" src="logos/bosch.svg" alt="Bosch" /></div>
+          <div class="lg"><img style="max-height:2.50cqh" src="logos/rossignol.svg" alt="Rossignol" /></div>
+          <div class="lg"><span class="wm" style="font-size:3.3cqh">head</span></div>
+          <div class="lg"><img style="max-height:5.60cqh" src="logos/scott.png" alt="Scott" /></div>
+          <div class="lg"><img style="max-height:2.00cqh" src="logos/mammut.svg" alt="Mammut" /></div>
+          <div class="lg"><img style="max-height:3.69cqh" src="logos/smartwool.svg" alt="Smartwool" /></div>
+          <div class="lg"><img style="max-height:5.60cqh" src="logos/zwift.svg" alt="Zwift" /></div>
+          <div class="lg"><img style="max-height:2.44cqh" src="logos/canyon.png" alt="Canyon" /></div>
+          <div class="lg"><img style="max-height:3.26cqh" src="logos/outdoor-research.svg" alt="Outdoor Research" /></div>
+          <div class="lg"><img style="max-height:4.15cqh" src="logos/poc.svg" alt="Poc" /></div>
+          <div class="lg"><img style="max-height:5.60cqh" src="logos/evo.svg" alt="Evo" /></div>
+          <div class="lg"><span class="wm">trainingpeaks</span></div>
+          <div class="lg"><img style="max-height:2.00cqh" src="logos/scarpa.png" alt="Scarpa" /></div>
+          <div class="lg"><img style="max-height:3.69cqh" src="logos/lowa.svg" alt="Lowa" /></div>
+          <div class="lg"><span class="wm">gregory</span></div>
+          <div class="lg"><img style="max-height:5.29cqh" src="logos/msr.svg" alt="Msr" /></div>
+          <div class="lg"><img style="max-height:2.51cqh" src="logos/therm-a-rest.svg" alt="Therm-A-Rest" /></div>
+          <div class="lg"><span class="wm">jetboil</span></div>
+          <div class="lg"><img style="max-height:2.64cqh" src="logos/yakima.png" alt="Yakima" /></div>
+          <div class="lg"><img style="max-height:2.95cqh" src="logos/kuiu.png" alt="Kuiu" /></div>
+          <div class="lg"><img style="max-height:5.02cqh" src="logos/chomps.svg" alt="Chomps" /></div>
+          <div class="lg"><img style="max-height:3.80cqh" src="logos/skratch.svg" alt="Skratch" /></div>
+          <div class="lg"><img style="max-height:3.15cqh" src="logos/hydrapak.svg" alt="Hydrapak" /></div>
+          <div class="lg"><img style="max-height:3.66cqh" src="logos/roka.svg" alt="Roka" /></div>
+          <div class="lg"><img style="max-height:3.07cqh" src="logos/skullcandy.svg" alt="Skullcandy" /></div>
+          <div class="lg"><img style="max-height:4.26cqh" src="logos/enve.png" alt="Enve" /></div>
+          <div class="lg"><img style="max-height:2.16cqh;max-width:90%" src="logos/colnago.png" alt="Colnago" /></div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- ============================================================
+         06 — GO NORTH  (closer)
+         ============================================================ -->
+    <section class="slide s-north" data-section="GO NORTH · SNOWBASIN">
+      <div class="photo"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>SNOWBASIN RESORT &nbsp;·&nbsp; THE CAMPAIGN</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="body">
+        <div>
+          <div class="eyebrow" data-anim="reveal">— THE WORK</div>
+          <h2 data-anim="reveal-2">GO<br/><span class="red">NORTH.</span></h2>
+          <p class="lede" data-anim="rise-3">One line on a billboard, and a whole resort pointed at it — <b>the campaign behind the growth on the last slide.</b></p>
+          <div class="brand" data-anim="fade-3"><img src="logos/snowbasin-reverse.svg" alt="Snowbasin Resort" /></div>
+        </div>
+
+        <div class="player" data-anim="rise-4">
+          <div class="fallback">Film loads from Google Drive<br/>— needs a live connection —</div>
+          <iframe src="https://drive.google.com/file/d/1exAlb8RaJLsiglg43TiXIeN6V4l1pQNo/preview"
+                  title="Snowbasin — Go North"
+                  allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm" data-anim="fade-3">SNOWBASIN RESORT &nbsp;·&nbsp; <span class="strong">2019 – 2024</span></span>
+        <span class="label-mono-sm" data-anim="fade-3" style="text-align:right">THANK YOU<span style="color:var(--utah-red-bright)">.</span></span>
+      </div>
+    </section>
+
+  </div><!-- /.stage -->
+
+  <div class="hud">
+    <div class="hud-left">
+      <span class="pip"></span>
+      <span id="hud-section">ABOUT ME</span>
+    </div>
+    <div class="hud-right"><span id="hud-slide">01 / 07</span></div>
+  </div>
+
+  <div class="progress-bar" id="progress"></div>
+
+  <div class="help" id="help">
+    <kbd>F</kbd> FULLSCREEN &nbsp; <kbd>←</kbd><kbd>→</kbd> NAVIGATE &nbsp; <kbd>N</kbd> INDEX &nbsp; <kbd>HOME</kbd> RESET
+  </div>
+</div>
+
+<script src="../_engine/deck.v1.js?r=4"></script>
+</body>
+</html>

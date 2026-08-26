@@ -1,0 +1,3228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Advisory Group Meeting No. 2 — Business of Sports — David Eccles School of Business</title>
+<link rel="icon" type="image/svg+xml" href="../_brand/utah/logos/desb-vertical-black.svg" />
+
+<!-- Engine (versioned, brand-agnostic) then brand tokens. Order matters. -->
+<link rel="stylesheet" href="../_engine/deck.v1.css?r=4" />
+<link rel="stylesheet" href="../_brand/utah/brand.css" />
+
+<style>
+  /* ============================================================
+     DECK — ADVISORY GROUP MEETING NO. 2
+     August 25, 2026 · Spencer Fox Eccles Business Building, Child Hall Rm 7180
+
+     Slide-specific layout only. All colour/type resolves from
+     _brand/brand.css; all chrome from _engine/deck.v1.css.
+
+     Convention: one .s-* block per slide, in slide order.
+     ============================================================ */
+
+  /* ---------- shared: section divider (cinematic dark) ---------- */
+  /* NB: no `position: relative` here — .stage > .slide supplies
+     absolute positioning, and overriding it drops the slide into flow. */
+  .s-div {
+    background: #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+  }
+  .s-div .photo {
+    position: absolute; inset: 0; z-index: 0;
+    background-size: cover;
+    background-position: center 45%;
+    filter: contrast(1.06);
+  }
+  .s-div .topbar, .s-div .midbar, .s-div .bottombar { position: relative; z-index: 2; }
+  .s-div .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4cqh 5cqw 0;
+    color: var(--paper);
+  }
+  .s-div .midbar { display: grid; align-content: center; padding: 0 5cqw; gap: 2cqh; }
+  .s-div .midbar .num { color: var(--utah-red-bright); text-shadow: 0 0 18px rgba(230,0,18,0.4); }
+  .s-div .midbar h2 {
+    color: var(--paper);
+    font-family: var(--f-display); font-weight: 400;
+    font-size: 11cqw; line-height: 1.0; letter-spacing: 0.015em;
+    text-transform: uppercase;
+  }
+  .s-div .midbar h2 .red { color: var(--utah-red-bright); }
+  .s-div .midbar .lede {
+    color: rgba(255,255,255,0.92);
+    font-family: var(--f-body); font-weight: 500;
+    font-size: 2.6cqh; line-height: 1.45; max-width: 62cqw;
+  }
+  /* run-of-show strip: who presents, how long */
+  .s-div .bottombar {
+    display: flex; justify-content: space-between; align-items: end;
+    gap: 3cqw; padding: 3.4cqh 5cqw 3.4cqh;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin: 0 5cqw; padding-left: 0; padding-right: 0;
+  }
+  .s-div .bottombar .who { display: flex; gap: 2.6cqw; align-items: baseline; }
+  .s-div .bottombar .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.05cqh;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(255,255,255,0.55); display: block; margin-bottom: 0.5cqh;
+  }
+  .s-div .bottombar .v {
+    font-family: var(--f-condensed); font-weight: 600; font-size: 2.5cqh;
+    letter-spacing: 0.03em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-div .bottombar .time .v { color: var(--utah-red-bright); }
+
+  /* ============================================================
+     01 — COVER
+     ============================================================ */
+  .s-cover { background: #000; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+  .s-cover .photo {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.30) 42%, rgba(0,0,0,0.90) 100%),
+      linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0) 62%),
+      url('../_brand/utah/img/rice-eccles-aerial.jpg');
+    background-size: cover; background-position: center 42%;
+    opacity: 0;
+    will-change: transform;
+  }
+  /* HOLDING-SLIDE DRIFT
+     The deck sits on the cover while people arrive, so the aerial breathes
+     rather than freezing on a still: a slow push out, a beat, a slow push
+     back, forever. Two animations — the arrival fade runs once and holds,
+     then the loop takes over the transform (later animation wins for the
+     same property, and it starts where the fade left off, so there is no
+     jump). Scale never drops below 1: at exactly cover size the photo has
+     no slack left, and anything under it would expose the slide edge. */
+  .s-cover.active .photo {
+    animation: coverIn 6s 0.1s ease-out forwards,
+               coverDrift 34s 6.1s ease-in-out infinite;
+  }
+  /* The entrance keeps the original feel: a slow rise out of black while
+     the aerial pushes out. It runs ONCE — the loop that follows moves the
+     transform only, so the deck never dips back to black on repeat. */
+  @keyframes coverIn {
+    from { opacity: 0; transform: scale(1.10); }
+    to   { opacity: 1; transform: scale(1.01); }
+  }
+  /* Picks up at the scale the entrance landed on, so the first loop move is
+     a push IN rather than a jump. */
+  @keyframes coverDrift {
+    0%,   5%   { transform: scale(1.01); }   /* hold where the entrance ended */
+    45%,  55%  { transform: scale(1.09); }   /* pushed in, hold */
+    95%,  100% { transform: scale(1.01); }   /* back out, hold */
+  }
+  /* Print has no .active, and the drift would freeze mid-scale anyway —
+     force the photo visible and untransformed so the cover is not blank. */
+  @media print {
+    .s-cover .photo { opacity: 1 !important; animation: none !important; transform: none !important; }
+  }
+  .s-cover > *:not(.photo) { position: relative; z-index: 2; }
+  .s-cover .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4cqh 5cqw 0; color: var(--paper);
+  }
+  .s-cover .midbar { display: grid; align-content: center; padding: 0 5cqw; gap: 1.8cqh; }
+  .s-cover .eyebrow {
+    color: var(--utah-red-bright);
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.35cqh;
+    letter-spacing: 0.42em; text-transform: uppercase;
+  }
+  .s-cover h1 {
+    color: var(--paper);
+    font-family: var(--f-display); font-weight: 400;
+    font-size: 9.6cqw; line-height: 0.98; letter-spacing: 0.012em; text-transform: uppercase;
+  }
+  .s-cover h1 .red { color: var(--utah-red-bright); }
+  .s-cover .meetmeta {
+    display: flex; gap: 3.4cqw; align-items: baseline;
+    padding-top: 1.6cqh; border-top: 2px solid rgba(255,255,255,0.28);
+    max-width: 74cqw;
+  }
+  .s-cover .meetmeta .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.05cqh;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.55cqh;
+  }
+  .s-cover .meetmeta .v {
+    font-family: var(--f-condensed); font-weight: 600; font-size: 2.5cqh;
+    letter-spacing: 0.03em; text-transform: uppercase; color: var(--paper); line-height: 1.2;
+  }
+  .s-cover .bottombar {
+    display: flex; justify-content: space-between; align-items: end;
+    padding: 3.4cqh 5cqw; color: var(--paper);
+  }
+  .s-cover .bottombar .strong { font-weight: 700; }
+
+  /* ============================================================
+     02 — RUN OF SHOW
+     ============================================================ */
+  .s-agenda {
+    background: var(--paper); color: var(--ink);
+    display: grid; grid-template-rows: auto auto 1fr auto;
+    padding: 3.4cqh 4.5cqw;
+  }
+  .s-agenda .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.3cqh; border-bottom: 2px solid var(--ink);
+  }
+  .s-agenda .topbar .crumb { color: var(--utah-red); }
+  .s-agenda h2 {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: 5.4cqw; line-height: 1.0; letter-spacing: 0.015em;
+    text-transform: uppercase; color: var(--ink); margin: 1.2cqh 0 1.4cqh;
+  }
+  .s-agenda h2 .red { color: var(--utah-red); }
+  .s-agenda .rows { display: grid; align-content: stretch; gap: 0; }
+  .s-agenda .row {
+    display: grid; grid-template-columns: 3.4cqw 1fr auto auto;
+    gap: 1.6cqw; align-items: center;
+    padding: 0.9cqh 0;
+    border-bottom: 1px solid rgba(0,0,0,0.13);
+  }
+  .s-agenda .row:last-child { border-bottom: 0; }
+  .s-agenda .row .n {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.1cqh;
+    line-height: 1; letter-spacing: 0.02em; color: var(--utah-red);
+  }
+  .s-agenda .row .t {
+    font-family: var(--f-condensed); font-weight: 600; font-size: 2.55cqh;
+    letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink); line-height: 1.15;
+  }
+  .s-agenda .row .who {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.35cqh;
+    color: #4A4A4A; text-align: right; white-space: nowrap;
+  }
+  .s-agenda .row .min {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.6cqh;
+    letter-spacing: 0.14em; color: var(--utah-red);
+    min-width: 5.4cqw; text-align: right;
+  }
+  .s-agenda .row.discuss { background: rgba(190,0,0,0.055); }
+  .s-agenda .row.discuss .t::after {
+    content: "DISCUSSION";
+    font-family: var(--f-mono); font-weight: 700; font-size: 0.95cqh;
+    letter-spacing: 0.22em; color: var(--paper); background: var(--utah-red);
+    padding: 0.24cqh 0.6cqw; margin-left: 0.9cqw; vertical-align: 0.25em;
+  }
+  .s-agenda .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.3cqh; border-top: 1px solid rgba(0,0,0,0.18);
+    color: var(--ink); font-weight: 500;
+  }
+  .s-agenda .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     shared: light content slide (bone) with topbar + footer
+     ============================================================ */
+  .s-lite {
+    background: var(--paper); color: var(--ink);
+    display: grid; grid-template-rows: auto auto 1fr auto;
+    padding: 3.4cqh 4.5cqw;
+  }
+  .s-lite .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.3cqh; border-bottom: 2px solid var(--ink);
+  }
+  .s-lite .topbar .crumb { color: var(--utah-red); }
+  .s-lite h2 {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: 5.2cqw; line-height: 1.0; letter-spacing: 0.015em;
+    text-transform: uppercase; color: var(--ink); margin: 1.1cqh 0 2.1cqh;
+  }
+  .s-lite h2 .red { color: var(--utah-red); }
+  .s-lite .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.3cqh; border-top: 1px solid rgba(0,0,0,0.18);
+    color: var(--ink); font-weight: 500;
+  }
+  .s-lite .foot .strong { font-weight: 700; }
+
+  /* pending marker — content owned by someone else, not yet supplied.
+     Uses outline (not border/background) so it overlays red and black
+     cards without flattening their fill. */
+  .pending {
+    position: relative;
+    outline: 2px dashed rgba(190,0,0,0.65);
+    outline-offset: -2px;
+  }
+  .pending.yr, .pending.step { outline-color: rgba(255,255,255,0.6); }
+  .pending::after {
+    content: "AWAITING INPUT";
+    position: absolute; top: 0; right: 0;
+    font-family: var(--f-mono); font-weight: 700; font-size: 0.95cqh;
+    letter-spacing: 0.2em; color: var(--paper); background: var(--utah-red);
+    padding: 0.3cqh 0.7cqw;
+  }
+
+  /* ============================================================
+     WHAT IS THE PLAYERS ACADEMY — ported from deck 1
+     ============================================================ */
+  .s-what {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    overflow: hidden; }
+  .s-what .red-pane {
+    background-color: var(--utah-red);
+    background-image:
+      linear-gradient(135deg, rgba(190,0,0,0.55) 0%, rgba(122,0,0,0.45) 100%),
+      url('../_brand/utah/img/slc-spring-view.jpg');
+    background-size: cover;
+    background-position: center 75%;
+    background-blend-mode: normal, multiply;
+    color: var(--paper);
+    padding: 4cqh 3.5cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative; }
+  .s-what .red-pane::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(255,255,255,0.1), transparent 55%),
+      radial-gradient(ellipse at 20% 100%, rgba(0,0,0,0.2), transparent 50%);
+    pointer-events: none; }
+  .s-what .red-pane > * { position: relative; z-index: 1; }
+  .s-what .red-pane .topbar { color: var(--paper); }
+  .s-what .red-pane .hero { display: grid; align-content: center; gap: 1.8cqh; }
+  .s-what .red-pane .hero .label { color: rgba(255,255,255,0.85); }
+  .s-what .red-pane .hero h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 8cqw;
+    line-height: 1.02;
+    letter-spacing: 0.015em;
+    color: var(--paper);
+    text-transform: uppercase; }
+  .s-what .red-pane .hero .expand {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 1.7cqh;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--paper);
+    line-height: 1.35;
+    max-width: 36cqw; }
+  .s-what .red-pane .hero .expand .accent { color: rgba(255,255,255,0.75); }
+  .s-what .red-pane .hero .body {
+    color: var(--paper);
+    font-weight: 500;
+    margin-top: 1cqh;
+    max-width: 38cqw; }
+  .s-what .red-pane .footer { color: var(--paper); }
+  .s-what .red-pane .footer .strong { font-weight: 700; }
+  .s-what .white-pane {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 4cqh 4cqw;
+    display: grid;
+    grid-template-rows: auto 1fr auto; }
+  .s-what .white-pane .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--ink);
+    padding-bottom: 1.4cqh;
+    border-bottom: 2px solid var(--ink); }
+  .s-what .white-pane .topbar .crumb { color: var(--utah-red); }
+  .s-what .white-pane .cards {
+    display: grid; align-content: center; gap: 2cqh;
+    padding: 1cqh 0; }
+  .s-what .white-pane .card {
+    padding: 1.6cqh 0;
+    border-top: 2px solid var(--ink);
+    position: relative;
+    display: grid;
+    grid-template-columns: 12cqw 1fr;
+    gap: 1.4cqw; }
+  .s-what .white-pane .card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -2px;
+    width: 9cqw; height: 2px;
+    background: var(--utah-red); }
+  .s-what .white-pane .card .label {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.15cqh;
+    letter-spacing: 0.28em;
+    color: var(--utah-red);
+    text-transform: uppercase;
+    padding-top: 0.4cqh; }
+  .s-what .white-pane .card .body {
+    color: var(--ink);
+    font-weight: 500; }
+  .s-what .white-pane .card .body strong { color: var(--ink); font-weight: 700; }
+  .s-what .white-pane .footer {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.14);
+    color: var(--ink);
+    font-weight: 500; }
+
+  /* ============================================================
+     BUSINESS OF SPORTS 101 — the focus, and the demand behind it.
+     Split across two slides on purpose: at a 720px stage the whole
+     brief lands at ~713px with every element pinned to the 2.0cqh
+     floor and no padding left, which is a wall of text rather than
+     a slide. Two slides let the type breathe.
+     ============================================================ */
+  .s-focus {
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 3.4cqh 4.5cqw; }
+  .s-focus .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.6cqh;
+    border-bottom: 2px solid var(--ink); }
+  .s-focus .topbar .crumb { color: var(--utah-red); }
+  .s-focus .topbar h2 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4cqh;
+    line-height: 1.0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink); }
+  .s-focus .topbar h2 .red { color: var(--utah-red); }
+  .s-focus .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2cqw;
+    padding: 2cqh 0 0;
+    position: relative; }
+  .s-focus .pillar {
+    background: var(--bone);
+    padding: 0 2cqw 11cqh;   /* clears the strip pinned at the foot */
+    display: grid;
+    grid-template-rows: auto auto auto auto 1fr;
+    gap: 1.2cqh;
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid var(--utah-red); }
+  .s-focus .pillar .photo-band {
+    margin: 0 -2cqw 1.4cqh;
+    height: 27cqh;
+    background-size: cover;
+    background-position: center;
+    position: relative; }
+  .s-focus .pillar .photo-band::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 100%); }
+  .s-focus .pillar .photo-band .photo-tag {
+    position: absolute; left: 1.4cqw; bottom: 0.8cqh;
+    z-index: 2;
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.0cqh;
+    letter-spacing: 0.3em;
+    color: var(--paper);
+    text-transform: uppercase; }
+  .s-focus .pillar > .label {
+    padding-top: 1.4cqh; }
+  .s-focus .pillar .label {
+    color: var(--utah-red); }
+  .s-focus .pillar h3 {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 5.4cqh;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink); }
+  .s-focus .pillar .pitch {
+    font-family: var(--f-condensed);
+    font-weight: 500;
+    font-size: 2.5cqh;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.2; }
+  .s-focus .pillar .pitch .red { color: var(--utah-red); }
+  .s-focus .pillar ul {
+    list-style: none;
+    display: grid;
+    gap: 0.7cqh;
+    padding-top: 1.4cqh;
+    border-top: 1px solid rgba(0,0,0,0.18);
+    align-content: start; }
+  .s-focus .pillar ul li {
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 2.25cqh;
+    line-height: 1.36;
+    padding-left: 1.4cqw;
+    position: relative; }
+  .s-focus .pillar ul li::before {
+    content: "";
+    position: absolute;
+    /* Centred on the first line via em, not a hand-tuned cqh value: line-height
+       is 1.36, so half of it is 0.68em, less 1px for half the dash. A fixed
+       offset was tuned to the original 1.7cqh copy and stopped tracking the
+       moment the type grew. */
+    left: 0; top: calc(0.68em - 1px);
+    width: 0.5cqw; height: 2px;
+    background: var(--utah-red); }
+  .s-focus .themes-strip {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: auto repeat(3, 1fr);
+    align-items: center;
+    gap: 2.4cqw;
+    padding: 1.9cqh 2.4cqw;
+    background: #000;
+    border-top: 4px solid var(--utah-red);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.28); }
+  .s-focus .themes-strip .strip-label {
+    font-family: var(--f-mono);
+    font-weight: 700;
+    font-size: 1.35cqh;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.4;
+    max-width: 15cqw; }
+  .s-focus .themes-strip .strip-label .red { color: var(--utah-red-bright); display: block; }
+  .s-focus .themes-strip .tm {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.1cqw;
+    align-items: center;
+    border-left: 1px solid rgba(255,255,255,0.2);
+    padding-left: 1.8cqw; }
+  .s-focus .themes-strip .tm .tn {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 4.2cqh;
+    line-height: 0.82;
+    letter-spacing: 0.02em;
+    color: var(--utah-red-bright); }
+  .s-focus .themes-strip .tm .tname {
+    font-family: var(--f-condensed);
+    font-weight: 600;
+    font-size: 1.9cqh;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.1; }
+
+  /* ============================================================
+     DEMAND & REACH — the minor at the centre of an orbit of
+     departments. The ring rotates; the labels counter-rotate by the
+     same amount so they stay upright and legible while it turns.
+     ============================================================ */
+  .s-reach { background: var(--paper); display: grid; grid-template-rows: auto auto 1fr auto;
+             padding-top: 2.4cqh; padding-bottom: 1.8cqh; }
+  .s-reach h2 { font-size: 4.2cqw; margin: 0.5cqh 0 0.9cqh; }
+  .s-reach .topbar { padding-bottom: 0.9cqh; }
+  .s-reach .split { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 2.0cqw; align-items: center; }
+
+  /* Enrollment as a ramp rather than three cards: the point is the climb,
+     and identical boxes flatten it into three unrelated facts. Bars are
+     scaled off the range midpoints (50 / 150 / 200+). */
+  .s-reach .ramp { display: grid; gap: 1.5cqh; }
+  .s-reach .ramp .rtitle {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.1cqh;
+    line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+    padding-bottom: 1.0cqh; border-bottom: 2px solid var(--ink); margin-bottom: 0.4cqh;
+  }
+  .s-reach .rw {
+    display: grid; grid-template-columns: 8.6cqw 1fr 8.4cqw; align-items: center; gap: 1.2cqw;
+    padding-bottom: 1.4cqh; border-bottom: 1px solid rgba(0,0,0,0.14);
+  }
+  .s-reach .rw .yr {
+    font-family: var(--f-condensed); font-weight: 700; font-size: 2.0cqh;
+    letter-spacing: 0.06em; text-transform: uppercase; color: #5A5A5A; line-height: 1.28;
+  }
+  .s-reach .rw .yr em {
+    display: block; font-style: normal; font-weight: 700;
+    font-size: 2.15cqh; letter-spacing: 0.04em; color: var(--ink);
+  }
+  .s-reach .rw .bar {
+    display: block; height: 1.5cqh; background: var(--utah-red);
+    width: var(--w); transform-origin: left center;
+  }
+  .s-reach.active .rw .bar { animation: rampIn 1.1s .35s var(--ease-out) both; }
+  @keyframes rampIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @media print { .s-reach .rw .bar { animation: none !important; transform: none !important; } }
+  .s-reach .rw .v {
+    font-family: var(--f-body); font-weight: 600; font-size: 2.6cqh;
+    line-height: 1.1; letter-spacing: 0.01em; color: var(--ink);
+    font-variant-numeric: tabular-nums; text-align: left;
+  }
+  .s-reach .ramp .rlab {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.1cqh;
+    letter-spacing: 0.22em; text-transform: uppercase; color: #8A8A8A;
+  }
+  .s-reach .note { padding: 0 0 0 1.2cqw; margin-top: 4.2cqh;
+    border-left: 3px solid var(--utah-red); }
+  .s-reach .note .k { font-family: var(--f-mono); font-weight: 700; font-size: 1.1cqh;
+    letter-spacing: 0.22em; text-transform: uppercase; color: #6A6A6A; }
+  .s-reach .note p { font-family: var(--f-body); font-weight: 500; font-size: 2.05cqh;
+    line-height: 1.36; margin-top: 0.5cqh; color: var(--ink); }
+  .s-reach .note p strong { color: var(--utah-red); font-weight: 700; }
+
+  /* ORBIT — pills sit CENTRED on their point rather than anchored outward from
+     a dot. Anchoring outward made the envelope lopsided (labels ran to the slide
+     edge on one side) and made the angular gaps read unevenly. A centred pill
+     gives a symmetric envelope — radius plus half a pill, the same all round —
+     and the square container keeps the path a true circle.
+     Long names are interleaved with short ones in the markup so two wide pills
+     never land next to each other. */
+  /* Slightly wider than tall. A true circle cannot hold eleven pills of these
+     widths: two pairs straddle the top and bottom, and only one label ("Law")
+     is short enough to relieve a pair — solved exhaustively, every ordering
+     left one collision. Widening the horizontal radius gives the top and
+     bottom pairs the separation they need without shrinking the type. The
+     Centium orbit is more elliptical still (400/270). */
+  /* Aspect is pinned at 6/5 so the ring stays a TRUE circle at any size: the
+     left/top percentages are aspect-corrected (33.33% of width == 39.96% of
+     height == the same 205px radius). */
+  .s-reach .orbit { position: relative; width: 100%; aspect-ratio: var(--oar);
+                    max-height: 100%; margin: auto;
+                    --oar: 615 / 580; }
+  .s-reach .ring  { position: absolute; inset: 0; }
+  /* Position is set as left/top percentages of the square container. A
+     transform of translate(<pct>) would resolve against the NODE's own width,
+     not the container, which collapses every node onto the centre. */
+  .s-reach .node { position: absolute; width: 0; height: 0; }
+  /* UNIFORM pills. This is what makes the ring rotation-invariant: with every
+     pill the same box and every gap the same angle, the only cases that can
+     collide are neighbours at the top/bottom (separation purely horizontal)
+     and at the left/right (purely vertical) — and both are fixed quantities,
+     the same at every angle. Variable-width pills had no such guarantee, which
+     is why a layout verified at one frame fell apart at the next. */
+  /* Centring and counter-rotation are split across two elements on purpose.
+     CSS applies the independent `rotate` property BEFORE `transform`, so a
+     pill that both centres itself with translate(-50%,-50%) and counter-rotates
+     does the translate in the already-rotated frame — which walks it off the
+     circle. The wrapper centres and never rotates; the pill rotates about its
+     own centre and never translates. */
+  .s-reach .pwrap {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 9.45cqw;
+  }
+  .s-reach .pill {
+    width: 100%; min-height: 4.6cqh;
+    display: grid; place-items: center; text-align: center;
+    background: var(--paper); border: 1px solid rgba(0,0,0,0.18); border-radius: 100px;
+    padding: 0.5cqh 0.42cqw;   /* Entrepreneurship is one unbreakable word and needs the room */
+    box-shadow: 0 6px 16px -10px rgba(0,0,0,0.30);
+  }
+  .s-reach .pill span {
+    font-family: var(--f-condensed); font-weight: 600; font-size: 1.75cqh;
+    letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink); line-height: 1.12;
+    hyphens: auto;
+  }
+  .s-reach .hub {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 25%; aspect-ratio: 1; border-radius: 50%; background: var(--utah-red);
+    display: grid; align-content: center; justify-items: center; gap: 0.35cqh; text-align: center;
+  }
+  .s-reach .hub span {
+    font-family: var(--f-display); font-weight: 400; font-size: 2.5cqh;
+    line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-reach .hub em {
+    font-family: var(--f-mono); font-weight: 700; font-style: normal; font-size: 1.1cqh;
+    letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.82);
+  }
+
+  /* Rotation is safe now that the pills are uniform. Earlier attempts verified
+     the layout at ONE frame; with variable widths the clearances changed as the
+     ring turned, so it degraded the longer it ran. Uniform pills make the two
+     binding clearances constants — neighbour separation 131px against a 121px
+     pill plus 8px gap — so what holds at one angle holds at every angle.
+     The ring turns; each pill counters it by the same duration to stay upright,
+     via the independent `rotate` property so the centring translate survives. */
+  @keyframes orbitSpin   { to { rotate: 360deg; } }
+  @keyframes orbitUnspin { to { rotate: -360deg; } }
+  .s-reach.active .ring { animation: orbitSpin 180s linear infinite; }
+  .s-reach.active .pill { animation: orbitUnspin 180s linear infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .s-reach.active .ring, .s-reach.active .pill { animation: none; }
+  }
+  @media print { .s-reach .ring, .s-reach .pill { animation: none !important; } }
+
+  /* ============================================================
+     MARKET CONTEXT — SBJ BEST SPORTS BUSINESS CITIES
+     A slope chart, which is the honest form for rank change between
+     two lists: every city is one segment, so SLC's climb is read as
+     slope against 42 others rather than asserted. Rank axis is
+     INVERTED (1 at top) so "up" means "better" — the whole point.
+     ============================================================ */
+  .s-sbj {
+    background: var(--paper); color: var(--ink);
+    display: grid; grid-template-rows: auto auto 1fr auto auto;
+    padding: 3.0cqh 4.5cqw 3.0cqh;
+  }
+  .s-sbj .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.2cqh; border-bottom: 2px solid var(--ink);
+  }
+  .s-sbj .topbar .crumb { color: var(--utah-red); }
+  .s-sbj .head { margin: 1.2cqh 0 0.8cqh; }
+  .s-sbj .htxt { display: grid; gap: 0.7cqh; align-content: end; justify-items: start; }
+  .s-sbj .srcmark img { height: 4.6cqh; width: auto; display: block; margin-bottom: 0.3cqh; }
+  .s-sbj h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 4.0cqw;
+    line-height: 1.0; letter-spacing: 0.015em; text-transform: uppercase; color: var(--ink);
+  }
+  .s-sbj .htxt .sub {
+    font-family: var(--f-body); font-weight: 600; font-size: 2.1cqh;
+    line-height: 1.32; color: #4A4A4A; max-width: 70cqw;
+  }
+  .s-sbj h2 .red { color: var(--utah-red); }
+  .s-sbj .chart { min-height: 0; }
+  .s-sbj .chart svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+  /* chart primitives — sized in SVG user units, so they scale with the
+     viewBox and print at the same proportions they render on screen */
+  .s-sbj .gridline { stroke: rgba(0,0,0,0.10); stroke-width: 1; }
+  .s-sbj .yrlab { font-family: var(--f-display); font-weight: 400; font-size: 17px; letter-spacing: 0.02em; fill: var(--ink); }
+  .s-sbj .axsub { font-family: var(--f-body); font-weight: 600; font-size: 10.5px; fill: rgba(0,0,0,0.46); }
+
+  /* Every city is a group: a faint always-on ghost, a coloured highlight
+     revealed on hover or pin, and an invisible fat stroke that catches the
+     pointer — a 1.6px line is far too thin to hover reliably. */
+  .s-sbj .city .ghost { stroke: #DCDCDC; stroke-width: 1.6; fill: none; transition: opacity .18s ease; }
+  .s-sbj .city .hl    { fill: none; stroke-width: 3; stroke-linecap: round; opacity: 0; transition: opacity .18s ease; }
+  .s-sbj .city .cdot  { opacity: 0; transition: opacity .18s ease; stroke: none; }
+  .s-sbj .city .hit   { fill: none; stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
+  .s-sbj .city.on .ghost, .s-sbj .city.hov .ghost { opacity: 0; }
+  .s-sbj .city.on .hl,    .s-sbj .city.hov .hl,
+  .s-sbj .city.on .cdot,  .s-sbj .city.hov .cdot { opacity: 1; }
+  .s-sbj .city.hov .hl { stroke-width: 4; }
+
+  /* same weight as a competitor line — red alone carries Salt Lake */
+  .s-sbj .line { fill: none; stroke-width: 3; stroke-linecap: round; stroke: var(--utah-red); }
+  .s-sbj .dot { stroke: none; }
+  .s-sbj .clab { font-family: var(--f-body); font-weight: 700; font-size: 14px; }
+  .s-sbj .clab.rank { font-variant-numeric: tabular-nums; }
+  .s-sbj .clab.slc { fill: var(--utah-red); }   /* colour carries it, not size */
+  .s-sbj .lead { stroke-width: 1; stroke-dasharray: 2 3; }
+
+  /* draw-on: dasharray is set per-path in JS from its measured length */
+  .s-sbj .dot, .s-sbj .clab.slc { opacity: 0; transition: opacity .5s ease; }
+  .s-sbj.lit .dot, .s-sbj.lit .clab.slc { opacity: 1; }
+
+  .s-sbj .chips { display: flex; flex-wrap: wrap; gap: 0.5cqh 0.5cqw; padding: 0.7cqh 0 0.9cqh; }
+  .s-sbj .chip {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.55cqh 0.72cqw; cursor: pointer; user-select: none;
+    background: var(--paper); color: #5A5A5A;
+    border: 1px solid rgba(0,0,0,0.22); transition: all .18s ease;
+  }
+  .s-sbj .chip:hover { border-color: var(--utah-red); color: var(--utah-red); }
+  .s-sbj .chip.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .s-sbj .chip.preset { border-style: dashed; color: var(--utah-red); border-color: rgba(190,0,0,0.5); }
+  .s-sbj .chip.preset:hover { background: var(--utah-red); color: var(--paper); border-color: var(--utah-red); }
+  .s-sbj .chip.ev.on { background: #6A6A6A; border-color: #6A6A6A; }
+  .s-sbj .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.1cqh; border-top: 1px solid rgba(0,0,0,0.18);
+    color: var(--ink); font-weight: 500;
+  }
+  .s-sbj .foot .strong { font-weight: 700; }
+  /* PDF export must never inherit a mid-animation state, and the chart's
+     controls are meaningless on paper. */
+  @media print {
+    .s-sbj .line, .s-sbj .city .ghost, .s-sbj .city .hl {
+      stroke-dasharray: none !important; stroke-dashoffset: 0 !important; transition: none !important;
+    }
+    .s-sbj .dot, .s-sbj .clab { opacity: 1 !important; }
+    /* only PINNED cities show markers — a blanket rule painted a dot for
+       all 42 ghosts, stacking a colour column under every year */
+    .s-sbj .city.on .cdot      { opacity: 1 !important; }
+    .s-sbj .city:not(.on) .cdot { opacity: 0 !important; }
+    .s-sbj .chips { visibility: hidden !important; }
+  }
+
+  /* ============================================================
+     05 — MASTER SCHEDULE
+     ============================================================ */
+  /* understated launch ticker beside the headline — type only, no fill */
+  .s-sched .head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 3cqw; margin: 1.1cqh 0 2.1cqh;
+  }
+  .s-sched .head h2 { margin: 0; }
+  .s-sched .cd {
+    flex: none; display: grid; gap: 0.55cqh; justify-items: end;
+    padding-left: 1.8cqw; border-left: 2px solid rgba(0,0,0,0.16);
+  }
+  .s-sched .cd .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.1cqh;
+    letter-spacing: 0.26em; text-transform: uppercase; color: rgba(0,0,0,0.5);
+  }
+  .s-sched .cd .timer { display: flex; align-items: baseline; gap: 0.55cqw; }
+  .s-sched .cd .u { display: grid; justify-items: center; gap: 0.2cqh; }
+  .s-sched .cd .v {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.1cqh;
+    line-height: 0.9; letter-spacing: 0.015em; color: var(--utah-red);
+    font-variant-numeric: tabular-nums; min-width: 2.1ch; text-align: center;
+  }
+  .s-sched .cd .l {
+    font-family: var(--f-mono); font-weight: 700; font-size: 0.9cqh;
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.45);
+  }
+  .s-sched .cd .sep {
+    font-family: var(--f-display); font-size: 2.5cqh; line-height: 1;
+    color: rgba(0,0,0,0.22); align-self: start;
+  }
+
+  .s-sched .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.8cqw; align-content: center; }
+  /* Rows are implicit on purpose: columns carry a variable number of bands,
+     and a fixed grid-template-rows would drop the extras into an unsized
+     implicit row (the failure that broke the old step layout). */
+  .s-sched .col { background: var(--paper); border: 1px solid rgba(0,0,0,0.15); border-top: 4px solid var(--utah-red); padding: 1.5cqh 0.95cqw; display: grid; gap: 0.85cqh; align-content: start; }
+  .s-sched .col .term {
+    font-family: var(--f-display); font-weight: 400; font-size: 2.7cqh;
+    line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+  }
+  .s-sched .col .term .red { color: var(--utah-red); }
+  /* two tracks per term: academic milestones, then engagement */
+  .s-sched .col .band { display: grid; gap: 0.5cqh; }
+  .s-sched .col .bk {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.0cqh;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--utah-red);
+    padding-top: 0.6cqh; border-top: 1px solid rgba(0,0,0,0.16);
+  }
+  .s-sched .col .bk.eng { color: #6A6A6A; }
+  .s-sched .col ul { list-style: none; display: grid; gap: 0.5cqh; }
+  .s-sched .col li {
+    font-size: 2.0cqh; line-height: 1.28; color: var(--ink); font-weight: 500;
+    padding-left: 0.95cqw; position: relative;
+  }
+  .s-sched .col .band.eng li { color: #4A4A4A; }
+  .s-sched .col .band.eng li::before { background: #9A9A9A; }
+  .s-sched .col li::before {
+    /* centred on the first line via em, not a hand-tuned cqh value:
+       line-height is 1.34, so half of it is 0.67em, less 1px for half
+       the dash. Stays aligned if the type size changes again. */
+    content: ""; position: absolute; left: 0; top: calc(0.67em - 1px);
+    width: 0.55cqw; height: 2px; background: var(--utah-red);
+  }
+
+  /* ============================================================
+     07 — COLLABORATIVE EFFORTS
+     ============================================================ */
+  .s-collab .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8cqw; align-content: center; }
+  .s-collab .card {
+    background: var(--paper); border: 1px solid rgba(0,0,0,0.15); border-top: 4px solid var(--utah-red);
+    display: grid; grid-template-rows: auto 1fr; overflow: hidden; min-height: 46cqh;
+  }
+  .s-collab .card .ph { height: 20cqh; background-size: cover; background-position: center; position: relative; }
+  .s-collab .card .ph::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);
+  }
+  .s-collab .card .ph .tag {
+    position: absolute; left: 1.1cqw; bottom: 0.8cqh; z-index: 2;
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.0cqh;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--paper);
+  }
+  /* Explicit rows so the lead, headline and body sit on common bands.
+     align-content:center recentres each card independently, so the
+     Olympic card's longer paragraph lifted its headline above the
+     other two. Same failure as .s-team. */
+  .s-collab .card .inner {
+    padding: 1.9cqh 1.4cqw 2.1cqh; display: grid;
+    grid-template-rows: auto auto 1fr; gap: 0.95cqh; align-content: start;
+  }
+  .s-collab .card h3 {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.1cqh;
+    line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+  }
+  .s-collab .card .lead {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.05cqh;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--utah-red);
+  }
+  .s-collab .card p { font-size: 2.5cqh; line-height: 1.35; color: var(--ink); font-weight: 500; }
+
+  /* ============================================================
+     09 — WHERE STUDENTS GO  (hover-flip tiles, lifted from deck 1)
+     Front = segment description. Hover = partner logos.
+     On arrival every card starts on the BACK (logos) and stagger-flips
+     to the front, so the audience sees the logo wall first.
+     All logos are local — no favicon-service dependency.
+     ============================================================ */
+  .s-where { background: var(--bone); }
+  .s-where .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 1.2cqh 1.2cqw;
+    align-content: stretch;
+  }
+  .s-where .seg { perspective: 1200px; cursor: pointer; min-height: 24cqh; }
+  .s-where .seg .card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(.65, 0, .35, 1);
+  }
+  /* `both` fill-mode applies the starting (back) keyframe during the
+     delay, so cards are already showing logos the instant the slide
+     appears — no flash of the front face first. */
+  .s-where.flipping .seg .card-inner { animation: whereFlip 1.2s cubic-bezier(.65,0,.35,1) both; }
+  .s-where.flipping .seg:nth-child(1) .card-inner { animation-delay: 0.45s; }
+  .s-where.flipping .seg:nth-child(2) .card-inner { animation-delay: 0.62s; }
+  .s-where.flipping .seg:nth-child(3) .card-inner { animation-delay: 0.79s; }
+  .s-where.flipping .seg:nth-child(4) .card-inner { animation-delay: 0.96s; }
+  .s-where.flipping .seg:nth-child(5) .card-inner { animation-delay: 1.13s; }
+  .s-where.flipping .seg:nth-child(6) .card-inner { animation-delay: 1.30s; }
+  .s-where.flipping .seg:nth-child(7) .card-inner { animation-delay: 1.47s; }
+  .s-where.flipping .seg:nth-child(8) .card-inner { animation-delay: 1.64s; }
+  @keyframes whereFlip {
+    0%   { transform: rotateY(180deg); }
+    100% { transform: rotateY(0deg); }
+  }
+  .s-where .seg:hover .card-inner { transform: rotateY(180deg); }
+
+  .s-where .seg .card-front,
+  .s-where .seg .card-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    background: var(--paper);
+    border-top: 4px solid var(--utah-red);
+    padding: 1.6cqh 1.3cqw;
+    display: grid; gap: 0.8cqh;
+  }
+  .s-where .seg .card-front { grid-template-rows: auto auto 1fr auto; }
+  .s-where .seg .card-front .h {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.3cqh;
+    letter-spacing: 0.28em; color: var(--utah-red); text-transform: uppercase;
+  }
+  .s-where .seg .card-front .n {
+    font-family: var(--f-display); font-weight: 400; font-size: 4.1cqh;
+    line-height: 0.94; letter-spacing: 0.018em; color: var(--ink);
+  }
+  .s-where .seg .card-front .l {
+    color: var(--ink); font-weight: 500; font-size: 2.5cqh; line-height: 1.32;
+  }
+  .s-where .seg .card-front .hint {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.1cqh;
+    letter-spacing: 0.28em; color: var(--utah-red); text-transform: uppercase;
+    align-self: end; opacity: 0.55; transition: opacity 0.3s;
+    display: flex; gap: 0.4cqw; align-items: center;
+  }
+  .s-where .seg:hover .card-front .hint { opacity: 1; }
+  /* the hover affordance means nothing on a printed handout */
+  @media print { .s-where .seg .card-front .hint { display: none; } }
+
+  .s-where .seg .card-back {
+    transform: rotateY(180deg);
+    background: var(--ink);
+    border-top: 4px solid var(--paper);
+    grid-template-rows: auto auto 1fr;
+    padding: 1.3cqh 1.1cqw; gap: 0.6cqh;
+  }
+  .s-where .seg .card-back .h {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.2cqh;
+    letter-spacing: 0.26em; color: var(--utah-red-bright); text-transform: uppercase;
+  }
+  .s-where .seg .card-back .h-sub {
+    font-family: var(--f-display); font-weight: 400; font-size: 2.8cqh;
+    line-height: 1.0; letter-spacing: 0.018em; color: var(--paper); text-transform: uppercase;
+  }
+  .s-where .seg .card-back .logos {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 0.95cqh 0.6cqw; align-content: center; padding: 0.3cqh 0;
+  }
+  .s-where .seg .card-back .logos .logo {
+    display: grid; grid-template-columns: 4.5cqh 1fr; gap: 0.7cqw; align-items: center;
+  }
+  .s-where .seg .card-back .logos .logo img {
+    width: 4.5cqh; height: 4.5cqh; object-fit: contain;
+    background: var(--paper); border-radius: 50%; padding: 0.65cqh; display: block;
+  }
+  /* the Utes mark carries its own viewBox padding, so it needs less */
+  .s-where .seg .card-back .logos .logo img[src$=".svg"] { padding: 0.95cqh; }
+  /* POWDR is a tight-bounded wordmark, not a padded glyph — the extra inset
+     would shrink an already-wide-aspect mark to a sliver in a round chip. */
+  .s-where .seg .card-back .logos .logo img[src$="powdr.svg"] { padding: 0.5cqh; }
+  .s-where .seg .card-back .logos .logo .name {
+    font-family: var(--f-condensed); font-weight: 500; font-size: 1.9cqh;
+    line-height: 1.14; letter-spacing: 0.02em; color: var(--paper);
+  }
+
+  /* ============================================================
+     10 — UTAH BALLPARK TEST EVENT
+     Image left / content right, using the piped row layout from the
+     partnership-platform slide: 2px rule, red tick, mono label column.
+     ============================================================ */
+  .s-test { display: grid; grid-template-columns: 1fr 1.22fr; overflow: hidden; }
+
+  .s-test .photo-pane {
+    position: relative; overflow: hidden; background: #000;
+  }
+  /* The zoom animation scales from 1.1, and with a centred transform
+     origin that bleeds past this column into the white pane beside it.
+     overflow:hidden on .photo-pane clips CHILDREN, not itself — so the
+     image lives on an inner layer and gets clipped properly. Keeping
+     the filter here too, since filter on the parent would establish a
+     containing block and defeat the clip. */
+  .s-test .photo-pane .ph {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url('../_brand/utah/img/ballpark-construction.jpg');
+    background-size: cover; background-position: center 42%;
+    filter: contrast(1.04) saturate(1.05);
+  }
+  .s-test .photo-pane::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 58%, rgba(0,0,0,0.80) 100%);
+  }
+  .s-test .photo-pane .cap {
+    position: absolute; left: 2.2cqw; right: 2.2cqw; bottom: 3.4cqh; z-index: 2;
+    display: grid; gap: 0.6cqh;
+  }
+  .s-test .photo-pane .cap .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-test .photo-pane .cap .v {
+    font-family: var(--f-display); font-weight: 400; font-size: 2.5cqh;
+    line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-test .photo-pane .cap .w {
+    font-family: var(--f-condensed); font-weight: 500; font-size: 2.35cqh;
+    letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.9);
+  }
+  .s-test .photo-pane .top {
+    position: absolute; left: 2.2cqw; top: 3.4cqh; z-index: 2;
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--paper);
+  }
+
+  .s-test .pane {
+    background: var(--paper); color: var(--ink);
+    padding: 3.6cqh 3.6cqw;
+    display: grid; grid-template-rows: auto auto 1fr auto;
+  }
+  .s-test .pane .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.3cqh; border-bottom: 2px solid var(--ink);
+  }
+  .s-test .pane .topbar .crumb { color: var(--utah-red); }
+  .s-test .pane .hero { display: grid; gap: 1.1cqh; padding: 1.9cqh 0 0.8cqh; }
+  .s-test .pane .hero h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 7.4cqw;
+    line-height: 0.99; letter-spacing: 0.015em; text-transform: uppercase; color: var(--ink);
+  }
+  .s-test .pane .hero h2 .red { color: var(--utah-red); }
+  .s-test .pane .hero p {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.5cqh;
+    line-height: 1.4; color: var(--ink);
+  }
+  .s-test .pane .hero p b { font-weight: 700; }
+
+  /* Second movement. The hero states the test event; this states what comes
+     after it. Keeps the red tick over a full rule that the numbered rows
+     used, so removing them did not cost the slide its structure. */
+  .s-test .concepts {
+    align-self: center; position: relative;
+    padding: 2.1cqh 0 0; border-top: 2px solid var(--ink);
+    display: grid; gap: 1.1cqh;
+  }
+  .s-test .concepts::before {
+    content: ""; position: absolute; left: 0; top: -2px;
+    width: 7cqw; height: 2px; background: var(--utah-red);
+  }
+  .s-test .concepts h3 {
+    font-family: var(--f-display); font-weight: 400; font-size: 4.4cqh;
+    line-height: 1; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+  }
+  .s-test .concepts h3 .red { color: var(--utah-red); }
+  .s-test .concepts p {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.5cqh;
+    line-height: 1.4; color: var(--ink);
+  }
+
+  /* piped rows */
+  .s-test .rows { display: grid; align-content: center; gap: 1.5cqh; padding: 0.8cqh 0; }
+  .s-test .row {
+    padding: 1.5cqh 0 0;
+    border-top: 2px solid var(--ink);
+    position: relative;
+    display: grid; grid-template-columns: 11cqw 1fr; gap: 1.6cqw;
+  }
+  .s-test .row::before {
+    content: ""; position: absolute; left: 0; top: -2px;
+    width: 7cqw; height: 2px; background: var(--utah-red);
+  }
+  .s-test .row .label {
+    display: grid; gap: 0.35cqh; align-content: start; padding-top: 0.2cqh;
+  }
+  .s-test .row .label .ln {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.3cqh;
+    line-height: 0.85; letter-spacing: 0.018em; color: var(--utah-red);
+  }
+  .s-test .row .label .lw {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.5cqh;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--utah-red);
+    line-height: 1.2;
+  }
+  .s-test .row .body {
+    color: var(--ink); font-weight: 500; font-size: 2.55cqh; line-height: 1.36;
+  }
+  .s-test .row .body b { font-weight: 700; }
+  /* piped rows have no box, so the shared .pending outline reads as
+     clutter — mark them with a dashed tick and a right-aligned badge. */
+  .s-test .row.pending { outline: none; }
+  .s-test .row.pending::before {
+    background: repeating-linear-gradient(90deg, var(--utah-red) 0 9px, transparent 9px 16px);
+  }
+  .s-test .row.pending::after { top: -0.78cqh; right: 0; }
+
+  .s-test .pane .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.3cqh; border-top: 1px solid rgba(0,0,0,0.18);
+    color: var(--ink); font-weight: 500;
+  }
+  .s-test .pane .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     PRIORITIES — Q3 + Q4
+     Own treatment so it doesn't read as The Road to Launch with two
+     columns instead of four.
+     ============================================================ */
+  .s-prio .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4cqw; align-content: stretch; }
+  .s-prio .col { background: var(--paper); border: 1px solid rgba(0,0,0,0.15); display: grid; grid-template-rows: auto 1fr; }
+  .s-prio .col .hd { background: var(--utah-red); color: #fff; padding: 1.5cqh 1.6cqw; display: grid; gap: 0.35cqh; }
+  /* Carries the quarter on its own now that the Q3/Q4 numerals are gone, but
+     only just: a small tracked mono label reads as a kicker, and blowing it
+     up to fill the space the numerals left made it shout. Full white instead
+     of 85% does the load-bearing work without adding bulk. */
+  .s-prio .col .hd .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.35cqh;
+    letter-spacing: 0.28em; text-transform: uppercase; color: #fff;
+  }
+  /* each quarter now leads with a theme and a one-line thesis before
+     the concrete deliverables */
+  .s-prio .col .hd .theme {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.3cqh;
+    line-height: 1.05; letter-spacing: 0.02em; text-transform: uppercase;
+    color: #fff; margin-top: 0.5cqh;
+  }
+  .s-prio .col .hd .sum {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.3cqh;
+    line-height: 1.32; color: rgba(255,255,255,0.94); margin-top: 0.55cqh;
+  }
+  .s-prio .col ul { list-style: none; display: grid; gap: 1.4cqh; align-content: start; padding: 2.2cqh 1.6cqw; }
+  .s-prio .col li {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.75cqh; line-height: 1.3;
+    color: var(--ink); padding-left: 1.5cqw; position: relative;
+  }
+  .s-prio .col li::before {
+    content: ""; position: absolute; left: 0; top: calc(0.65em - 1px);
+    width: 0.7cqw; height: 2px; background: var(--utah-red);
+  }
+  .s-prio .col li.tbc { color: #6B6B6B; font-style: italic; }
+  .s-prio .col li.tbc::before { background: rgba(190,0,0,0.45); }
+
+  /* ============================================================
+     DISCUSSION QUESTIONS  (PLAYERS Academy)
+     Red-tinted arena photo rather than flat red: the Huntsman Center
+     crowd is the audience the program is preparing students for, so it
+     argues the point while the questions sit on top.
+     All type is white — ink numerals on red were unreadable.
+     ============================================================ */
+  .s-fourq {
+    background-color: var(--utah-red);
+    background-image:
+      linear-gradient(135deg, rgba(190,0,0,0.50) 0%, rgba(122,0,0,0.38) 100%),
+      url('../_brand/utah/img/huntsman-center.jpg');
+    background-size: cover;
+    background-position: center 42%;
+    background-blend-mode: normal, multiply;
+    color: var(--paper);
+    display: grid; grid-template-rows: auto auto 1fr auto;
+    padding: 3.2cqh 4.5cqw; overflow: hidden; position: relative;
+  }
+  .s-fourq::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.46) 0%, rgba(0,0,0,0.06) 28%, rgba(0,0,0,0.10) 60%, rgba(0,0,0,0.56) 100%);
+  }
+  .s-fourq > * { position: relative; z-index: 1; }
+  .s-fourq .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.2cqh; border-bottom: 2px solid rgba(255,255,255,0.45);
+  }
+  .s-fourq .topbar .crumb { color: var(--paper); }
+  .s-fourq .topbar .crumb .pip {
+    display: inline-block; width: 0.8cqh; height: 0.8cqh; background: var(--paper);
+    border-radius: 50%; vertical-align: middle; margin-right: 0.8cqw;
+  }
+  .s-fourq h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 6.0cqw;
+    line-height: 1.0; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--paper); margin: 1.1cqh 0 0.8cqh;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.28);
+  }
+  .s-fourq h2 .ink { color: var(--paper); }
+  /* six questions, so the rhythm tightens from the original four */
+  .s-fourq .rows { display: grid; align-content: center; gap: 1.55cqh; padding: 1.0cqh 0 1.2cqh; }
+  .s-fourq .row {
+    padding: 1.35cqh 0 0; border-top: 2px solid rgba(255,255,255,0.45);
+    position: relative;
+    display: grid; grid-template-columns: 12cqw 1fr; gap: 1.8cqw;
+  }
+  .s-fourq .row::before {
+    content: ""; position: absolute; left: 0; top: -2px;
+    width: 8cqw; height: 2px; background: var(--paper);
+  }
+  .s-fourq .row .label { display: grid; gap: 0.35cqh; align-content: start; padding-top: 0.2cqh; }
+  .s-fourq .row .label .ln {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.7cqh;
+    line-height: 0.85; letter-spacing: 0.018em; color: var(--paper);
+  }
+  .s-fourq .row .label .lw {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.5cqh;
+    letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.82);
+    line-height: 1.2;
+  }
+  .s-fourq .row .body {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.55cqh;
+    line-height: 1.3; color: var(--paper);
+    text-shadow: 0 1px 12px rgba(0,0,0,0.22);
+  }
+  .s-fourq .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.2cqh; border-top: 1px solid rgba(255,255,255,0.38);
+    color: var(--paper); font-weight: 500;
+  }
+  .s-fourq .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     THE BUSINESS OF SPORTS GRADUATE — piped rows, commencement image
+     The slide asks the room to picture a person, so a real graduate
+     carries it rather than four abstract boxes.
+     ============================================================ */
+  .s-grad { display: grid; grid-template-columns: 1.24fr 1fr; overflow: hidden; }
+  .s-grad .pane {
+    background: var(--paper); color: var(--ink);
+    padding: 3.4cqh 3.4cqw;
+    display: grid; grid-template-rows: auto auto 1fr auto;
+  }
+  .s-grad .pane .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.2cqh; border-bottom: 2px solid var(--ink);
+  }
+  .s-grad .pane .topbar .crumb { color: var(--utah-red); }
+  .s-grad .pane h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 4.6cqw;
+    line-height: 1.0; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--ink); margin: 1.1cqh 0 0.5cqh;
+  }
+  .s-grad .pane h2 .red { color: var(--utah-red); }
+  .s-grad .rows { display: grid; align-content: center; gap: 1.3cqh; padding: 0.5cqh 0; }
+  .s-grad .row {
+    padding: 1.4cqh 0 0; border-top: 2px solid var(--ink);
+    position: relative;
+    display: grid; grid-template-columns: 10.5cqw 1fr; gap: 1.5cqw;
+  }
+  .s-grad .row::before {
+    content: ""; position: absolute; left: 0; top: -2px;
+    width: 7cqw; height: 2px; background: var(--utah-red);
+  }
+  .s-grad .row .label { display: grid; gap: 0.3cqh; align-content: start; padding-top: 0.15cqh; }
+  .s-grad .row .label .ln {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.4cqh;
+    line-height: 0.85; letter-spacing: 0.018em; color: var(--utah-red);
+  }
+  .s-grad .row .label .lw {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.55cqh;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--utah-red); line-height: 1.2;
+  }
+  .s-grad .row .body {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.6cqh;
+    line-height: 1.34; color: var(--ink);
+  }
+  /* commencement photo — swap the file at _brand/img/commencement.jpg */
+  .s-grad .photo-pane { position: relative; overflow: hidden; background: #000; }
+  .s-grad .photo-pane .ph {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url('../_brand/utah/img/commencement.jpg');
+    /* landscape source into a tall pane — bias toward the graduate,
+       who sits centre-right with her face about a third down */
+    background-size: cover; background-position: 56% 34%;
+    filter: contrast(1.04) saturate(1.04);
+  }
+  .s-grad .photo-pane::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.82) 100%);
+  }
+  .s-grad .photo-pane .cap {
+    position: absolute; left: 2.2cqw; right: 2.2cqw; bottom: 3.2cqh; z-index: 2;
+    display: grid; gap: 0.55cqh;
+  }
+  .s-grad .photo-pane .cap .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-grad .photo-pane .cap .v {
+    font-family: var(--f-display); font-weight: 400; font-size: 3cqh;
+    line-height: 1.04; letter-spacing: 0.02em; text-transform: uppercase; color: var(--paper);
+  }
+
+  /* ============================================================
+     17 — THE ASK
+     ============================================================ */
+  /* ============================================================
+     INTRODUCTIONS — advisory roster + project team
+     ============================================================ */
+  .s-roster { background: var(--bone); padding-top: 2.4cqh; padding-bottom: 1.5cqh; }
+  .s-roster .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 3cqw; margin: 0.4cqh 0 0.8cqh; }
+  .s-roster .head h2 { margin: 0; }
+  .s-roster .head .sub {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.05cqh;
+    line-height: 1.35; color: var(--ink); max-width: 44cqw; text-align: right;
+  }
+  /* Rows size to content and the block centres, rather than stretching to
+     fill the slide. With the card text top-aligned (below), stretching left
+     a large empty gutter under every card. */
+  /* 1fr rows rather than auto: in an auto-height grid, fr tracks equalise to
+     the tallest, so every card is the same size regardless of how much copy
+     its row happens to carry. auto rows let row 1 and row 2 differ. */
+  /* Column 1 is the University of Utah pair, held apart from the external
+     advisors by an empty gutter column; the other ten auto-flow into
+     columns 3-7. Rows hug their content -- 1fr rows left the cards
+     roughly 40% empty below the text. */
+  .s-roster .grid {
+    display: grid;
+    grid-template-columns: 1fr 2.4cqw repeat(5, 1fr);
+    grid-template-rows: auto auto; gap: 1.1cqh 0.85cqw; align-content: center;
+  }
+  .s-roster .p.uofu:nth-of-type(1) { grid-area: 1 / 1; }
+  .s-roster .p.uofu:nth-of-type(2) { grid-area: 2 / 1; }
+  .s-roster .gutter { grid-area: 1 / 2 / 3 / 3; }
+  .s-roster .p {
+    background: var(--paper); border: 1px solid rgba(0,0,0,0.14); border-top: 4px solid var(--utah-red);
+    padding: 1.05cqh 0.9cqw; display: grid; grid-template-rows: auto auto 1fr; gap: 0.65cqh; align-content: start;
+  }
+  .s-roster .p .mark { height: 5.3cqh; display: flex; align-items: center; }
+  .s-roster .p .mark img { height: 100%; width: auto; max-width: 100%; object-fit: contain; }
+  /* OPTICAL SIZING — normalize on AREA, not height.
+     `max-height:100%` alone lets a wide mark run the full box width while a
+     square mark is capped by height, so Cynosure rendered at 7075px^2 against
+     Utah Athletics' block U at 2231 — a 3.2x spread, which is why the wide
+     ones read as oversized. Height below is sqrt(4300/aspect) as a % of the
+     box, giving every mark the same ~4300px^2 footprint; marks already at or
+     under target stay at 100%. Recompute if a logo is swapped, OR if the
+     column count changes — at 7 columns the box is 129.5x50.4, and the wide
+     marks now hit the WIDTH clamp before the area target, so their heights
+     are set by the box rather than by sqrt(4300/aspect). */
+  .s-roster .p .mark img[src$="powdr.svg"]                     { height: 42%; }
+  .s-roster .p .mark img[src$="ken-garff.png"]                 { height: 56%; }
+  .s-roster .p .mark img[src$="utah-athletics.png"]            { height: 68%; }
+  .s-roster .p .mark img[src$="cynosure-group.jpg"]            { height: 71%; }
+  .s-roster .p .mark img[src$="smith-entertainment.png"]       { height: 80%; }
+  .s-roster .p .mark img[src$="miller-family-foundation.png"]  { height: 84%; }
+  .s-roster .p .mark img[src$="utah-olympic-legacy.png"]       { height: 94%; }
+  /* Reserve two lines for every name so a wrapping one (Trenbeath-Murray)
+     doesn't push its own role line below the rest of the row. */
+  .s-roster .p .nm {
+    font-family: var(--f-display); font-weight: 400; font-size: 2.5cqh;
+    line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+    min-height: 2.04em;
+  }
+  .s-roster .p .rl {
+    font-family: var(--f-body); font-weight: 500; font-size: 1.7cqh;
+    line-height: 1.28; color: #4A4A4A;
+  }
+  .s-roster .p .rl b { color: var(--utah-red); font-weight: 700; display: block; }
+  /* additional names inside one advisor card (Utah Athletics carries three) */
+  .s-roster .p .rl .also {
+    display: block; margin-top: 0.7cqh; padding-top: 0.6cqh;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    font-size: 1.7cqh; line-height: 1.24; color: #4A4A4A;
+  }
+  /* Additional names match the card's primary name (Mark Harlan) rather than
+     reading as sub-entries — these are advisors in their own right. */
+  .s-roster .p .rl .also em {
+    display: block; font-style: normal;
+    font-family: var(--f-display); font-weight: 400; font-size: 2.5cqh;
+    line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 1.25cqh;
+  }
+  .s-roster .p .rl .also ~ b { margin-top: 0.7cqh; }   /* org sits clear of the names above it */
+
+  /* project team — real headshots, larger */
+  .s-team { background: var(--paper); }
+  .s-team .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.6cqw; align-content: center; }
+  /* Explicit rows so the photo, name and role each sit on a common
+     baseline across all six. With align-content:center a two-line role
+     (Grant's) pushed his whole card out of line with the others. */
+  .s-team .p {
+    display: grid; grid-template-rows: auto auto 1fr;
+    gap: 1.2cqh; justify-items: center; text-align: center; align-content: start;
+  }
+  .s-team .p .ph {
+    width: 21cqh; height: 21cqh; border-radius: 50%; overflow: hidden;
+    border: 3px solid var(--utah-red); background: var(--bone);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.16);
+  }
+  .s-team .p .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Per-person framing. Sources differ in aspect: the 333x500 portraits
+     crop top/bottom, the 500x392 landscape crops left/right and so has
+     no vertical slack — Molly needs a slight zoom before she can move. */
+  .s-team .p .ph img[src$="barth-grant.jpg"]     { object-position: center 10%; }
+  .s-team .p .ph img[src$="frank-monet.jpg"]     { object-position: center 30%; }
+  /* Molly is 500x392 landscape: `cover` scales her by height, so vertical
+     is already full-bleed and object-position has nothing to move. She
+     needs a zoom to create slack first. Done by oversizing the box and
+     offsetting with margins, NOT transform — a transformed child gets
+     promoted to its own layer and the parent's border-radius clip
+     degrades to a rectangle, painting her dark background into the
+     corners outside the circle. Margins stay in normal flow and clip. */
+  .s-team .p .ph img[src$="mazzolini-molly.jpg"] {
+    width: 114%; height: 114%; margin-left: -7%; margin-top: -3%;
+  }
+  .s-team .p .nm {
+    font-family: var(--f-display); font-weight: 400; font-size: 3cqh;
+    line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink);
+  }
+  .s-team .p .rl { font-family: var(--f-body); font-weight: 500; font-size: 2.05cqh; line-height: 1.28; color: #4A4A4A; }
+
+  /* ============================================================
+     PROGRAM STRUCTURE — 18 credits (per the June 2026 proposal)
+     ============================================================ */
+  .s-curric { display: grid; grid-template-columns: 1fr 1.32fr; overflow: hidden; }
+  .s-curric .photo-pane { position: relative; overflow: hidden; background: #000; }
+  .s-curric .photo-pane .ph {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: url('../_brand/utah/img/eccles-atrium.jpg');
+    background-size: cover; background-position: 58% 50%;
+  }
+  .s-curric .photo-pane::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 32%, rgba(0,0,0,0.82) 100%);
+  }
+  .s-curric .photo-pane .cap { position: absolute; left: 2.2cqw; right: 2.2cqw; bottom: 3.2cqh; z-index: 2; display: grid; gap: 0.5cqh; }
+  .s-curric .photo-pane .cap .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-curric .photo-pane .cap .v {
+    font-family: var(--f-display); font-weight: 400; font-size: 5.6cqh;
+    line-height: 0.96; letter-spacing: 0.02em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-curric .photo-pane .cap .w { font-family: var(--f-body); font-weight: 500; font-size: 1.9cqh; line-height: 1.3; color: rgba(255,255,255,0.92); }
+  .s-curric .pane { background: var(--paper); color: var(--ink); padding: 3.4cqh 3.4cqw; display: grid; grid-template-rows: auto auto 1fr auto; }
+  .s-curric .pane .topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.2cqh; border-bottom: 2px solid var(--ink); }
+  .s-curric .pane .topbar .crumb { color: var(--utah-red); }
+  .s-curric .pane h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 5cqw;
+    line-height: 1.0; letter-spacing: 0.015em; text-transform: uppercase; color: var(--ink); margin: 1.1cqh 0 1cqh;
+  }
+  .s-curric .pane h2 .red { color: var(--utah-red); }
+  .s-curric .blocks { display: grid; align-content: space-evenly; gap: 1.2cqh; padding: 1.4cqh 0; }
+  .s-curric .blk { display: grid; grid-template-columns: 11cqw 1fr; gap: 1.4cqw; padding: 1.2cqh 0 0; border-top: 2px solid var(--ink); position: relative; }
+  .s-curric .blk::before { content: ""; position: absolute; left: 0; top: -2px; width: 7cqw; height: 2px; background: var(--utah-red); }
+  .s-curric .blk.exp::before { background: var(--ink); }
+  .s-curric .blk .lab { display: grid; gap: 0.25cqh; align-content: start; }
+  .s-curric .blk .lab .cr {
+    font-family: var(--f-display); font-weight: 400; font-size: 3.4cqh;
+    line-height: 0.85; letter-spacing: 0.018em; color: var(--utah-red);
+  }
+  /* the bare numerals read as a count of nothing without a unit */
+  .s-curric .blk .lab .un {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.15cqh;
+    letter-spacing: 0.22em; text-transform: uppercase; color: #6A6A6A; line-height: 1.2;
+  }
+  .s-curric .blk .lab .nm {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.35cqh;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--utah-red); line-height: 1.2;
+  }
+  .s-curric .blk ul { list-style: none; display: grid; gap: 0.6cqh; }
+  .s-curric .blk li {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.2cqh; line-height: 1.3;
+    color: var(--ink); padding-left: 1.2cqw; position: relative;
+  }
+  .s-curric .blk li::before { content: ""; position: absolute; left: 0; top: calc(0.64em - 1px); width: 0.6cqw; height: 2px; background: var(--utah-red); }
+  /* Potential future electives are not part of the 18 credits, so the
+     block is muted and its rule is grey rather than red. */
+  .s-curric .blk.future::before { background: #9A9A9A; }
+  .s-curric .blk.future .lab .cr,
+  .s-curric .blk.future .lab .nm { color: #6A6A6A; }
+  .s-curric .blk.future li { color: #4A4A4A; }
+  .s-curric .blk.future li::before { background: #9A9A9A; }
+  .s-curric .pane .foot { display: flex; justify-content: space-between; align-items: end; padding-top: 1.2cqh; border-top: 1px solid rgba(0,0,0,0.18); color: var(--ink); font-weight: 500; }
+  .s-curric .pane .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     APPROVALS — hurdles cleared vs ahead
+     ============================================================ */
+  .s-appr { background: var(--paper); }
+  .s-appr .track { display: grid; grid-template-columns: repeat(6, 1fr); align-content: center; gap: 0; }
+  .s-appr .step { position: relative; padding: 0 0.7cqw; display: grid; gap: 1.2cqh; align-content: start; }
+  .s-appr .rail { position: relative; height: 5.4cqh; grid-column: 1 / -1; margin-bottom: 2.2cqh; }
+  .s-appr .rail::before { content: ""; position: absolute; left: 8.33%; right: 8.33%; top: 50%; height: 3px; background: rgba(0,0,0,0.15); transform: translateY(-50%); }
+  .s-appr .rail .fill { position: absolute; left: 8.33%; width: 16.67%; top: 50%; height: 3px; background: var(--utah-red); transform: translateY(-50%); }
+  .s-appr .dots { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(6, 1fr); align-items: center; }
+  .s-appr .dot { justify-self: center; width: 2.6cqh; height: 2.6cqh; border-radius: 50%; background: var(--paper); border: 3px solid rgba(0,0,0,0.22); }
+  .s-appr .dot.done { background: var(--utah-red); border-color: var(--utah-red); }
+  .s-appr .step .dt {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.45cqh;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--utah-red); text-align: center;
+  }
+  .s-appr .step.ahead .dt { color: #7A7A7A; }
+  .s-appr .step .nm {
+    font-family: var(--f-display); font-weight: 400; font-size: 3cqh;
+    line-height: 1.04; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink); text-align: center;
+  }
+  .s-appr .step.ahead .nm { color: #6B6B6B; }
+  .s-appr .step .st {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.25cqh;
+    letter-spacing: 0.16em; text-transform: uppercase; text-align: center;
+    color: var(--paper); background: var(--utah-red); padding: 0.28cqh 0; justify-self: stretch;
+  }
+  .s-appr .step.ahead .st { background: rgba(0,0,0,0.14); color: #5A5A5A; }
+
+  /* ============================================================
+     17 — WHERE WE NEED HELP
+     Garff classroom looking out over the field to the Wasatch — the
+     classroom-to-field thesis in one frame, which is the right ground
+     for the closing ask. Dark treatment (not red) so it doesn't echo
+     Four Questions, and so it hands off cleanly to the night close.
+     ============================================================ */
+  .s-help {
+    background: #000; color: var(--paper);
+    display: grid; grid-template-rows: auto 1fr auto auto;
+    padding: 3.2cqh 4.5cqw; overflow: hidden; position: relative;
+  }
+  .s-help .photo {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      /* darken left for the headline and bottom for the cards, but leave
+         the Wasatch and the golden-hour sky largely intact upper-right */
+      linear-gradient(90deg, rgba(0,0,0,0.84) 0%, rgba(0,0,0,0.48) 42%, rgba(0,0,0,0.12) 72%),
+      linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 26%, rgba(0,0,0,0.34) 62%, rgba(0,0,0,0.90) 100%),
+      url('../_brand/utah/img/campus-spring.jpg');
+    /* 3:2 source into 16:9 — bias up so the crop keeps campus and range
+       and loses the foreground grass */
+    background-size: cover; background-position: center 28%;
+    filter: contrast(1.04) saturate(1.04);
+  }
+  .s-help > *:not(.photo) { position: relative; z-index: 2; }
+
+  .s-help .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1.2cqh; border-bottom: 2px solid rgba(255,255,255,0.4);
+  }
+  .s-help .topbar .crumb { color: var(--paper); }
+  .s-help .topbar .crumb .pip {
+    display: inline-block; width: 0.8cqh; height: 0.8cqh; background: var(--utah-red);
+    border-radius: 50%; box-shadow: 0 0 12px var(--utah-red);
+    vertical-align: middle; margin-right: 0.8cqw;
+  }
+  .s-help .hero { display: grid; align-content: center; gap: 1.4cqh; }
+  .s-help h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 7.4cqw;
+    line-height: 0.99; letter-spacing: 0.015em; text-transform: uppercase;
+    color: var(--paper); text-shadow: 0 2px 26px rgba(0,0,0,0.4);
+  }
+  .s-help h2 .red { color: var(--utah-red-bright); }
+  .s-help .hero .lede {
+    font-family: var(--f-body); font-weight: 500; font-size: 2.55cqh;
+    line-height: 1.4; color: rgba(255,255,255,0.94); max-width: 54cqw;
+    text-shadow: 0 1px 14px rgba(0,0,0,0.35);
+  }
+
+  .s-help .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1cqw; padding-bottom: 1.4cqh; }
+  .s-help .card {
+    background: rgba(0,0,0,0.46);
+    border: 1px solid rgba(255,255,255,0.24);
+    border-top: 4px solid var(--utah-red);
+    padding: 1.6cqh 1.4cqw;
+    display: grid; grid-template-rows: auto auto auto; gap: 0.7cqh;
+    align-content: start; backdrop-filter: blur(4px);
+  }
+  .s-help .card .k {
+    font-family: var(--f-mono); font-weight: 700; font-size: 1.1cqh;
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--utah-red-bright);
+  }
+  .s-help .card h4 {
+    font-family: var(--f-display); font-weight: 400; font-size: 3cqh;
+    line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-help .card p {
+    font-size: 2.35cqh; line-height: 1.32; color: rgba(255,255,255,0.93); font-weight: 500;
+  }
+  .s-help .foot {
+    display: flex; justify-content: space-between; align-items: end;
+    padding-top: 1.2cqh; border-top: 1px solid rgba(255,255,255,0.32);
+    color: var(--paper); font-weight: 500;
+  }
+  .s-help .foot .strong { font-weight: 700; }
+
+  /* ============================================================
+     18 — CLOSE
+     ============================================================ */
+  .s-close { background: #000; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; }
+  .s-close .photo {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.9) 100%),
+      url('../_brand/utah/img/rice-eccles-night.jpg');
+    background-size: cover; background-position: center 45%;
+  }
+  .s-close > *:not(.photo) { position: relative; z-index: 2; }
+  .s-close .topbar { display: flex; justify-content: space-between; align-items: center; padding: 4cqh 5cqw 0; color: var(--paper); }
+  .s-close .midbar { display: grid; align-content: center; padding: 0 5cqw; gap: 2cqh; }
+  .s-close .midbar .num { color: var(--utah-red-bright); }
+  .s-close .midbar h2 {
+    font-family: var(--f-display); font-weight: 400; font-size: 10.5cqw;
+    line-height: 1.0; letter-spacing: 0.015em; text-transform: uppercase; color: var(--paper);
+  }
+  .s-close .midbar h2 .red { color: var(--utah-red-bright); }
+  .s-close .midbar .signoff {
+    font-family: var(--f-mono); font-weight: 500; font-size: 1.4cqh;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--paper); line-height: 1.6;
+  }
+  .s-close .midbar .signoff .accent { color: var(--utah-red-bright); }
+  .s-close .bottombar {
+    display: flex; justify-content: space-between; align-items: end;
+    padding: 3.4cqh 5cqw; color: var(--paper);
+  }
+  .s-close .bottombar .strong { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="deck-shell">
+  <div class="stage" id="stage">
+
+    <!-- ============================================================
+         01 — COVER
+         ============================================================ -->
+    <section class="slide s-cover" data-section="ADVISORY GROUP MEETING NO. 2">
+      <div class="photo"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>BUSINESS OF SPORTS &nbsp;·&nbsp; ADVISORY GROUP</span>
+        <div class="eccles-mark lg"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="David Eccles School of Business" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="eyebrow" data-anim="reveal">— MEETING NO. 2</div>
+        <h1 data-anim="reveal-2">SHAPING THIS<br/><span class="red">TOGETHER.</span></h1>
+        <div class="meetmeta" data-anim="rise-3">
+          <div><span class="k">Date</span><span class="v">Tue · 25 Aug 2026</span></div>
+          <div><span class="k">Time</span><span class="v">2:00 – 3:15 PM MT</span></div>
+          <div><span class="k">Location</span><span class="v">Spencer Fox Eccles Business Building<br/>Child Hall, Rm 7180</span></div>
+        </div>
+      </div>
+
+      <div class="bottombar">
+        <div class="label-mono-sm" data-anim="fade-3">DAVID ECCLES SCHOOL OF BUSINESS<br/><span class="strong">THE UNIVERSITY OF UTAH</span></div>
+        <div class="label-mono-sm" data-anim="fade-3" style="text-align:right">BUSINESS OF SPORTS<br/><span class="strong">MINOR LAUNCHES FALL 2027</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         02 — RUN OF SHOW
+         ============================================================ -->
+    <section class="slide s-agenda" data-section="RUN OF SHOW">
+      <div class="topbar">
+        <span class="crumb label-mono">75 MINUTES &nbsp;·&nbsp; 15 INTRO &nbsp;·&nbsp; 60 PROGRAM</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">TODAY'S <span class="red">AGENDA.</span></h2>
+
+      <div class="rows">
+        <div class="row" data-anim="rise-2">
+          <span class="n">00</span><span class="t">Introductions</span>
+          <span class="who"></span><span class="min">15 MIN</span>
+        </div>
+        <div class="row" data-anim="rise-2">
+          <span class="n">01</span><span class="t">Business of Sports Academic Update</span>
+          <span class="who"></span><span class="min">8 MIN</span>
+        </div>
+        <div class="row" data-anim="rise-2">
+          <span class="n">02</span><span class="t">Collaborative Efforts</span>
+          <span class="who"></span><span class="min">8 MIN</span>
+        </div>
+        <div class="row" data-anim="rise-3">
+          <span class="n">03</span><span class="t">PLAYERS Academy</span>
+          <span class="who"></span><span class="min">15 MIN</span>
+        </div>
+        <div class="row" data-anim="rise-4">
+          <span class="n">04</span><span class="t">Priorities · Q3 + Q4</span>
+          <span class="who"></span><span class="min">5 MIN</span>
+        </div>
+        <div class="row discuss" data-anim="rise-4">
+          <span class="n">05</span><span class="t">Student Attributes</span>
+          <span class="who"></span><span class="min">14 MIN</span>
+        </div>
+        <div class="row" data-anim="rise-5">
+          <span class="n">06</span><span class="t">Where We Need Help</span>
+          <span class="who"></span><span class="min">10 MIN</span>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">PURPOSE &nbsp;·&nbsp; <span class="strong">REFINE THE PROGRAM WITH THE PEOPLE WHO HIRE OUR STUDENTS</span></span>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         INTRODUCTIONS DIVIDER
+         ================================================================= -->
+    <section class="slide s-div" data-section="INTRODUCTIONS">
+      <div class="photo" data-anim="zoom" style="background-image:
+        linear-gradient(180deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.28) 40%, rgba(0,0,0,0.88) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0) 62%),
+        url('../_brand/utah/img/rose-bowl-fans.jpg');"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>WELCOME</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="num label-mono" data-anim="reveal">— THE PEOPLE IN THE ROOM</div>
+        <h2 data-anim="reveal-2">INTRODUCTIONS.</h2>
+        <div class="lede" data-anim="rise-3">A founding group of industry leaders, and the team building the Business of Sports at the David Eccles School of Business.</div>
+      </div>
+
+      <div class="bottombar">
+        <div class="time" data-anim="fade-3"><span class="k">Timebox</span><span class="v">15 Minutes</span></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         ADVISORY GROUP
+         ================================================================= -->
+    <section class="slide s-lite s-roster" data-section="THE ADVISORY GROUP">
+      <div class="topbar">
+        <span class="crumb label-mono">FOUNDING INDUSTRY VOICES</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="head">
+        <h2 data-anim="reveal">THE ADVISORY <span class="red">GROUP.</span></h2>
+        <div class="sub" data-anim="rise-2">Senior leaders shaping the next generation of sports leaders.</div>
+      </div>
+
+      <div class="grid">
+        <div class="p uofu" data-anim="rise-2">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/utah-athletics.png" alt="University of Utah"/></div>
+          <div class="nm">Mark Harlan</div>
+          <div class="rl">Athletics Director
+            <span class="also"><em>Charmelle Green</em>Deputy Athletics Director / COO</span>
+            <span class="also"><em>Jason Greco</em>Executive Senior Associate AD</span>
+            <b>University of Utah</b>
+          </div>
+        </div>
+        <div class="p uofu" data-anim="rise-2">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/university-of-utah.png" alt="University of Utah"/></div>
+          <div class="nm">Scott Doughman</div>
+          <div class="rl">President’s Office, Olympic Planning
+            <span class="also"><em>Jason Burrow-Sanchez</em>Faculty Athletic Representative</span>
+            <b>University of Utah</b>
+          </div>
+        </div>
+        <div class="gutter" aria-hidden="true"></div>
+        <div class="p" data-anim="rise-2">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/smith-entertainment.png" alt="Smith Entertainment Group"/></div>
+          <div class="nm">Chris Barney</div>
+          <div class="rl">President, Revenue &amp; Commercial Strategy<b>Smith Entertainment Group</b></div>
+        </div>
+        <div class="p" data-anim="rise-2">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/utah-olympic-legacy.png" alt="Utah Olympic Legacy Foundation"/></div>
+          <div class="nm">Richard Bezemer</div>
+          <div class="rl">Strategic Advisor<b>Utah Olympic Legacy Foundation</b></div>
+        </div>
+        <div class="p" data-anim="rise-2">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/jbc-international.png" alt="JBC International LLC"/></div>
+          <div class="nm">Jim Brown</div>
+          <div class="rl">Founder &amp; CEO<b>JBC International LLC</b></div>
+        </div>
+        <div class="p" data-anim="rise-2">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/cynosure-group.jpg" alt="The Cynosure Group"/></div>
+          <div class="nm">Spencer P. Eccles</div>
+          <div class="rl">Co-Founder &amp; Managing Director<b>The Cynosure Group</b></div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/utah-royals.png" alt="Real Salt Lake &amp; Utah Royals"/></div>
+          <div class="nm">John Kimball</div>
+          <div class="rl">President<b>Real Salt Lake &amp; Utah Royals</b></div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/utah-jazz.png" alt="Utah Jazz"/></div>
+          <div class="nm">Jim Olson</div>
+          <div class="rl">President<b>Utah Jazz</b></div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/ski-utah.png" alt="Ski Utah"/></div>
+          <div class="nm">Nathan Rafferty</div>
+          <div class="rl">President &amp; CEO<b>Ski Utah</b></div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/powdr.svg" alt="POWDR"/></div>
+          <div class="nm">Justin Sibley</div>
+          <div class="rl">Chief Executive Officer
+            <span class="also"><em>Eric Woodruff</em>SVP Technology &amp; People</span>
+            <b>POWDR</b>
+          </div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/miller-sports-entertainment.png" alt="Miller Sports + Entertainment"/></div>
+          <div class="nm">Michelle Smith</div>
+          <div class="rl">President<b>Miller Sports + Entertainment</b></div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="mark"><img src="../_brand/utah/logos/advisors/ken-garff.png" alt="Ken Garff Enterprises"/></div>
+          <div class="nm">Erin Trenbeath-Murray</div>
+          <div class="rl">VP of Philanthropy<b>Ken Garff Enterprises</b></div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">ADVISORY GROUP &nbsp;·&nbsp; <span class="strong">SHAPING THIS TOGETHER</span></span>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PROJECT TEAM
+         ================================================================= -->
+    <section class="slide s-lite s-team" data-section="THE BUSINESS OF SPORTS TEAM">
+      <div class="topbar">
+        <span class="crumb label-mono">DAVID ECCLES SCHOOL OF BUSINESS</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">THE <span class="red">TEAM.</span></h2>
+
+      <div class="grid">
+        <div class="p" data-anim="rise-2">
+          <div class="ph"><img src="../_brand/utah/headshots/dirks-kurt.jpg" alt="Kurt Dirks"/></div>
+          <div class="nm">Kurt Dirks</div>
+          <div class="rl">Dean &amp; Professor of Leadership</div>
+        </div>
+        <div class="p" data-anim="rise-2">
+          <div class="ph"><img src="../_brand/utah/headshots/barth-grant.jpg" alt="Grant Barth"/></div>
+          <div class="nm">Grant Barth</div>
+          <div class="rl">Senior Advisor to the Dean &amp; Assistant Professor</div>
+        </div>
+        <div class="p" data-anim="rise-2">
+          <div class="ph"><img src="../_brand/utah/headshots/mazzolini-molly.jpg" alt="Molly Mazzolini"/></div>
+          <div class="nm">Molly Mazzolini</div>
+          <div class="rl">Executive in Residence</div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="ph"><img src="../_brand/utah/headshots/frank-monet.jpg" alt="Monet Frank"/></div>
+          <div class="nm">Monet Frank</div>
+          <div class="rl">Assistant Director of Development</div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="ph"><img src="../_brand/utah/headshots/rueckert-michael.jpg" alt="Michael Rueckert"/></div>
+          <div class="nm">Michael Rueckert</div>
+          <div class="rl">Adjunct Professor, Sports Marketing</div>
+        </div>
+        <div class="p" data-anim="rise-3">
+          <div class="ph"><img src="../_brand/utah/headshots/artz-audrey.jpg" alt="Audrey Artz"/></div>
+          <div class="nm">Audrey Artz</div>
+          <div class="rl">Student &amp; Intern</div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">BUSINESS OF SPORTS &nbsp;·&nbsp; <span class="strong">DAVID ECCLES SCHOOL OF BUSINESS</span></span>
+      </div>
+    </section>
+
+            <!-- =================================================================
+         MARKET CONTEXT — SBJ BEST SPORTS BUSINESS CITIES
+         ================================================================= -->
+    <section class="slide s-sbj" data-section="MARKET CONTEXT · BEST SPORTS BUSINESS CITIES">
+      <div class="topbar">
+        <span class="crumb label-mono">MARKET CONTEXT &nbsp;·&nbsp; RANKINGS PUBLISHED MAY 2026</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="head">
+        <div class="htxt">
+          <div class="srcmark" data-anim="reveal"><img src="../_brand/utah/logos/sources/sbj.png" alt="Sports Business Journal" /></div>
+          <h2 data-anim="reveal">BEST SPORTS CITIES <span class="red">RANKINGS.</span></h2>
+          <div class="sub" data-anim="rise-2">Salt Lake City climbed 32 places, from #44 in 2023 to #12 in 2026. No other city on either list moved further.</div>
+        </div>
+      </div>
+
+      <div class="chart"><svg id="sbjChart" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet" role="img"
+           aria-label="Slope chart of Sports Business Journal Best Sports Business Cities rankings, 2023 to 2026"></svg></div>
+
+      <div class="chips" id="sbjChips"></div>
+
+      <div class="foot">
+        <span class="label-mono-sm">SOURCE &nbsp;·&nbsp; <span class="strong">SPORTS BUSINESS JOURNAL · BEST SPORTS BUSINESS CITIES</span></span>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         BUSINESS OF SPORTS 101 (a) — ACADEMIC FOCUS
+         ================================================================= -->
+<section class="slide s-focus" data-section="BUSINESS OF SPORTS · ACADEMIC FOCUS">
+      <div class="topbar">
+        <span class="crumb label-mono">ANALYTICS &nbsp;·&nbsp; BRANDS &nbsp;·&nbsp; EXPERIENCES</span>
+        <h2>ACADEMIC <span class="red">FOCUS.</span></h2>
+      </div>
+
+      <div class="pillars">
+        <div class="themes-strip" data-anim="rise-4">
+          <div class="strip-label">Woven Through<span class="red">Every Course</span></div>
+          <div class="tm"><span class="tn">01</span><span class="tname">Artificial Intelligence</span></div>
+          <div class="tm"><span class="tn">02</span><span class="tname">Fan Engagement</span></div>
+          <div class="tm"><span class="tn">03</span><span class="tname">Sales Strategy</span></div>
+        </div>
+        <div class="pillar" data-anim="rise-2">
+          <div class="photo-band" style="background-image: url('../_brand/utah/img/garff-classroom.jpg'); background-position: center 64%;">
+            <div class="photo-tag">GARFF BUILDING &nbsp;·&nbsp; CLASSROOM TO FIELD</div>
+          </div>
+          <div class="label label-mono-sm">FOCUS 01</div>
+          <h3>ANALYTICS</h3>
+          <div class="pitch">Turning numbers <span class="red">into strategy.</span></div>
+          <ul>
+            <li>Sponsorship ROI</li>
+            <li>Media rights valuation</li>
+            <li>Athlete analytics</li>
+            <li>Data-driven decisions</li>
+          </ul>
+        </div>
+
+        <div class="pillar" data-anim="rise-3">
+          <div class="photo-band" style="background-image: url('../_brand/utah/img/block-u.jpg'); background-position: center 28%;">
+            <div class="photo-tag">THE BLOCK U &nbsp;·&nbsp; UTAH&rsquo;S ICONIC MARK</div>
+          </div>
+          <div class="label label-mono-sm">FOCUS 02</div>
+          <h3>BRANDS</h3>
+          <div class="pitch">Where sport <span class="red">meets culture.</span></div>
+          <ul>
+            <li>Brand &amp; product development</li>
+            <li>Storytelling &amp; activation</li>
+            <li>Athlete brand management</li>
+            <li>Culture intersection</li>
+          </ul>
+        </div>
+
+        <div class="pillar" data-anim="rise-4">
+          <div class="photo-band" style="background-image: url('../_brand/utah/img/huntsman-center.jpg'); background-position: center 52%;">
+            <div class="photo-tag">JON M. HUNTSMAN CENTER &nbsp;·&nbsp; THE VENUE AS PRODUCT</div>
+          </div>
+          <div class="label label-mono-sm">FOCUS 03</div>
+          <h3>EXPERIENCES</h3>
+          <div class="pitch">From concept <span class="red">to legacy.</span></div>
+          <ul>
+            <li>Venue design</li>
+            <li>Corporate partner integration</li>
+            <li>Universal access &amp; experience innovation</li>
+            <li>Community impact &amp; legacy</li>
+            <li>Event management &amp; operations</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <span class="label-mono-sm">DAVID ECCLES SCHOOL OF BUSINESS &nbsp;·&nbsp; BUSINESS OF SPORTS MINOR</span>
+
+      </div>
+    </section>
+
+    <!-- =================================================================
+         BUSINESS OF SPORTS 101 (b) — DEMAND AND CAMPUS REACH
+         ================================================================= -->
+    <section class="slide s-lite s-reach" data-section="BUSINESS OF SPORTS · DEMAND &amp; REACH">
+      <div class="topbar">
+        <span class="crumb label-mono">BUSINESS OF SPORTS 101 &nbsp;·&nbsp; DEMAND &amp; REACH</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">AT THE CENTER OF <span class="red">THE CAMPUS.</span></h2>
+
+      <div class="split">
+        <div>
+          <div class="ramp">
+            <div class="rtitle">Enrollment Projection</div>
+            <div class="rw" data-anim="rise-2">
+              <span class="yr">Year 1<em>FY28</em></span>
+              <span class="bar" style="--w:25%"></span>
+              <span class="v">40&ndash;60</span>
+            </div>
+            <div class="rw" data-anim="rise-3">
+              <span class="yr">Year 2<em>FY29</em></span>
+              <span class="bar" style="--w:75%"></span>
+              <span class="v">130&ndash;170</span>
+            </div>
+            <div class="rw" data-anim="rise-4">
+              <span class="yr">Year 3<em>FY30</em></span>
+              <span class="bar" style="--w:100%"></span>
+              <span class="v">200+</span>
+            </div>
+            <div class="rlab">Students enrolled, cumulative</div>
+          </div>
+          <div class="note" data-anim="rise-4">
+            <div class="k">— The Labor Market</div>
+            <p>Sport management was a <strong>Top 10 U.S. job</strong> in 2023, median <strong>$88,720</strong>, with about <strong>99,000 openings a year</strong> through 2034.</p>
+          </div>
+        </div>
+
+        <div class="orbit" data-anim="fade-2">
+          <div class="ring">
+            <div class="node" style="left:50.00%;top:9.83%"><div class="pwrap"><div class="pill" style="--i:0"><span>Law</span></div></div></div>
+            <div class="node" style="left:70.48%;top:16.20%"><div class="pwrap"><div class="pill" style="--i:1"><span>Entrepreneurship</span></div></div></div>
+            <div class="node" style="left:84.46%;top:33.31%"><div class="pwrap"><div class="pill" style="--i:2"><span>Finance &amp; Accounting</span></div></div></div>
+            <div class="node" style="left:87.50%;top:55.72%"><div class="pwrap"><div class="pill" style="--i:3"><span>Information Systems</span></div></div></div>
+            <div class="node" style="left:78.63%;top:76.31%"><div class="pwrap"><div class="pill" style="--i:4"><span>Parks, Rec &amp; Tourism</span></div></div></div>
+            <div class="node" style="left:60.67%;top:88.55%"><div class="pwrap"><div class="pill" style="--i:5"><span>Engineering</span></div></div></div>
+            <div class="node" style="left:39.33%;top:88.55%"><div class="pwrap"><div class="pill" style="--i:6"><span>Humanities</span></div></div></div>
+            <div class="node" style="left:21.37%;top:76.31%"><div class="pwrap"><div class="pill" style="--i:7"><span>Marketing</span></div></div></div>
+            <div class="node" style="left:12.50%;top:55.72%"><div class="pwrap"><div class="pill" style="--i:8"><span>Marriott Hospitality</span></div></div></div>
+            <div class="node" style="left:15.54%;top:33.31%"><div class="pwrap"><div class="pill" style="--i:9"><span>Business Economics</span></div></div></div>
+            <div class="node" style="left:29.52%;top:16.20%"><div class="pwrap"><div class="pill" style="--i:10"><span>Kinesiology</span></div></div></div>
+          </div>
+          <div class="hub"><span>Business<br/>of Sports</span><em>The Minor</em></div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">SPORT-ADJACENT COURSE INTEGRATION &nbsp;·&nbsp; <span class="strong">ELEVEN DEPARTMENTS ACROSS THE U</span></span>
+      </div>
+    </section>
+
+
+        
+
+    <!-- ============================================================
+         03 — §01 DIVIDER · ACADEMIC UPDATE
+         ============================================================ -->
+    <section class="slide s-div" data-section="01 · BUSINESS OF SPORTS ACADEMIC UPDATE">
+      <div class="photo" data-anim="zoom" style="background-image:
+        linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.32) 42%, rgba(0,0,0,0.88) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0) 62%),
+        url('../_brand/utah/img/garff-exterior.jpg');"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>AGENDA ITEM 01</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="num label-mono" data-anim="reveal">— STATUS AND PATHWAY FORWARD</div>
+        <h2 data-anim="reveal-2">ACADEMIC<br/><span class="red">UPDATE.</span></h2>
+        <div class="lede" data-anim="rise-3">Where the minor stands today, what runs in the classroom this year, and the schedule that carries us to a Fall 2027 launch.</div>
+      </div>
+
+      <div class="bottombar">
+        <div class="time" data-anim="fade-3"><span class="k">Timebox</span><span class="v">8 Minutes</span></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PROGRAM STRUCTURE — 18 credits
+         ================================================================= -->
+    <section class="slide s-curric" data-section="01 · PROGRAM STRUCTURE">
+      <div class="photo-pane">
+        <div class="ph" data-anim="zoom"></div>
+        <div class="cap">
+          <div class="k">— The Minor</div>
+          <div class="v">18<br/>Credits</div>
+          <div class="w">Open to every University of Utah undergraduate.</div>
+        </div>
+      </div>
+
+      <div class="pane">
+        <div class="topbar">
+          <span class="crumb label-mono">CURRICULUM &nbsp;·&nbsp; JUNE 2026 PROPOSAL</span>
+          <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+        </div>
+
+        <h2 data-anim="reveal">PROGRAM <span class="red">STRUCTURE.</span></h2>
+
+        <div class="blocks">
+          <div class="blk" data-anim="rise-2">
+            <div class="lab"><span class="cr">9</span><span class="un">Credits</span><span class="nm">Core</span></div>
+            <ul>
+              <li>Sports Business Leadership Speaker Series</li>
+              <li>Marketing Vision or Principles of Marketing</li>
+              <li>Intro to Sports Business</li>
+            </ul>
+          </div>
+          <div class="blk exp" data-anim="rise-3">
+            <div class="lab"><span class="cr">3</span><span class="un">Credits</span><span class="nm">Experiential</span></div>
+            <ul>
+              <li>Sports Business Internship / Capstone Project, delivered by the PLAYERS Academy</li>
+            </ul>
+          </div>
+          <div class="blk" data-anim="rise-4">
+            <div class="lab"><span class="cr">6</span><span class="un">Credits</span><span class="nm">Electives<br/>Choose 2</span></div>
+            <ul>
+              <li>Sports Analytics</li>
+              <li>Sports Marketing</li>
+              <li>Sports Product Management</li>
+            </ul>
+          </div>
+          <div class="blk future" data-anim="rise-5">
+            <div class="lab"><span class="cr">+</span><span class="un">Future</span><span class="nm">Electives</span></div>
+            <ul>
+              <li>Sport Brand Management</li>
+              <li>Sales in Sports</li>
+              <li>Olympics &amp; Paralympics</li>
+              <li>Event Management and Facility Operations</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="foot">
+          <span class="label-mono-sm">18 CREDITS TOTAL &nbsp;·&nbsp; <span class="strong">9 CORE · 3 EXPERIENTIAL · 6 ELECTIVE</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         APPROVALS — hurdles cleared and ahead
+         ================================================================= -->
+    <section class="slide s-lite s-appr" data-section="01 · APPROVALS">
+      <div class="topbar">
+        <span class="crumb label-mono">ACADEMIC APPROVAL PATH</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">WHAT WE'VE <span class="red">CLEARED.</span></h2>
+
+      <div class="track">
+        <div class="rail" data-anim="fade-2">
+          <div class="fill"></div>
+          <div class="dots">
+          <div class="dot done"></div>
+          <div class="dot done"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          </div>
+        </div>
+        <div class="step" data-anim="rise-2">
+          <div class="dt">April 2026</div>
+          <div class="nm">Department<br/>Approval</div>
+          <div class="st">Cleared</div>
+        </div>
+        <div class="step" data-anim="rise-2">
+          <div class="dt">August 2026</div>
+          <div class="nm">Business Faculty<br/>Approval</div>
+          <div class="st">Cleared</div>
+        </div>
+        <div class="step ahead" data-anim="rise-2">
+          <div class="dt">November 2026</div>
+          <div class="nm">University Council<br/>Approval</div>
+          <div class="st">Ahead</div>
+        </div>
+        <div class="step ahead" data-anim="rise-3">
+          <div class="dt">December 2026</div>
+          <div class="nm">State Government<br/>Review</div>
+          <div class="st">Ahead</div>
+        </div>
+        <div class="step ahead" data-anim="rise-3">
+          <div class="dt">January 2027</div>
+          <div class="nm">Program<br/>Announced</div>
+          <div class="st">Ahead</div>
+        </div>
+        <div class="step ahead" data-anim="rise-3">
+          <div class="dt">March 2027</div>
+          <div class="nm">Courses<br/>Published</div>
+          <div class="st">Ahead</div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">TWO CLEARED &nbsp;·&nbsp; <span class="strong">FOUR AHEAD</span></span>
+        <span class="label-mono-sm">STATE REVIEW DATE IS A PLACEHOLDER</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         05 — MASTER SCHEDULE
+         ============================================================ -->
+    <section class="slide s-lite s-sched" data-section="01 · MASTER SCHEDULE">
+      <div class="topbar">
+        <span class="crumb label-mono">MASTER SCHEDULE</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="head">
+        <h2 data-anim="reveal">THE ROAD TO <span class="red">LAUNCH.</span></h2>
+        <div class="cd" data-anim="fade-2" data-countdown="2027-08-23T13:30:00Z">
+          <div class="k">Until First Class</div>
+          <div class="timer">
+            <div class="u"><div class="v" data-cd="days">—</div><div class="l">Days</div></div>
+            <div class="sep">:</div>
+            <div class="u"><div class="v" data-cd="hrs">—</div><div class="l">Hrs</div></div>
+            <div class="sep">:</div>
+            <div class="u"><div class="v" data-cd="mins">—</div><div class="l">Min</div></div>
+            <div class="sep">:</div>
+            <div class="u"><div class="v" data-cd="secs">—</div><div class="l">Sec</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col" data-anim="rise-2">
+          <div class="term">Spring <span class="red">2026</span></div>
+          <div class="band">
+            <div class="bk">Milestones</div>
+            <ul>
+              <li><strong>Business of Sports minor proposal submitted</strong></li>
+              <li>Advisory Group first meeting</li>
+              <li>Student Research Team: competitive landscape and student interest</li>
+            </ul>
+          </div>
+          <div class="band eng">
+            <div class="bk eng">Engagement</div>
+            <ul>
+              <li>Eccles Experience Magazine: Chris Barney, Jim Olson, Elaina Pappas, SEG feature</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col" data-anim="rise-3">
+          <div class="term">Summer <span class="red">2026</span></div>
+          <div class="band">
+            <div class="bk">Milestones</div>
+            <ul>
+              <li><strong>Department and faculty approvals cleared</strong></li>
+              <li>18-credit curriculum finalized</li>
+              <li>PLAYERS Academy model built</li>
+              <li>Advisory Group reconvened</li>
+            </ul>
+          </div>
+          <div class="band eng">
+            <div class="bk eng">Engagement</div>
+            <ul>
+              <li>Eccles Business Buzz Podcast: Jim Olson feature</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col" data-anim="rise-4">
+          <div class="term">Fall <span class="red">2026</span></div>
+          <div class="band">
+            <div class="bk">Milestones</div>
+            <ul>
+              <li>Launch of the Sports Business Leadership Speaker Series</li>
+              <li>PLAYERS Academy test event with Utah Baseball</li>
+              <li>University Council review</li>
+            </ul>
+          </div>
+          <div class="band eng">
+            <div class="bk eng">Engagement</div>
+            <ul>
+              <li>Eccles Experience Magazine: Coach Scalley feature and Business of Sports teaser article</li>
+              <li>Sports Business Association meetups</li>
+              <li>Business of Sports stakeholder night out (Jazz, Mammoth, RSL)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col" data-anim="rise-5">
+          <div class="term">Spring <span class="red">2027</span></div>
+          <div class="band">
+            <div class="bk">Milestones</div>
+            <ul>
+              <li>Sports Marketing offered</li>
+              <li>Curriculum through academic approval</li>
+              <li>Readiness coursework built &amp; piloted</li>
+            </ul>
+          </div>
+          <div class="band eng">
+            <div class="bk eng">Engagement</div>
+            <ul>
+              <li>Sales Innovation Summit: Chris Barney keynote</li>
+              <li>Lassonde Sports Entrepreneurship Summit</li>
+              <li>Eccles Alumni Forum</li>
+              <li>Business of Sports Ambassador recruitment</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col" data-anim="rise-6">
+          <div class="term">Fall <span class="red">2027</span></div>
+          <div class="band">
+            <div class="bk">Milestones</div>
+            <ul>
+              <li><strong>Minor officially launches</strong></li>
+              <li>PLAYERS Academy goes live</li>
+              <li>First capstone showcase scheduled</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         06 — §02 DIVIDER · COLLABORATIVE EFFORTS
+         ============================================================ -->
+    <section class="slide s-div" data-section="02 · COLLABORATIVE EFFORTS">
+      <div class="photo" data-anim="zoom" style="background-image:
+        linear-gradient(180deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.30) 42%, rgba(0,0,0,0.88) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0) 62%),
+        url('../_brand/utah/img/slc-skyline.jpg');"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>AGENDA ITEM 02</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="num label-mono" data-anim="reveal">— BUILDING WITH PARTNERS</div>
+        <h2 data-anim="reveal-2">COLLABORATIVE<br/><span class="red">EFFORTS.</span></h2>
+        <div class="lede" data-anim="rise-3">Three relationships moving in parallel: a peer program, the Olympic movement, and Utah Athletics.</div>
+      </div>
+
+      <div class="bottombar">
+        <div class="time" data-anim="fade-3"><span class="k">Timebox</span><span class="v">8 Minutes</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         07 — COLLABORATIONS
+         ============================================================ -->
+    <section class="slide s-lite s-collab" data-section="02 · THREE COLLABORATIONS">
+      <div class="topbar">
+        <span class="crumb label-mono">PEER PROGRAM &nbsp;·&nbsp; OLYMPIC &amp; PARALYMPIC &nbsp;·&nbsp; UTAH ATHLETICS</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">WHO WE'RE <span class="red">BUILDING WITH.</span></h2>
+
+      <div class="grid">
+        <div class="card" data-anim="rise-2">
+          <div class="ph" style="background-image:url('../_brand/utah/img/lassonde.jpg')"><span class="tag">Peer Program</span></div>
+          <div class="inner">
+            <div class="lead">Grant Barth</div>
+            <h3>University<br/>of Oregon</h3>
+            <p>Learning from a gold-standard sports business program: industry connections, product management depth, and faculty drawn from the field.</p>
+          </div>
+        </div>
+
+        <div class="card" data-anim="rise-3">
+          <div class="ph" style="background-image:url('../_brand/utah/img/slc-skyline.jpg')"><span class="tag">Olympic &amp; Paralympic Movement</span></div>
+          <div class="inner">
+            <div class="lead">Scott Doughman</div>
+            <h3>University of Utah<br/>× Olympics &amp; Paralympics</h3>
+            <p>How the university capitalizes on 2034: internships and jobs for our students, and a stage that distinguishes Utah globally, with Opening &amp; Closing Ceremony plus Athlete Village on campus.</p>
+          </div>
+        </div>
+
+        <div class="card" data-anim="rise-4">
+          <div class="ph" style="background-image:url('../_brand/utah/img/rice-eccles-aerial.jpg')"><span class="tag">Utah Athletics</span></div>
+          <div class="inner">
+            <div class="lead">Charmelle Green</div>
+            <h3>Utah Athletics &amp;<br/>Crimson Brand Partners</h3>
+            <p>A college-athletics-first move into private equity partnership. Cutting-edge sports business development our students can collaborate with and learn from.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">COLLABORATIVE EFFORTS &nbsp;·&nbsp; <span class="strong">THREE TRACKS, ONE PROGRAM</span></span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         08 — §03 DIVIDER · PLAYERS ACADEMY
+         ============================================================ -->
+    <section class="slide s-div" data-section="03 · THE PLAYERS ACADEMY">
+      <div class="photo" data-anim="zoom" style="background-image:
+        linear-gradient(180deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.22) 38%, rgba(0,0,0,0.88) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0) 60%),
+        url('../_brand/utah/img/muss-crowd.jpg');"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>AGENDA ITEM 03</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="num label-mono" data-anim="reveal">— THE EXPERIENTIAL ENGINE</div>
+        <h2 data-anim="reveal-2">THE <span class="red">PLAYERS</span><br/>ACADEMY.</h2>
+        <div class="lede" data-anim="rise-3">Professional Learning and Year-round Experiential Readiness. The platform that turns the required 3-credit experience into real placements.</div>
+      </div>
+
+      <div class="bottombar">
+        <div class="time" data-anim="fade-3"><span class="k">Timebox</span><span class="v">15 Minutes</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         09 — WHERE STUDENTS GO (hospitality added)
+         ============================================================ -->
+    <section class="slide s-lite s-where" data-section="03 · WHERE STUDENTS GO">
+      <div class="topbar">
+        <span class="crumb label-mono">THE EMPLOYER MAP &nbsp;·&nbsp; UTAH SPORTS INDUSTRY</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">WHERE STUDENTS <span class="red">GO.</span></h2>
+
+      <div class="grid">
+        <div class="seg" data-anim="rise-2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">01</div>
+              <div class="n">COLLEGE<br/>ATHLETICS</div>
+              <div class="l">Utah Athletics &amp; Crimson Brand Partners, the anchor tenant.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">College Athletics</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/utah-utes.svg" alt="Utah Athletics"/><span class="name">Utah Athletics</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/crimson-brand-partners.jpg" alt="Crimson Brand Partners"/><span class="name">Crimson Brand Partners</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seg" data-anim="rise-2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">02</div>
+              <div class="n">MAJOR<br/>LEAGUE</div>
+              <div class="l">The franchises anchoring Salt Lake's professional identity.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Major League</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/partners/utahjazz.png" alt="Utah Jazz"/><span class="name">Utah Jazz</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/utahmammoth.png" alt="Utah Mammoth"/><span class="name">Utah Mammoth</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/rsl.png" alt="Real Salt Lake"/><span class="name">Real Salt Lake</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/utahroyalsfc.png" alt="Utah Royals"/><span class="name">Utah Royals</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seg" data-anim="rise-2">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">03</div>
+              <div class="n">EMERGING<br/>LEAGUE</div>
+              <div class="l">The new leagues writing the next chapter of Utah sport.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Emerging League</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/partners/slc-stars.svg" alt="Salt Lake Stars"/><span class="name">Salt Lake Stars</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/slbees.png" alt="Salt Lake Bees"/><span class="name">Salt Lake Bees</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/utah-talons.svg" alt="Utah Talons"/><span class="name">Utah Talons</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/realmonarchs.png" alt="Real Monarchs"/><span class="name">Real Monarchs</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/lovb.png" alt="LOVB Salt Lake"/><span class="name">LOVB Salt Lake</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seg" data-anim="rise-3">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">04</div>
+              <div class="n">HOSPITALITY<br/>&amp; RESORTS</div>
+              <div class="l">Ski resorts, venue hospitality, and destination operators. Where sport meets service.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Hospitality &amp; Resorts</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/partners/parkcitymountain.png" alt="Park City"/><span class="name">Park City</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/deervalley.png" alt="Deer Valley"/><span class="name">Deer Valley</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/advisors/powdr.svg" alt="POWDR"/><span class="name">POWDR</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/brightonresort.png" alt="Brighton"/><span class="name">Brighton</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/solitudemountain.png" alt="Solitude"/><span class="name">Solitude</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/snowbasin.png" alt="Snowbasin"/><span class="name">Snowbasin</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seg" data-anim="rise-3">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">05</div>
+              <div class="n">CONSUMER<br/>BRANDS</div>
+              <div class="l">Utah-made gear. The brand bench of the outdoor industry.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Brands</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/partners/backcountry.png" alt="Backcountry"/><span class="name">Backcountry</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/blackdiamondequipment.png" alt="Black Diamond"/><span class="name">Black Diamond</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/cotopaxi.png" alt="Cotopaxi"/><span class="name">Cotopaxi</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/kuhl.png" alt="Kühl"/><span class="name">Kühl</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/skullcandy.png" alt="Skullcandy"/><span class="name">Skullcandy</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/salomon.png" alt="Salomon"/><span class="name">Salomon</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seg" data-anim="rise-3">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">06</div>
+              <div class="n">HEALTH<br/>&amp; WELLNESS</div>
+              <div class="l">The performance &amp; recovery sector: nutrition, equipment, training.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Wellness</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/partners/gognarly.png" alt="Gnarly"/><span class="name">Gnarly</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/lifevantage.png" alt="LifeVantage"/><span class="name">LifeVantage</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/livemomentous.png" alt="Momentous"/><span class="name">Momentous</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/mtnops.png" alt="MTN OPS"/><span class="name">MTN OPS</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/nordictrack.png" alt="NordicTrack"/><span class="name">NordicTrack</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/zyiaactive.png" alt="Zyia Active"/><span class="name">Zyia Active</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seg" data-anim="rise-4">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">07</div>
+              <div class="n">OLYMPIC<br/>&amp; NGBs</div>
+              <div class="l">The Olympic movement and the governing bodies headquartered here.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Olympic &amp; NGB</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/partners/olympics.png" alt="IOC"/><span class="name">IOC</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/ipc.png" alt="IPC"/><span class="name">IPC</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/teamusa.png" alt="Team USA"/><span class="name">Team USA</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/usskiandsnowboard.png" alt="US Ski &amp; Snowboard"/><span class="name">US Ski &amp; Snowboard</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/us-speedskating.png" alt="US Speedskating"/><span class="name">US Speedskating</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seg" data-anim="rise-4">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="h">08</div>
+              <div class="n">EVENTS<br/>&amp; ORGS</div>
+              <div class="l">The events &amp; organizations that move Utah's sports calendar.</div>
+              <div class="hint">HOVER TO EXPLORE &nbsp;↻</div>
+            </div>
+            <div class="card-back">
+              <div class="h">ACTIVE PARTNERS</div>
+              <div class="h-sub">Events</div>
+              <div class="logos">
+                <div class="logo"><img src="../_brand/utah/logos/partners/runragnar.png" alt="Ragnar"/><span class="name">Ragnar</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/uolf.png" alt="UOLF"/><span class="name">UOLF</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/utahsportscommission.png" alt="Sports Commission"/><span class="name">Sports Commission</span></div>
+                <div class="logo"><img src="../_brand/utah/logos/partners/visitsaltlake.png" alt="Sports Salt Lake"/><span class="name">Sports Salt Lake</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">PLAYERS ACADEMY &nbsp;·&nbsp; <span class="strong">CURATED PLACEMENTS, NOT A JOB BOARD</span></span>
+      </div>
+    </section>
+
+        <!-- =================================================================
+         WHAT IS THE PLAYERS ACADEMY — ported from the PLAYERS Academy deck
+         ================================================================= -->
+<section class="slide s-what" data-section="03 · WHAT IS THE PLAYERS ACADEMY?">
+      <div class="red-pane">
+        <div class="topbar label-mono">DEFINITION</div>
+
+        <div class="hero">
+          <div class="label label-mono">— WHAT IS THE PLAYERS ACADEMY?</div>
+          <h2 data-anim="reveal-2">PARTNERSHIP<br/>PLATFORM.</h2>
+          <div class="expand" data-anim="rise-3">
+            <span class="accent">PROFESSIONAL LEARNING AND<br/>YEAR-ROUND EXPERIENTIAL READINESS</span>
+          </div>
+          <p class="body body-lead" data-anim="rise-4">The Business of Sports' dedicated experiential engine. A structured, accountable, credit-bearing program that places students inside Utah's sports industry with vetted employer partners.</p>
+        </div>
+
+        <div class="footer">
+          <div class="lockup label-mono-sm"><span class="strong">PLAYERS ACADEMY</span> &nbsp;·&nbsp; A PARTNERSHIP PLATFORM</div>
+        </div>
+      </div>
+
+      <div class="white-pane">
+        <div class="topbar">
+          <span class="crumb label-mono">WHO BENEFITS &nbsp;·&nbsp; AND HOW</span>
+          <div class="eccles-mark sm"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+        </div>
+
+        <div class="cards">
+          <div class="card" data-anim="rise-2">
+            <div class="label">FOR STUDENTS</div>
+            <div class="body body-med"><strong>Curated placements, academic credit, and a clear path</strong> from classroom to career in the sports industry.</div>
+          </div>
+
+          <div class="card" data-anim="rise-3">
+            <div class="label">FOR EMPLOYERS</div>
+            <div class="body body-med"><strong>Access to trained, motivated DESB talent</strong> with structured onboarding expectations and defined responsibilities.</div>
+          </div>
+
+          <div class="card" data-anim="rise-4">
+            <div class="label">FOR THE PROGRAM</div>
+            <div class="body body-med"><strong>Real-world outcomes</strong> that strengthen the minor's credibility, donor appeal, and industry reputation.</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <span class="label-mono-sm">PLAYERS ACADEMY &nbsp;·&nbsp; THREE AUDIENCES &nbsp;·&nbsp; ONE PROGRAM</span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         15 — PLAYERS ACADEMY DISCUSSION QUESTIONS
+         ============================================================ -->
+    <section class="slide s-fourq" data-section="03 · DISCUSSION · QUESTIONS">
+      <div class="topbar">
+        <span class="crumb label-mono"><span class="pip"></span>PLAYERS ACADEMY &nbsp;·&nbsp; WE WANT YOUR PERSPECTIVE</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">QUESTIONS.</h2>
+
+      <div class="rows">
+        <div class="row" data-anim="rise-2">
+          <div class="label"><span class="ln">01</span><span class="lw">Involvement</span></div>
+          <div class="body">What would meaningful student involvement practically look like inside your organization: number of students, project duration, mentorship, recruiting access, something else?</div>
+        </div>
+        <div class="row" data-anim="rise-3">
+          <div class="label"><span class="ln">02</span><span class="lw">Value</span></div>
+          <div class="body">What would make this genuinely valuable enough for your organization to prioritize this partnership?</div>
+        </div>
+        <div class="row" data-anim="rise-4">
+          <div class="label"><span class="ln">03</span><span class="lw">Barriers</span></div>
+          <div class="body">What barriers (HR, legal, managerial capacity, timing, compensation, student readiness) would we need to solve?</div>
+        </div>
+        <div class="row" data-anim="rise-5">
+          <div class="label"><span class="ln">04</span><span class="lw">Relationship</span></div>
+          <div class="body">Beyond access to talent, what would you want out of a relationship with the Business of Sports program?</div>
+        </div>
+        <div class="row" data-anim="rise-6">
+          <div class="label"><span class="ln">05</span><span class="lw">Ambition</span></div>
+          <div class="body">If this became the premier university-to-industry talent platform in sports, what role would you want your organization to play, and what would it take to get there?</div>
+        </div>
+        <div class="row" data-anim="rise-6">
+          <div class="label"><span class="ln">06</span><span class="lw">Blind Spots</span></div>
+          <div class="body">What are we overlooking that could make this truly distinctive?</div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">DISCUSSION &nbsp;·&nbsp; <span class="strong">SHAPING THIS TOGETHER</span></span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         10 — UTAH BASEBALL TEST EVENT
+         ============================================================ -->
+    <section class="slide s-test" data-section="03 · UTAH BASEBALL TEST EVENT">
+      <div class="photo-pane">
+        <div class="ph" data-anim="zoom"></div>
+        <div class="top">Proof of Concept</div>
+        <div class="cap">
+          <div class="k">— Where It Happens</div>
+          <div class="v">Charlie Monfort Field<br/>America First Ballpark</div>
+          <div class="w">Utah Athletics</div>
+        </div>
+      </div>
+
+      <div class="pane">
+        <div class="topbar">
+          <span class="crumb label-mono">BEFORE THE MINOR LAUNCHES</span>
+          <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+        </div>
+
+        <div class="hero">
+          <h2 data-anim="reveal">THE TEST <span class="red">EVENT.</span></h2>
+          <p data-anim="rise-2">We run the model live with <b>Utah Baseball</b>, in the new facility. Real students, real deliverables, real feedback &ndash; for coaches and student-athletes. A full year before the requirement goes live.</p>
+        </div>
+
+        <div class="concepts" data-anim="rise-3">
+          <h3>Future <span class="red">Concepts.</span></h3>
+          <p>Utah Athletics is already thinking of the next version, inside the department
+             that runs every program. Real staff, real events, real fan-facing work, ready
+             for cross-campus integration and collaboration.</p>
+        </div>
+
+        <div class="foot">
+          <span class="label-mono-sm">PLAYERS ACADEMY &nbsp;·&nbsp; <span class="strong">PROVING THE MODEL BEFORE WE REQUIRE IT</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         12 — Y1 / Y2 FRAMEWORK
+         ============================================================ -->
+    <!-- ============================================================
+         18 — DISCUSSION QUESTIONS (PLAYERS Academy)
+         ============================================================ -->
+    <!-- ============================================================
+         14 — PRIORITIES · Q3 + Q4
+         ============================================================ -->
+    <section class="slide s-lite s-prio" data-section="04 · PRIORITIES · Q3 + Q4">
+      <div class="topbar">
+        <span class="crumb label-mono">AGENDA ITEM 04 &nbsp;·&nbsp; 5 MIN</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+      </div>
+
+      <h2 data-anim="reveal">Q3 + Q4 <span class="red">PRIORITIES.</span></h2>
+
+      <div class="grid">
+        <div class="col" data-anim="rise-2">
+          <div class="hd">
+            <div class="k">Third Quarter</div>
+            <div class="theme">Validate. Design. Recruit.</div>
+            <div class="sum">Pressure-test the model, refine the partner value proposition, and build the founding employer pipeline.</div>
+          </div>
+          <ul>
+            <li>Advisory Group No. 2 feedback captured and actioned</li>
+            <li>Utah Baseball test event executed</li>
+            <li>Curriculum package prepared for academic review</li>
+          </ul>
+        </div>
+
+        <div class="col" data-anim="rise-3">
+          <div class="hd">
+            <div class="k">Fourth Quarter</div>
+            <div class="theme">Build + Commit</div>
+            <div class="sum">Translate industry insight into a launch-ready model and early commitments.</div>
+          </div>
+          <ul>
+            <li>University Council approval &amp; state government review</li>
+            <li>PLAYERS Academy x Utah Baseball pilot program</li>
+            <li>Continued Business of Sports awareness with sports industry stakeholders</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         15 — STUDENT ATTRIBUTES (discussion)
+         ============================================================ -->
+    <section class="slide s-grad" data-section="05 · DISCUSSION · THE BUSINESS OF SPORTS GRADUATE">
+      <div class="pane">
+        <div class="topbar">
+          <span class="crumb label-mono">DISCUSSION &nbsp;·&nbsp; AGENDA ITEM 05</span>
+          <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-black.svg" alt="DESB" /></div>
+        </div>
+
+        <h2 data-anim="reveal">WHAT DOES A<br/>BUSINESS OF SPORTS<br/><span class="red">GRADUATE LOOK LIKE?</span></h2>
+
+        <div class="rows">
+          <div class="row" data-anim="rise-2">
+            <div class="label"><span class="ln">01</span><span class="lw">Industry</span></div>
+            <div class="body">Relevant content and genuine fluency in the business of sports.</div>
+          </div>
+          <div class="row" data-anim="rise-3">
+            <div class="label"><span class="ln">02</span><span class="lw">Durable</span></div>
+            <div class="body">Communication, leadership, and critical thinking. What sports employers actually value.</div>
+          </div>
+          <div class="row" data-anim="rise-4">
+            <div class="label"><span class="ln">03</span><span class="lw">Applied</span></div>
+            <div class="body">Real work, inside the sports industry, before they graduate.</div>
+          </div>
+          <div class="row" data-anim="rise-5">
+            <div class="label"><span class="ln">04</span><span class="lw">Teamwork</span></div>
+            <div class="body">Collaboration built into every project, not an afterthought.</div>
+          </div>
+          <div class="row" data-anim="rise-6">
+            <div class="label"><span class="ln">05</span><span class="lw">Business</span></div>
+            <div class="body">A real business education under the sports focus. Many sports management programs sit outside the business school; ours sits inside it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-pane">
+        <div class="ph" data-anim="zoom"></div>
+        <div class="cap">
+          <div class="k">— The Outcome</div>
+          <div class="v">Ready on<br/>Day One</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         16 — THE ASK
+         ============================================================ -->
+    <section class="slide s-help" data-section="06 · WHERE WE NEED HELP">
+      <div class="photo" data-anim="zoom"></div>
+
+      <div class="topbar">
+        <span class="crumb label-mono"><span class="pip"></span>AGENDA ITEM 06</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="DESB" /></div>
+      </div>
+
+      <div class="hero">
+        <h2 data-anim="reveal">WHERE WE<br/><span class="red">NEED HELP.</span></h2>
+        <div class="lede" data-anim="rise-3">The program is real and the timeline is set. What we need now is the part we can't build ourselves.</div>
+      </div>
+
+      <div class="grid">
+        <div class="card" data-anim="rise-3">
+          <div class="k">— Philanthropy</div>
+          <h4>Invest</h4>
+          <p>Future philanthropic support that fuels student opportunity and helps position the Business of Sports program for long-term impact and scale.</p>
+        </div>
+        <div class="card" data-anim="rise-4">
+          <div class="k">— Perspective</div>
+          <h4>Engage</h4>
+          <p>Bring industry perspective into the student experience through classroom conversations, guest lectures, panels, and signature Eccles events.</p>
+        </div>
+        <div class="card" data-anim="rise-5">
+          <div class="k">— Opportunity</div>
+          <h4>Employ</h4>
+          <p>Create meaningful pathways from classroom to career through internships, project-based experiences, and employment opportunities within the PLAYERS Academy.</p>
+        </div>
+        <div class="card" data-anim="rise-6">
+          <div class="k">— Mentorship</div>
+          <h4>Advise</h4>
+          <p>Mentor students, share industry perspective, and help us shape a differentiated model for developing the next generation of sports business talent.</p>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span class="label-mono-sm">FOUR WAYS TO HELP &nbsp;·&nbsp; <span class="strong">INVEST · ENGAGE · EMPLOY · ADVISE</span></span>
+        <span class="label-mono-sm">CLOSING REMARKS · NEXT MEETING</span>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         20 — CLOSE
+         ============================================================ -->
+    <section class="slide s-close" data-section="FIN · DAVID ECCLES SCHOOL OF BUSINESS">
+      <div class="photo" data-anim="zoom"></div>
+
+      <div class="topbar">
+        <span class="meta label-mono"><span class="pip"></span>BUSINESS OF SPORTS &nbsp;·&nbsp; FALL 2027</span>
+        <div class="eccles-mark md"><img src="../_brand/utah/logos/desb-horizontal-white.svg" alt="David Eccles School of Business" /></div>
+      </div>
+
+      <div class="midbar">
+        <div class="num label-mono" data-anim="reveal">— THANK YOU</div>
+        <h2 data-anim="reveal-2">ASCENT BEGINS <span class="red">HERE.</span></h2>
+        <p class="signoff" data-anim="rise-3">
+          DAVID ECCLES SCHOOL OF BUSINESS &nbsp;<span class="accent">·</span>&nbsp; UNIVERSITY OF UTAH<br/>
+          ADVISORY GROUP MEETING NO. 2 &nbsp;<span class="accent">·</span>&nbsp; 25 AUGUST 2026
+        </p>
+      </div>
+
+      <div class="bottombar">
+        <div class="label-mono-sm" data-anim="fade-3">BUSINESS OF SPORTS<br/><span class="strong">MINOR LAUNCHES FALL 2027</span></div>
+        <div class="label-mono-sm" data-anim="fade-3" style="text-align:right">Shaping this together<span style="color:var(--utah-red-bright)">.</span></div>
+      </div>
+    </section>
+
+  </div><!-- /.stage -->
+
+  <div class="hud">
+    <div class="hud-left">
+      <span class="pip"></span>
+      <span id="hud-section">ADVISORY GROUP MEETING NO. 2</span>
+    </div>
+    <div class="hud-right"><span id="hud-slide">01 / 19</span></div>
+  </div>
+
+  <div class="progress-bar" id="progress"></div>
+
+  <div class="help" id="help">
+    <kbd>F</kbd> FULLSCREEN &nbsp; <kbd>←</kbd><kbd>→</kbd> NAVIGATE &nbsp; <kbd>N</kbd> INDEX &nbsp; <kbd>HOME</kbd> RESET
+  </div>
+</div>
+
+<script src="../_engine/deck.v1.js?r=4"></script>
+<script>
+  /* Where-students-go tiles: add .flipping in the SAME frame the slide
+     goes active, so the first painted state is the logo wall. Cleared
+     after the last card lands so :hover takes over. */
+  /* ============================================================
+     SBJ BEST SPORTS BUSINESS CITIES — slope chart
+     Three SBJ lists, plotted in sequence:
+       2023  Best Sports Business Cities         (50 cities)
+       2024  Best Sports Business Cities: Events (25 cities)
+       2026  Best Sports Business Cities         (50 cities)
+     The 2024 list ranks event hosting only, over a shorter field, so the
+     axis names each list under its year rather than implying one metric.
+     Rank axis is INVERTED (1 at top): up is better.
+
+     Only Salt Lake is labelled at rest. Hovering any line illuminates it
+     and writes its name into both margins; clicking pins it. That keeps
+     the label field sparse, which is what stops the margins overstacking
+     — a static legend for 43 cities cannot be laid out legibly.
+     ============================================================ */
+  (() => {
+    const svg = document.getElementById('sbjChart');
+    if (!svg) return;
+    const NS = 'http://www.w3.org/2000/svg';
+
+    /* [key, label, 2023, 2026, 2024events|null] */
+    const D = [
+      ['slc','Salt Lake City',44,12,24], ['atl','Atlanta',5,1,4], ['nyc','New York',2,2,7],
+      ['ind','Indianapolis',11,3,5], ['clt','Charlotte',3,4,20], ['msp','Minneapolis',4,5,12],
+      ['la','Los Angeles',6,6,3], ['lv','Las Vegas',7,7,2], ['phx','Phoenix',10,8,9],
+      ['kc','Kansas City',16,9,13], ['mia','Miami',12,10,11], ['dc','Washington, D.C.',34,11,null],
+      ['tpa','Tampa',13,13,14], ['phi','Philadelphia',21,14,18], ['nsh','Nashville',8,15,null],
+      ['den','Denver',31,16,null], ['bos','Boston',15,17,21], ['orl','Orlando',25,18,1],
+      ['chi','Chicago',9,19,null], ['dal','Dallas',1,20,22], ['sea','Seattle',20,22,25],
+      ['rdu','Research Triangle',22,23,23], ['hou','Houston',29,25,8], ['cmh','Columbus',26,26,10],
+      ['sd','San Diego',18,27,null], ['sj','San Jose',49,28,17], ['det','Detroit',32,29,null],
+      ['aus','Austin',23,30,null], ['sf','San Francisco',19,31,null], ['pit','Pittsburgh',30,32,null],
+      ['cle','Cleveland',14,33,19], ['cin','Cincinnati',17,34,null], ['jax','Jacksonville',46,35,null],
+      ['mke','Milwaukee',32,36,null], ['stl','St. Louis',28,37,null], ['bhm','Birmingham',42,38,null],
+      ['cos','Colorado Springs',41,39,null], ['pdx','Portland',38,41,null], ['nola','New Orleans',24,43,16],
+      ['sat','San Antonio',27,44,15], ['okc','Oklahoma City',39,47,null], ['sdf','Louisville',37,48,null],
+      ['gso','Greensboro',35,50,null]
+    ];
+    const BY = Object.fromEntries(D.map(d => [d[0], d]));
+    /* No red in this palette: a competitor tinted red reads as Salt Lake.
+       Colours are also assigned by position in the ACTIVE set rather than
+       by each city's fixed index — index-modulo handed Denver and LA the
+       same brown inside one preset, which is ambiguous rather than merely
+       repetitive. Pinning appends, so existing lines keep their colour. */
+    const PALETTE = ['#1F5C8B','#2E7D5B','#8A6A1F','#5B3A8A','#1F7A8A','#3A5A2E','#6A4A2A','#37507A'];
+    let order = [];
+    const colorOf = k => PALETTE[(order.indexOf(k) < 0 ? order.length
+                                                       : order.indexOf(k)) % PALETTE.length];
+    const PRESETS = { 'Biggest risers': ['dc','sj','den'],
+                      'Western markets': ['la','lv','phx','den','sea','pdx','sd','cos'] };
+
+    const X0 = 205, XM = 500, X1 = 795, Y0 = 24, Y1 = 344;
+    const y  = r => Y0 + ((r - 1) / 49) * (Y1 - Y0);
+    const el = (t, a) => { const n = document.createElementNS(NS, t);
+                           for (const k in a) n.setAttribute(k, a[k]); return n; };
+    const pts = (d, ev) => { const p = [[X0, d[2]]];
+                             if (ev && d[4]) p.push([XM, d[4]]);
+                             p.push([X1, d[3]]); return p; };
+    /* Smooth-step cubics rather than straight segments: control points are
+       offset horizontally only, so the tangent at every plotted rank is
+       flat. Segments therefore join cleanly and each year reads as a
+       settled position rather than a corner. getTotalLength() measures
+       curves fine, so the draw-on animation is unaffected. */
+    const BEND = 0.38;
+    const dstr = p => {
+      if (!p.length) return '';
+      let d = `M${p[0][0]} ${y(p[0][1])}`;
+      for (let i = 1; i < p.length; i++) {
+        const [x0, r0] = p[i-1], [x1, r1] = p[i], c = (x1 - x0) * BEND;
+        d += ` C${x0+c} ${y(r0)}, ${x1-c} ${y(r1)}, ${x1} ${y(r1)}`;
+      }
+      return d;
+    };
+
+    let pinned = new Set(), hover = null, showEv = true;
+    let lastPinned = new Set(), justPinned = new Set();
+    let gLab, gCity, groups = {};
+
+    /* Push labels apart by rank order. The gap is per-pair because the
+       Salt Lake label is set larger than the rest. */
+    const gapFor = () => 16;   // all labels are one size now
+    function place(items) {
+      items.sort((a, b) => a.y - b.y);
+      for (let i = 1; i < items.length; i++) {
+        const g = gapFor(items[i-1], items[i]);
+        if (items[i].y - items[i-1].y < g) items[i].y = items[i-1].y + g;
+      }
+      if (!items.length) return items;
+      const over = items[items.length-1].y - (Y1 + 24);
+      if (over > 0) items.forEach(it => it.y -= over);
+      const under = (Y0 - 6) - items[0].y;
+      if (under > 0) items.forEach(it => it.y += under);
+      return items;
+    }
+
+    /* Labels are re-rendered on every hover/pin change; the chart itself
+       is not rebuilt, so the draw-on animation is never restarted. */
+    function labels() {
+      gLab.textContent = '';
+      const keys = new Set([...pinned]); if (hover) keys.add(hover); keys.delete('slc');
+      const mk = side => {
+        const items = [...keys].filter(k => BY[k]).map(k => {
+          const d = BY[k], r = side === 'L' ? d[2] : d[3];
+          return {k, y:y(r), rank:r, name:d[1], c:colorOf(k), slc:false};
+        });
+        items.push({k:'slc', y:y(side==='L'?44:12), rank:side==='L'?44:12,
+                    name:'Salt Lake City', c:'var(--utah-red)', slc:true});
+        /* Rank and name are separate text nodes on a shared baseline, each
+           justified to its own column, so the ranks line up as a column
+           against the plot and the names line up as a block beside them.
+           As one string they were ragged, since city names differ in width. */
+        const L = side === 'L';
+        const RANK_X = L ? X0 - 26 : X1 + 26;
+        const NAME_X = L ? X0 - 64 : X1 + 66;
+        const ANCHOR = L ? 'end' : 'start';
+        place(items).forEach(it => {
+          const ry = y(it.rank), parts = [];
+          const put = (cls, x, txt) => {
+            const t = el('text', {class:'clab '+cls+(it.slc?' slc':''), x, y:it.y+4,
+                                  'text-anchor':ANCHOR});
+            t.setAttribute('fill', it.c); t.textContent = txt;
+            gLab.appendChild(t); parts.push(t); return t;
+          };
+          put('rank', RANK_X, '#'+it.rank);
+          put('name', NAME_X, it.name);
+          if (Math.abs(it.y - ry) > 2) {                 // leader line when nudged
+            const ln = el('line', {class:'lead', x1: L ? X0-20 : X1+20,
+                                   x2: L ? X0-6 : X1+6, y1:it.y, y2:ry, stroke:it.c});
+            gLab.appendChild(ln); parts.push(ln);        // fades WITH the label
+          }
+          if (justPinned.has(it.k) && !document.hidden) {   // arrive with its line
+            parts.forEach(n => n.style.opacity = 0);
+            flush();
+            parts.forEach(n => { n.style.transition = 'opacity .4s 520ms ease';
+                                 n.style.opacity = 1; });
+          }
+        });
+      };
+      mk('L'); mk('R');
+    }
+
+    /* SVG has no z-index: paint order IS document order. A lit line would
+       otherwise sit under whichever ghosts happen to come after it, so the
+       selected groups are re-appended to the end of the city layer. They go
+       worst-rank-first, which leaves the best-ranked city painted last and
+       therefore on top; a hovered line tops even that. */
+    function restack() {
+      if (!gCity) return;
+      const keys = [...pinned].filter(k => groups[k]);
+      if (hover && !pinned.has(hover) && groups[hover]) keys.push(hover);
+      keys.sort((a, b) => BY[b][3] - BY[a][3]);
+      if (hover) { const i = keys.indexOf(hover);
+                   if (i > -1) { keys.splice(i, 1); keys.push(hover); } }
+      keys.forEach(k => gCity.appendChild(groups[k]));
+    }
+
+    /* Pinning replays the same draw-on the chart uses on entry, so a line
+       committed by a click arrives the way the rest of the chart did. */
+    function drawIn(g, delay) {
+      const path = g.querySelector('.hl');
+      if (!path) return;
+      const dots = g.querySelectorAll('.cdot');
+      if (document.hidden) { path.style.strokeDasharray = 'none'; return; }
+      const len = path.getTotalLength();
+      path.style.transition = 'none';
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+      dots.forEach(d => { d.style.transition = 'none'; d.style.opacity = 0; });
+      flush();
+      path.style.transition = `stroke-dashoffset .7s ${delay}ms var(--ease-out)`;
+      path.style.strokeDashoffset = 0;
+      dots.forEach(d => {
+        d.style.transition = `opacity .35s ${delay + 540}ms ease`;
+        d.style.opacity = '';          // hand back to the CSS rule
+      });
+    }
+
+    function paint() {
+      Object.entries(groups).forEach(([k, g]) => {
+        g.classList.toggle('on',  pinned.has(k));
+        g.classList.toggle('hov', hover === k);
+      });
+      justPinned = new Set([...pinned].filter(k => !lastPinned.has(k) && groups[k]));
+      Object.entries(groups).forEach(([k, g]) => {     // colour follows the active set
+        const c = colorOf(k);
+        const hl = g.querySelector('.hl'); if (hl) hl.setAttribute('stroke', c);
+        g.querySelectorAll('.cdot').forEach(d => d.setAttribute('fill', c));
+        /* A pinned line leaves an inline transition on its dots carrying the
+           draw-on's ~540ms delay. That delay also applied on the way OUT, so
+           unpinning dropped the line immediately and left its dots hanging.
+           Clearing the inline styles hands them back to the CSS rule, which
+           fades dots on the same .18s as the line. */
+        if (!pinned.has(k)) {
+          g.querySelectorAll('.cdot').forEach(d => { d.style.transition = ''; d.style.opacity = ''; });
+          if (hl) { hl.style.transition = ''; hl.style.strokeDasharray = ''; hl.style.strokeDashoffset = ''; }
+        }
+      });
+      restack();
+      labels();
+      [...justPinned].forEach((k, i) => drawIn(groups[k], i * 90));
+      lastPinned = new Set(pinned);
+      const clr = document.getElementById('sbjClear');
+      if (clr) clr.style.visibility = pinned.size ? 'visible' : 'hidden';
+    }
+
+    function draw() {
+      svg.textContent = '';
+      groups = {};
+      lastPinned = new Set();      // rebuilt groups replay their draw-on
+      const gGrid = el('g', {}), gSlc = el('g', {});
+      gCity = el('g', {});
+      gLab = el('g', {});
+
+      /* Gridlines only — every label carries its own "#rank", so a numeric
+         scale down the side just competed with them for the margin. */
+      [1,10,20,30,40,50].forEach(r =>
+        gGrid.appendChild(el('line', {class:'gridline', x1:X0, x2:X1, y1:y(r), y2:y(r)})));
+      const AX = showEv
+        ? [[X0,'2023','Best Sports Business Cities'],
+           [XM,'2024','Best Sports Business Cities: Event Hosting'],
+           [X1,'2026','Best Sports Business Cities']]
+        : [[X0,'2023','Best Sports Business Cities'],
+           [X1,'2026','Best Sports Business Cities']];
+      AX.forEach(([x,yr,sub]) => {
+        const a = el('text', {class:'yrlab', x, y:Y1+32, 'text-anchor':'middle'}); a.textContent = yr;
+        const b = el('text', {class:'axsub', x, y:Y1+47, 'text-anchor':'middle'}); b.textContent = sub;
+        gGrid.append(a, b, el('line', {class:'gridline', x1:x, x2:x, y1:Y0-8, y2:Y1+14}));
+      });
+
+      D.forEach(d => {
+        const [k, label] = d;
+        if (k === 'slc') return;
+        const P = pts(d, showEv), path = dstr(P), c = colorOf(k);
+        const g = el('g', {class:'city', 'data-k':k});
+        g.appendChild(el('path', {class:'ghost', d:path}));
+        g.appendChild(el('path', {class:'hl', d:path, stroke:c}));
+        P.forEach(([x,r], i) => {
+          const mid = showEv && P.length === 3 && i === 1;
+          g.appendChild(el('circle', {class:'cdot', cx:x, cy:y(r), r: mid?4:4.5, fill:c}));
+        });
+        const hit = el('path', {class:'hit', d:path});
+        hit.appendChild(el('title', {})).textContent = `${label} · #${d[2]} in 2023 · #${d[3]} in 2026`;
+        g.appendChild(hit);
+        g.addEventListener('mouseenter', () => { hover = k; paint(); });
+        g.addEventListener('mouseleave', () => { if (hover === k) { hover = null; paint(); } });
+        g.addEventListener('click', () => {
+          if (pinned.has(k)) { pinned.delete(k); order = order.filter(x => x !== k); }
+          else { pinned.add(k); order.push(k); }
+          paint();
+        });
+        groups[k] = g; gCity.appendChild(g);
+      });
+
+      const P = pts(BY.slc, showEv);
+      gSlc.appendChild(el('path', {class:'line', d:dstr(P)}));
+      P.forEach(([x,r], i) => {
+        const mid = showEv && P.length === 3 && i === 1;
+        gSlc.appendChild(el('circle', {class:'dot', cx:x, cy:y(r), r: mid?4:4.5,
+                                       fill:'var(--utah-red)'}));
+      });
+
+      svg.append(gGrid, gCity, gSlc, gLab);
+      paint(); animate();
+    }
+
+    /* The draw-on works by hiding a path (dashoffset = its full length) and
+       then releasing it. Releasing it MUST NOT depend on requestAnimationFrame:
+       rAF does not run in a hidden tab or in headless Chrome, which left the
+       whole chart invisible in PDF export. A forced reflow flushes the reset
+       synchronously, and a hidden document skips the hide entirely. */
+    const flush = () => void svg.getBoundingClientRect();
+
+    function animate() {
+      const slide = svg.closest('.s-sbj');
+      const ghosts = [...svg.querySelectorAll('.ghost')];
+      const leads  = [...svg.querySelectorAll('.line')];
+      if (document.hidden) {              // no animation frames here — show it drawn
+        [...ghosts, ...leads].forEach(p => {
+          p.style.transition = 'none'; p.style.strokeDasharray = 'none'; p.style.strokeDashoffset = 0;
+        });
+        slide.classList.add('lit');
+        return;
+      }
+      slide.classList.remove('lit');
+      [...ghosts, ...leads].forEach(p => {
+        const len = p.getTotalLength();
+        p.style.transition = 'none';
+        p.style.strokeDasharray = len; p.style.strokeDashoffset = len;
+      });
+      flush();
+      ghosts.forEach((p,i) => {
+        p.style.transition = `stroke-dashoffset .8s ${80+i*11}ms var(--ease-out)`;
+        p.style.strokeDashoffset = 0;
+      });
+      leads.forEach(p => {
+        p.style.transition = 'stroke-dashoffset 1.15s 720ms var(--ease-out)';
+        p.style.strokeDashoffset = 0;
+      });
+      setTimeout(() => slide.classList.add('lit'), 950);
+    }
+
+    const bar = document.getElementById('sbjChips');
+    (function controls() {
+      Object.keys(PRESETS).forEach(name => {
+        const b = document.createElement('button');
+        b.className = 'chip preset'; b.textContent = name;
+        b.onclick = () => { order = [...PRESETS[name]]; pinned = new Set(order); paint(); };
+        bar.appendChild(b);
+      });
+      const clr = document.createElement('button');
+      clr.className = 'chip preset'; clr.id = 'sbjClear'; clr.textContent = 'Clear pinned';
+      clr.onclick = () => { pinned.clear(); order = []; paint(); };
+      bar.appendChild(clr);
+      const ev = document.createElement('button');
+      ev.className = 'chip ev on'; ev.textContent = '2024 events list';
+      ev.title = 'SBJ 2024 ranked event hosting only, across 25 cities';
+      ev.onclick = () => { showEv = !showEv; ev.classList.toggle('on', showEv); draw(); };
+      bar.appendChild(ev);
+    })();
+
+    /* A per-line mouseleave is not enough: moving the pointer off the plot
+       quickly can skip it, stranding a line lit. The container clears it. */
+    const chart = document.querySelector('.s-sbj .chart');
+    if (chart) ['mouseleave','pointerleave'].forEach(ev =>
+      chart.addEventListener(ev, () => { if (hover) { hover = null; paint(); } }));
+
+    /* The engine advances the deck on any click inside .stage, so every
+       click on a line, a label or a control has to stop there or the
+       slide moves out from under the interaction. */
+    ['.s-sbj .chart', '.s-sbj .chips'].forEach(sel => {
+      const n = document.querySelector(sel);
+      if (n) n.addEventListener('click', e => e.stopPropagation());
+    });
+
+    draw();
+    Deck.onEnter('s-sbj', () => animate());
+  })();
+
+  (() => {
+    let t = null;
+    Deck.onEnter('s-where', el => {
+      clearTimeout(t);
+      el.classList.remove('flipping'); void el.offsetWidth; el.classList.add('flipping');
+      t = setTimeout(() => el.classList.remove('flipping'), 3200);
+    });
+    Deck.onLeave('s-where', el => { clearTimeout(t); el.classList.remove('flipping'); });
+  })();
+</script>
+</body>
+</html>
