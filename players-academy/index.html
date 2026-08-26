@@ -2288,6 +2288,36 @@
   @media (max-aspect-ratio: 16/9) {
     .stage { width: 100vw; height: calc(100vw * 9 / 16); }
   }
+  /* ---- PDF EXPORT ----------------------------------------------------
+     These pages predate the shared engine and carried no print rules, so
+     they exported as a single page. Ported from _engine/deck.v1.css: one
+     slide per 13.333x7.5in page, arrival animations frozen finished,
+     presenter chrome hidden. container-type is restated on .slide because
+     the cq units resolve against the stage on screen, which is no longer
+     the sizing box once slides become static blocks.
+     -------------------------------------------------------------------- */
+  @media print {
+    @page { size: 13.333in 7.5in; margin: 0; }
+    html, body { width: auto; height: auto; overflow: visible; background: #fff; }
+    .deck-shell, .deck { position: static; display: block; place-items: initial; inset: auto; }
+    .stage {
+      position: static; width: auto; height: auto;
+      max-width: none; max-height: none; aspect-ratio: auto;
+      container-type: normal; box-shadow: none; overflow: visible;
+    }
+    .slide {
+      position: relative; inset: auto;
+      width: 13.333in; height: 7.5in;
+      opacity: 1 !important; pointer-events: auto; transition: none;
+      container-type: size; container-name: slide;
+      overflow: hidden;
+      break-after: page; page-break-after: always;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .slide:last-child { break-after: auto; page-break-after: auto; }
+    [data-anim] { opacity: 1 !important; transform: none !important; animation: none !important; }
+    .hud, .progress-bar, .help { display: none !important; }
+  }
 </style>
 </head>
 <body>

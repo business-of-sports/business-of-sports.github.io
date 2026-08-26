@@ -14,6 +14,9 @@ deck is one short path.
 | About me                     | https://business-of-sports.github.io/about-me/ |
 | Design concepts              | https://business-of-sports.github.io/concepts/ |
 
+Every deck has a PDF at the same path with the trailing slash swapped for
+`.pdf` — `/advisory-2/` is the deck, `/advisory-2.pdf` is the export.
+
 The root page lists nothing. Decks are reachable only by direct link — the repo
 is public, so treat that as tidiness, not access control.
 
@@ -35,6 +38,25 @@ ignores every `_`-prefixed folder, and `_engine` and `_brand` would 404.
 
 Copy an existing deck folder, keep the `../_engine/` and `../_brand/utah/`
 references, name the folder as the URL you want to send.
+
+## Regenerating a PDF
+
+Chrome headless against the served deck, then Ghostscript at 150 dpi — raw
+Chrome output runs 3-6x larger because it embeds images at full resolution:
+
+    chrome --headless --no-pdf-header-footer --virtual-time-budget=30000 \
+      --print-to-pdf=out.pdf http://localhost:PORT/advisory-2/
+    gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress \
+      -dDownsampleColorImages=true -dColorImageResolution=150 \
+      -dNOPAUSE -dQUIET -dBATCH -sOutputFile=advisory-2.pdf out.pdf
+
+Pagination comes from the `@media print` block — one slide per 13.333x7.5in
+page, animations frozen finished, presenter chrome hidden. It lives in
+`_engine/deck.v1.css` for engine decks, and inline for `players-academy` and
+`concepts`, which predate the engine.
+
+PDFs are binary and do not delta-compress: each regeneration adds a fresh full
+copy to history. Squash or prune if that outgrows the working tree.
 
 ## Archive
 
