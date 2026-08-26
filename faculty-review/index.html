@@ -316,5 +316,17 @@
 
   </div>
 </div>
+<script>
+/* Single sheet, no deck engine -- but P should still reach the PDF, so the
+   convention holds everywhere. /slug/ exports to /slug.pdf. */
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'p' && e.key !== 'P') return;
+  if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
+  var base = location.pathname.replace(/\/index\.html?$/i, '/').replace(/\/+$/, '');
+  if (!base) return;
+  e.preventDefault();
+  location.href = base + '.pdf';
+});
+</script>
 </body>
 </html>

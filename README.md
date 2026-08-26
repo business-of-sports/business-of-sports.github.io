@@ -15,7 +15,8 @@ deck is one short path.
 | Design concepts              | https://business-of-sports.github.io/concepts/ |
 
 Every deck has a PDF at the same path with the trailing slash swapped for
-`.pdf` — `/advisory-2/` is the deck, `/advisory-2.pdf` is the export.
+`.pdf` — `/advisory-2/` is the deck, `/advisory-2.pdf` is the export. Pressing
+**P** on any deck jumps to its PDF; Back returns you to the slide you left.
 
 The root page lists nothing. Decks are reachable only by direct link — the repo
 is public, so treat that as tidiness, not access control.

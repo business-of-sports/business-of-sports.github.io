@@ -3221,7 +3221,7 @@
   <div class="progress-bar" id="progress"></div>
 
   <div class="help" id="help">
-    <kbd>F</kbd> FULLSCREEN &nbsp; <kbd>←</kbd><kbd>→</kbd> NAVIGATE &nbsp; <kbd>HOME</kbd> RESET
+    <kbd>F</kbd> FULLSCREEN &nbsp; <kbd>←</kbd><kbd>→</kbd> NAVIGATE &nbsp; <kbd>P</kbd> PDF &nbsp; <kbd>HOME</kbd> RESET
   </div>
 </div>
 
@@ -3364,7 +3364,19 @@
       if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
       else document.exitFullscreen?.();
     }
+    else if (e.key === 'p' || e.key === 'P') { e.preventDefault(); openPDF(); }
   });
+
+  /* P -> this deck's PDF. A deck served at /slug/ exports to /slug.pdf, so
+     the href is the pathname with its trailing slash traded for .pdf. Same
+     tab on purpose: Back returns you where you were. Guarded to http(s) --
+     opened from file:// there is no sibling to hit. */
+  function pdfHref() {
+    if (location.protocol !== 'http:' && location.protocol !== 'https:') return null;
+    var base = location.pathname.replace(/\/index\.html?$/i, '/').replace(/\/+$/, '');
+    return base ? base + '.pdf' : null;
+  }
+  function openPDF() { var href = pdfHref(); if (href) location.href = href; }
 
   stage.addEventListener('click', (e) => {
     const rect = stage.getBoundingClientRect();

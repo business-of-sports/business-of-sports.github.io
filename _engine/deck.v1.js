@@ -11,7 +11,12 @@
    Navigator + deep-link were added to v1 rather than forked to v2:
    at the time v1 had exactly one consumer and it was still in active
    development, so no archived deck was pinned to the old behaviour.
-   Once a deck ships against v1, that exemption is spent.
+   Once a deck ships against v1, that exemption is spent for anything
+   that CHANGES existing behaviour -- a rebound key, an altered API, a
+   different default. Purely additive bindings on previously-unbound
+   keys stay allowed: they cannot alter how an already-published deck
+   behaves, which is the only thing the rule protects. P (open PDF) was
+   added under that carve-out.
    ============================================================ */
 
 window.Deck = (() => {
@@ -244,7 +249,20 @@ window.Deck = (() => {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
       else document.exitFullscreen?.();
     }
+    else if (e.key === 'p' || e.key === 'P')                      { e.preventDefault(); openPDF(); }
   });
+
+  /* P -> this deck's PDF. Convention: a deck served at /slug/ exports to
+     /slug.pdf, so the href is the pathname with its trailing slash traded
+     for .pdf. Same tab on purpose -- Back returns you, and the #N deep
+     link restores the slide you left rather than dumping you on slide 1.
+     Guarded to http(s): opened from file:// there is no sibling to hit. */
+  function pdfHref() {
+    if (location.protocol !== 'http:' && location.protocol !== 'https:') return null;
+    const base = location.pathname.replace(/\/index\.html?$/i, '/').replace(/\/+$/, '');
+    return base ? base + '.pdf' : null;
+  }
+  function openPDF() { const href = pdfHref(); if (href) location.href = href; }
 
   if (counterEl) counterEl.addEventListener('click', openNav);
 
